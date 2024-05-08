@@ -11,6 +11,7 @@ import type { StackScreenProps } from '@react-navigation/stack';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 export type GetStartedStackParamList = {
+  GetStarted: undefined;
   LoginNavigator: NavigatorScreenParams<LoginStackParamList>;
   RegisterNavigator: NavigatorScreenParams<RegisterStackParamList>;
 };
