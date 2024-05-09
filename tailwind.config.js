@@ -6,6 +6,49 @@ module.exports = {
     './components/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
+    // 14 16 18 20 25
+    fontSize: {
+      sm: [
+        '18.667px',
+        {
+          lineHeight: '22px',
+          letterSpacing: '-0.24px',
+          fontweight: '500',
+        },
+      ],
+      md: [
+        '21.333px',
+        {
+          lineHeight: '26px',
+          letterSpacing: '-0.24px',
+          fontweight: '500',
+        },
+      ],
+      lg: [
+        '24px',
+        {
+          lineHeight: '28px',
+          letterSpacing: '-0.24px',
+          fontweight: '500',
+        },
+      ],
+      xl: [
+        '26.667px',
+        {
+          lineHeight: '32px',
+          letterSpacing: '-0.24px',
+          fontweight: '500',
+        },
+      ],
+      '2xl': [
+        '33.333px',
+        {
+          lineHeight: '40px',
+          letterSpacing: '-0.24px',
+          fontweight: '500',
+        },
+      ],
+    },
     extend: {
       colors: {
         'gray-1': '#F0F0F0',
@@ -25,13 +68,6 @@ module.exports = {
         'inter-m': ['Inter-Medium'],
         'inter-b': ['Inter-Bold'],
         'inter-r': ['Inter-Regular'],
-      },
-      fontSize: {
-        'hs-s': '14px',
-        'hs-m': '16px',
-        'hs-l': '18px',
-        'hs-xl': '20px',
-        'hs-2xl': '25px',
       },
     },
   },
