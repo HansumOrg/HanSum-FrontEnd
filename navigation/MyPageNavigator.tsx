@@ -12,7 +12,11 @@ export default function MyPageNavigator() {
 
   return (
     <MyPageStack.Navigator initialRouteName="MyPage">
-      <MyPageStack.Screen name="MyPage" component={MyPageScreen} />
+      <MyPageStack.Screen
+        name="MyPage"
+        component={MyPageScreen}
+        options={{ headerShown: false }}
+      />
       <MyPageStack.Screen
         name="EditProfileNavigator"
         component={EditProfileNavigator}

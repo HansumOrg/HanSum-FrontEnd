@@ -19,7 +19,11 @@ export default function MainNavigator() {
       />
       <MainTab.Screen name="SearchNavigator" component={SearchNavigator} />
       <MainTab.Screen name="ChatNavigator" component={ChatNavigator} />
-      <MainTab.Screen name="MyPageNavigator" component={MyPageNavigator} />
+      <MainTab.Screen
+        name="MyPageNavigator"
+        component={MyPageNavigator}
+        options={{ headerShown: false }}
+      />
       <MainTab.Screen name="Favorites" component={FavoritesScreen} />
       <MainTab.Screen
         name="GuesthouseDetailsNavigator"
