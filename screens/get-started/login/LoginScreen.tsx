@@ -1,12 +1,10 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, View, Text } from 'react-native';
 import { LoginStackScreenProps } from '../../../navigation/types';
-import { TextInput } from 'react-native-gesture-handler';
 import RectButton from '../../../components/common/RectButton';
 import FindButton from '../../../components/common/FindButton';
 import InputText from '../../../components/common/InputText';
-import TitleText from '../../../components/common/TitleText';
+
 export default function LoginScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -38,14 +36,14 @@ export default function LoginScreen({
               name="아이디"
               value={userId}
               onChangeText={text => setUserId(text)}
-            ></InputText>
+            />
             <InputText
               name="비밀번호"
               value={password}
               textContentType="password"
-              secureTextEntry={true}
+              secureTextEntry
               onChangeText={text => setPassword(text)}
-            ></InputText>
+            />
           </View>
           <View className="bg-white h-1/3 mt-2">
             <RectButton onPress={loginSumit} text="로그인 하기" />

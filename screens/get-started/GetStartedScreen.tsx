@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { GetStartedStackScreenProps } from '../../navigation/types';
 import RectButton from '../../components/common/RectButton';
+
 export default function GetStartedScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -14,7 +15,7 @@ export default function GetStartedScreen({
       <StatusBar barStyle="default" />
       <View className="h-screen px-6 pt-6 bg-white">
         <View className=" h-4/5 bg-white items-center justify-center ">
-          <View className="h-36 bg-gray-2 w-36"></View>
+          <View className="h-36 bg-gray-2 w-36" />
           <View className=" bg-white items-center mt-6">
             <Text>“한 숨”을 통해</Text>
             <Text> 새로운 사람들과 소중한 만남을 시작해보세요!!</Text>
