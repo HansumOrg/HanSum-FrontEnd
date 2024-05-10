@@ -94,12 +94,7 @@ export default function MyPageScreen({
           <View className="flex w-full h-full">
             <ScrollView>
               <View className="flex h-full items-center">
-                <View
-                  style={{
-                    shadowColor: '#000',
-                  }}
-                  className="bg-white w-auto m-5 rounded-sm shadow-md"
-                >
+                <View className="bg-white w-auto m-5 rounded-sm shadow-lg shadow-black/50">
                   <Text>글입니다.</Text>
                 </View>
               </View>
