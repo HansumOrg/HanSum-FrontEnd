@@ -46,7 +46,11 @@ export default function LoginScreen({
             />
           </View>
           <View className="bg-white h-1/3 mt-2">
-            <RectButton onPress={loginSumit} text="로그인 하기" />
+            <RectButton
+              activate={password !== '' && userId !== ''}
+              onPress={loginSumit}
+              text="로그인 하기"
+            />
             <FindButton
               onPress1={onPress}
               onPress2={onPress}

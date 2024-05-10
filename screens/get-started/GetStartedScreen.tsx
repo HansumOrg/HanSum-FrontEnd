@@ -7,7 +7,6 @@ export default function GetStartedScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: GetStartedStackScreenProps<'GetStarted'>) {
   return (
@@ -26,6 +25,7 @@ export default function GetStartedScreen({
           <View className="h-2/3 mt-2">
             <RectButton
               className="bg-gray-400"
+              activate
               onPress={() => navigation.navigate('RegisterNavigator')}
               text="시작하기"
             />
