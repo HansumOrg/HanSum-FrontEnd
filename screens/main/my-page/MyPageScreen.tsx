@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -10,7 +10,7 @@ import {
 import { MyPageStackScreenProps } from '../../../navigation/types';
 import NoticeIcon from '../../../assets/images/icon_notice.svg';
 import MoreIcon from '../../../assets/images/icon_more.svg';
-import { Shadow } from 'react-native-shadow-2'
+import { BoxShadow } from 'react-native-shadow';
 
 export default function MyPageScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -19,6 +19,18 @@ export default function MyPageScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: MyPageStackScreenProps<'MyPage'>) {
+  const [scrollViewWidth, setScrollViewWidth] = useState(0);
+  const shadowOpt = (width: number, height: number) => ({
+    width,
+    height,
+    color: '#000',
+    border: 2,
+    radius: 3,
+    opacity: 0.2,
+    x: 0,
+    y: 3,
+    style: { marginVertical: 5 },
+  });
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -79,8 +91,20 @@ export default function MyPageScreen({
           <View className="flex h-1/6 justify-end">
             <Text className="font-inter-b text-lg text-black">내 예약</Text>
           </View>
-          <ScrollView className="flex flex-colw-full h-full">
-          </ScrollView>
+          <View className="flex w-full h-full">
+            <ScrollView>
+              <View className="flex h-full items-center">
+                <View
+                  style={{
+                    shadowColor: '#000',
+                  }}
+                  className="bg-white w-auto m-5 rounded-sm shadow-md"
+                >
+                  <Text>글입니다.</Text>
+                </View>
+              </View>
+            </ScrollView>
+          </View>
         </View>
       </View>
     </SafeAreaView>
