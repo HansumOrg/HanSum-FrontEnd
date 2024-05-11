@@ -14,6 +14,7 @@ export default function EditProfileNavigator() {
       <EditProfileStack.Screen
         name="EditProfile"
         component={EditProfileScreen}
+        options={{ headerShown: false }}
       />
       <EditProfileStack.Screen
         name="ChangeNickname"
