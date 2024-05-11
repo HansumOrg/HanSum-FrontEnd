@@ -19,14 +19,17 @@ export default function EditProfileNavigator() {
       <EditProfileStack.Screen
         name="ChangeNickname"
         component={ChangeNicknameScreen}
+        options={{ headerShown: false }}
       />
       <EditProfileStack.Screen
         name="AddInterest"
         component={AddInterestScreen}
+        options={{ headerShown: false }}
       />
       <EditProfileStack.Screen
         name="ViewReceivedSticker"
         component={ViewReceivedStickerScreen}
+        options={{ headerShown: false }}
       />
     </EditProfileStack.Navigator>
   );

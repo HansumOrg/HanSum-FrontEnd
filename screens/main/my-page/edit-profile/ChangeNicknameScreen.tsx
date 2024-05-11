@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
 import BackIcon from '../../../../assets/images/icon_goback.svg';
-import { userData } from '../../../../data.json';
+import data from '../../../../data.json';
 
 interface User {
   user_id: number;
@@ -36,7 +36,7 @@ interface NicknameProps {
 function CheckNickname(props: NicknameProps) {
   const { nickname, user, userId } = props;
   let check = 0;
-  if (user.some(data => data.nickname === nickname) || nickname === '') {
+  if (user.some(inform => inform.nickname === nickname) || nickname === '') {
     check = 2;
   }
   if (check !== 2) {
@@ -53,6 +53,7 @@ export default function ChangeNicknameScreen({
   navigation,
 }: EditProfileStackScreenProps<'ChangeNickname'>) {
   const userId = 1;
+  const userData: User[] = data.user;
   const [changeState, setChangeState] = useState(0); // 닉네임 중복확인 상태 0=미확인, 1=확인, 2=불가
   const [ChangeNickname, setChangeNickname] = useState(''); // 변경할 닉네임
 
