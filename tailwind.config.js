@@ -9,43 +9,43 @@ module.exports = {
     // 14 16 18 20 25
     fontSize: {
       sm: [
-        '18.667px',
+        '14px',
         {
-          lineHeight: '22px',
+          lineHeight: '17px',
           letterSpacing: '-0.24px',
-          fontweight: '500',
+          fontWeight: '500',
         },
       ],
       md: [
-        '21.333px',
+        '16px',
         {
-          lineHeight: '26px',
+          lineHeight: '19px',
           letterSpacing: '-0.24px',
-          fontweight: '500',
+          fontWeight: '600',
         },
       ],
       lg: [
-        '24px',
+        '18px',
         {
-          lineHeight: '28px',
+          lineHeight: '21px',
           letterSpacing: '-0.24px',
-          fontweight: '500',
+          fontWeight: '500',
         },
       ],
       xl: [
-        '26.667px',
+        '20px',
         {
-          lineHeight: '32px',
+          lineHeight: '23px',
           letterSpacing: '-0.24px',
-          fontweight: '500',
+          fontWeight: '600',
         },
       ],
       '2xl': [
-        '33.333px',
+        '25px',
         {
-          lineHeight: '40px',
+          lineHeight: '28px',
           letterSpacing: '-0.24px',
-          fontweight: '500',
+          fontWeight: '700',
         },
       ],
     },
@@ -62,6 +62,7 @@ module.exports = {
         'mbti-blue': '#00F4FF',
         'mbti-yellow': '#E4C728',
         'mbti-pink': '#C0226D',
+        'mbti-purple': '#C0226C',
       },
       fontFamily: {
         'inter-sb': ['Inter-SemiBold'],
