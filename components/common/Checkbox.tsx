@@ -1,18 +1,16 @@
 import React from 'react';
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable } from 'react-native';
 import Check from '../icon/Check';
 
 interface Props {
   isChecked: boolean;
-  disabled?: boolean;
   onValueChangeHandler?: (checked: boolean) => void;
   children?: React.ReactNode;
   className?: string;
 }
 
 const UiCheckbox = (props: Props) => {
-  const { isChecked, disabled, onValueChangeHandler, children, className } =
-    props;
+  const { isChecked, onValueChangeHandler, children, className } = props;
 
   const onPressedHandler = () => {
     if (onValueChangeHandler) {
@@ -20,50 +18,23 @@ const UiCheckbox = (props: Props) => {
     }
   };
 
-  const styles = StyleSheet.create({
-    checkbox: {
-      height: 24,
-      width: 24,
-      borderRadius: 4,
-      borderWidth: 2,
-      borderColor: '#C2C2C2',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    checked: {
-      backgroundColor: '#39C3C5',
-      borderColor: '#39C3C5',
-    },
-    disabled: {
-      borderColor: '#C2C2C2',
-      backgroundColor: '#C2C2C2',
-    },
-    checkedAndDisabled: {
-      backgroundColor: '#C6F3F3',
-      borderColor: '#C6F3F3',
-    },
-    label: {
-      marginLeft: 8,
-    },
-  });
-
+  // 스타일은 className을 통해 관리됩니다
   return (
-    <View className={`flex flex-row ${className}`}>
+    <View
+      className={`flex flex-row rounded-md items-center border-solid border-2 border-black ${
+        className ?? ''
+      }`}
+    >
       <Pressable
-        disabled={disabled}
         onPress={onPressedHandler}
-        style={[
-          styles.checkbox,
-          isChecked && styles.checked,
-          disabled && styles.disabled,
-          isChecked && disabled && styles.checkedAndDisabled,
-        ]}
+        className={`checkbox ${isChecked ? 'checked' : ''} ${
+          isChecked ? 'checkedAndDisabled' : ''
+        }`}
       >
-        {isChecked && (
-          <Check size={16} color={disabled ? '#C2C2C2' : '#FFFFFF'} />
-        )}
+        {isChecked && <Check size={16} color="#39C3C5" />}
+        {!isChecked && <Check size={16} color="#FFFFFF" />}
       </Pressable>
-      {children && <View style={styles.label}>{children}</View>}
+      {children && <View className="label">{children}</View>}
     </View>
   );
 };
