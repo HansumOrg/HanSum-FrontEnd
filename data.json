@@ -1,0 +1,159 @@
+{
+    "user" : [
+        {
+          "user_id": 1,
+          "login_id": "john_doe",
+          "password": "hashed_password",
+          "username": "John Doe",
+          "phone": "01012345678",
+          "sex": "M",
+          "birthday": "1990/01/01",
+          "nickname": "Johnny",
+          "mbti": "INTJ",
+          "user_agreement": 1,
+          "interested_location": ["성산일출봉", "만장굴"],
+          "interest_hobby": ["독서","요리"] ,
+          "interested_food": ["고기국수", "해물라면"]
+        },
+        {
+          "user_id": 2,
+          "login_id": "jane_smith",
+          "password": "hashed_password",
+          "username": "Jane Smith",
+          "phone": "01098765432",
+          "sex": "F",
+          "birthday": "1992/02/14",
+          "nickname": "Janie",
+          "mbti": "ENFP",
+          "user_agreement": 1,
+          "interested_location": ["함덕","천지연 폭포"],
+          "interest_hobby": ["캠핑", "등상"],
+          "interested_food": ["감귤", "흑돼지"]
+        }
+      ],
+      "facility" : [
+        {
+          "facility_id": 1,
+          "guesthouse_id": 1,
+          "party": 1,
+          "breakfast": 1,
+          "singleroom": 1,
+          "parking": 1,
+          "swimmingpool": 0,
+          "woman_only": 0
+        },
+        {
+          "facility_id": 2,
+          "guesthouse_id": 2,
+          "party": 0,
+          "breakfast": 0,
+          "singleroom": 1,
+          "parking": 1,
+          "swimmingpool": 1,
+          "woman_only": 1
+        }
+      ],
+    "sticker" : [
+        {
+          "sticker_id": 1,
+          "user_id": 1,
+          "sticker_text": "배려심이 깊어요",
+          "sticker_count": 5
+        },
+        {
+          "sticker_id": 2,
+          "user_id": 2,
+          "sticker_text": "조용하고 편안한 동반자였어요 ",
+          "sticker_count": 3
+        }
+      ],
+      "favorite" : [
+        {
+          "dibs_id": 1,
+          "user_id": 1,
+          "guesthouse_id": 2
+        },
+        {
+          "dibs_id": 2,
+          "user_id": 2,
+          "guesthouse_id": 1
+        }
+      ],
+      "review" : [
+        {
+          "review_id": 1,
+          "user_id": 1,
+          "guesthouse_id": 1,
+          "rating": 4.5,
+          "createdDate": "2024-05-01 14:30:00"
+        },
+        {
+          "review_id": 2,
+          "user_id": 2,
+          "guesthouse_id": 2,
+          "rating": 3.5,
+          "createdDate": "2024-04-20 09:15:00"
+        }
+      ],
+      "reservation" : [
+        {
+          "reservation_id": 1,
+          "user_id": 1,
+          "guesthouse_id": 2,
+          "checkin_date": "2024-06-10 15:00:00",
+          "checkout_date": "2024-06-15 10:00:00"
+        },
+        {
+          "reservation_id": 2,
+          "user_id": 1,
+          "guesthouse_id": 1,
+          "checkin_date": "2024-02-01 15:00:00",
+          "checkout_date": "2024-02-05 10:00:00"
+        },        
+        {
+          "reservation_id": 3,
+          "user_id": 1,
+          "guesthouse_id": 1,
+          "checkin_date": "2024-05-11 15:00:00",
+          "checkout_date": "2024-06-11 10:00:00"
+        }
+      ],
+      "mbti_prob" : [
+        {
+          "probability_id": 1,
+          "guesthouse_id": 1,
+          "mbti": "INTJ",
+          "probability": 0.1500
+        },
+        {
+          "probability_id": 2,
+          "guesthouse_id": 2,
+          "mbti": "ENFP",
+          "probability": 0.2000
+        }
+      ],
+    "guesthouse" : [
+        {
+          "guesthouse_id": 1,
+          "guesthouse_name": "Jeju Beach House",
+          "address": "123 Beach Road, Jeju City",
+          "location": "Jeju City",
+          "price": 30000,
+          "phone": "01011112222",
+          "rating": 4.2,
+          "imageUrl": "https://example.com/jeju-beach.jpg",
+          "mood": "액티비티가 다양한"
+        },
+        {
+          "guesthouse_id": 2,
+          "guesthouse_name": "Seogwipo Sunset Inn",
+          "address": "456 Sunset Street, Seogwipo",
+          "location": "Seogwipo",
+          "price": 35000,
+          "phone": "01033334444",
+          "rating": 4.0,
+          "imageUrl": "https://example.com/seogwipo-sunset.jpg",
+          "mood": "여유로운"
+        }
+      ]
+}
