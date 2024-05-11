@@ -12,10 +12,15 @@ interface RadioButtonsProps {
   options: RadioButtonsItem[];
   activeItem: string;
   onSelectItem: (selectedItem: string) => void;
+  text1: string;
+  text2: string;
+  mbti1: string;
+  mbti2: string;
 }
 
 export default function RadioButtons(props: RadioButtonsProps) {
-  const { options, activeItem, onSelectItem } = props;
+  const { options, activeItem, onSelectItem, text1, text2, mbti1, mbti2 } =
+    props;
   function getOptionStyle(length: number, index: string): string {
     const idx = parseInt(index, 10);
     switch (idx) {
@@ -29,37 +34,90 @@ export default function RadioButtons(props: RadioButtonsProps) {
       case 5:
         return 'w-2/3 h-2/3';
       default:
-        return 'w-2/3 h-2/3'; // 기본적으로 w-2/3 h-2/3 스타일을 반환합니다.
+        return 'w-2/3 h-2/3';
     }
   }
+  function getTextStyle(
+    length: number,
+    index: string,
+    Mbti1: string,
+    Mbti2: string,
+  ): JSX.Element {
+    const idx = parseInt(index, 10);
+    switch (idx) {
+      case 1:
+        return (
+          <Text className=" text-primary-2 font-inter-b text-2xl">{Mbti1}</Text>
+        );
+      case 6:
+        return (
+          <Text className=" text-primary-2 font-inter-b text-2xl">{Mbti2}</Text>
+        );
+      default:
+        return <Text />; // 빈 텍스트 반환
+    }
+  }
+  // TODO: 선이 제대로 적용되지 않는 이슈 및 가운데 텍스트가 들어가는 이튜 해경해야함
+
+  // function getLineStyle(length: number, index: string): string {
+  //   const idx = parseInt(index, 10);
+  //   switch (idx) {
+  //     case 1:
+  //       return 'hidden';
+  //     case 6:
+  //       return 'w-2 h-1';
+  //     case 3:
+  //       return 'w-4 h-1';
+  //     case 4:
+  //       return 'w-4 h-1';
+  //     case 2:
+  //       return 'w-4 h-1';
+  //     case 5:
+  //       return 'w-4 h-1';
+  //     default:
+  //       return 'w-10 h-1';
+  //   }
+  // }
 
   return (
-    <View className="flex  h-full w-full justify-center items-center z-0">
-      <View className="flex bo flex-row h-1/2  w-full justify-between items-center relative z-10">
+    <View className="flex h-full w-full justify-center items-center ">
+      <View className="flex flex-row h-1/2 w-full justify-between items-center">
         {options.map(option => {
           const isActive = activeItem === option.value;
           return (
-            <Pressable
-              className="flex flex-row items-center rounded-full justify-center h-full w-1/6  "
-              key={option.key}
-              onPress={() => onSelectItem(option.value)}
-            >
-              <View
-                className={`items-center justify-center border-2 rounded-full border-primary-2 ${getOptionStyle(
-                  options.length,
-                  option.key,
-                )}`}
+            <React.Fragment key={option.key}>
+              {/* Add line before button except for the first one */}
+
+              <Pressable
+                className="flex flex-row items-center rounded-full justify-center h-full w-1/6"
+                onPress={() => onSelectItem(option.value)}
               >
-                {isActive ? (
-                  <View className="bg-primary-2  rounded-full w-5/6 h-5/6" />
-                ) : null}
-              </View>
-              <Text className="text-neutral-950 dark:text-neutral-50">
-                {option.label}
-              </Text>
-            </Pressable>
+                {/* <View
+                  className={`bg-primary-2 z-20 ${getLineStyle(
+                    options.length,
+                    option.key,
+                  )}`}
+                /> */}
+                <View
+                  className={`items-center justify-center border-2 rounded-full border-primary-2 ${getOptionStyle(
+                    options.length,
+                    option.key,
+                  )}`}
+                >
+                  {isActive ? (
+                    <View className="bg-primary-2 rounded-full w-5/6 h-5/6" />
+                  ) : (
+                    getTextStyle(options.length, option.key || '', mbti1, mbti2)
+                  )}
+                </View>
+              </Pressable>
+            </React.Fragment>
           );
         })}
+      </View>
+      <View className="flex-row w-full justify-between mt-1">
+        <Text className="font-inter-b text-16 text-black">{text1}</Text>
+        <Text className="font-inter-b text-16 text-black">{text2}</Text>
       </View>
     </View>
   );
