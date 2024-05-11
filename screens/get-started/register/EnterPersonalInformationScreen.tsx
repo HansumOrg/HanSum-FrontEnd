@@ -19,13 +19,13 @@ export default function EnterPersonalInformationScreen({
             <Text>사용자의 성별을 선택해주세요.</Text>
           </View>
           <View className="flex-row bg-white h-1/3 divide-x-8 divide-white">
-            <View className="h-full w-1/2 bg-red-400">
+            <View className="h-full w-1/2 ">
               <Pressable className="flex rounded-xl border-2 border-gray-2 justify-center items-center h-3/5 mt-3 bg-white ">
                 <Text>여자</Text>
               </Pressable>
             </View>
 
-            <View className=" h-full w-1/2 bg-blue-400">
+            <View className=" h-full w-1/2">
               <Pressable className="flex rounded-xl border-2 border-gray-2 justify-center items-center h-3/5 mt-3 bg-white ">
                 <Text>남자</Text>
               </Pressable>
@@ -34,7 +34,7 @@ export default function EnterPersonalInformationScreen({
           <View className=" bg-white h-1/3 justify-center">
             <Text>사용자의 생일을 선택해주세요.</Text>
           </View>
-          <View className="flex-row bg-red-50 h-2/3 " />
+          <View className="flex-row bg-red-200 h-2/3 " />
           <View className="bg-white h-1/3 mt-2 ">
             <RectButton
               activate

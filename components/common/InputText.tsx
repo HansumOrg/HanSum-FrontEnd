@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, TextInput, TextInputProps } from 'react-native';
 
 interface InputTextProps extends TextInputProps {
@@ -51,7 +51,7 @@ interface InputTextProps extends TextInputProps {
 }
 
 export default function InputText(props: InputTextProps) {
-  //logic
+  // logic
   const { name, onChangeText, value, textContentType, secureTextEntry } = props;
 
   return (
@@ -62,7 +62,7 @@ export default function InputText(props: InputTextProps) {
         textContentType={textContentType}
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
-      ></TextInput>
+      />
     </View>
   );
 }

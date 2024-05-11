@@ -9,7 +9,6 @@ interface FindButtonProps extends PressableProps {
 }
 
 export default function FindButton(props: FindButtonProps) {
-  //logic
   const { onPress1, onPress2, text1, text2 } = props;
 
   return (

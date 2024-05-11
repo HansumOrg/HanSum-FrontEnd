@@ -70,14 +70,5 @@ export default function LoginScreen({
         </View>
       </View>
     </SafeAreaView>
-    // `<SafeAreaView>
-    //   <StatusBar barStyle="default" />
-    //   <View className="h-screen bg-slate-500 flex justify-center items-start px-4">
-    //     <View className='h-1/4 w-full justify-center '>
-
-    //     </View>
-    //     <Text className="text-5xl text-white">LoginScreen</Text>
-    //   </View>
-    // </SafeAreaView>`
   );
 }
