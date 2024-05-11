@@ -1,5 +1,5 @@
 {
-    "userData" : [
+    "user" : [
         {
           "user_id": 1,
           "login_id": "john_doe",
@@ -31,7 +31,7 @@
           "interested_food": ["감귤", "흑돼지"]
         }
       ],
-      "facilityData" : [
+      "facility" : [
         {
           "facility_id": 1,
           "guesthouse_id": 1,
@@ -53,7 +53,7 @@
           "woman_only": 1
         }
       ],
-    "stickerData" : [
+    "sticker" : [
         {
           "sticker_id": 1,
           "user_id": 1,
@@ -67,7 +67,7 @@
           "sticker_count": 3
         }
       ],
-      "favoriteData" : [
+      "favorite" : [
         {
           "dibs_id": 1,
           "user_id": 1,
@@ -79,7 +79,7 @@
           "guesthouse_id": 1
         }
       ],
-      "reviewData" : [
+      "review" : [
         {
           "review_id": 1,
           "user_id": 1,
@@ -95,7 +95,7 @@
           "createdDate": "2024-04-20 09:15:00"
         }
       ],
-      "reservationData" : [
+      "reservation" : [
         {
           "reservation_id": 1,
           "user_id": 1,
@@ -105,13 +105,20 @@
         },
         {
           "reservation_id": 2,
-          "user_id": 2,
+          "user_id": 1,
           "guesthouse_id": 1,
-          "checkin_date": "2024-07-01 15:00:00",
-          "checkout_date": "2024-07-05 10:00:00"
+          "checkin_date": "2024-02-01 15:00:00",
+          "checkout_date": "2024-02-05 10:00:00"
+        },        
+        {
+          "reservation_id": 3,
+          "user_id": 1,
+          "guesthouse_id": 1,
+          "checkin_date": "2024-05-11 15:00:00",
+          "checkout_date": "2024-06-11 10:00:00"
         }
       ],
-      "mbti_probData" : [
+      "mbti_prob" : [
         {
           "probability_id": 1,
           "guesthouse_id": 1,
@@ -125,7 +132,7 @@
           "probability": 0.2000
         }
       ],
-    "guesthouseData" : [
+    "guesthouse" : [
         {
           "guesthouse_id": 1,
           "guesthouse_name": "Jeju Beach House",
