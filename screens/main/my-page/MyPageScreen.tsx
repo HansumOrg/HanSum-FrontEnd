@@ -14,7 +14,43 @@ import LocalIcon from '../../../assets/images/icon_local.svg';
 import PhoneIcon from '../../../assets/images/icon_phone.svg';
 import AddProfileIcon from '../../../assets/images/icon_addProfile.svg';
 
-const Reservation = [
+interface Reservation {
+  reservation_id: number;
+  user_id: number;
+  guesthouse_id: number;
+  checkin_date: string;
+  checkout_date: string;
+}
+
+interface User {
+  user_id: number;
+  login_id: string;
+  password: string;
+  username: string;
+  phone: string;
+  sex: string;
+  birthday: string;
+  nickname: string;
+  mbti: string;
+  user_agreement: number;
+  interested_location: string[];
+  interest_hobby: string[];
+  interested_food: string[];
+}
+
+interface Guesthouse {
+  guesthouse_id: number;
+  guesthouse_name: string;
+  address: string;
+  location: string;
+  price: number;
+  phone: string;
+  rating: number;
+  imageUrl: string;
+  mood: string;
+}
+
+const reservationData: Reservation[] = [
   {
     reservation_id: 1,
     user_id: 1,
@@ -24,14 +60,14 @@ const Reservation = [
   },
   {
     reservation_id: 2,
-    user_id: 1,
+    user_id: 2,
     guesthouse_id: 1,
     checkin_date: '2024-07-01 15:00:00',
     checkout_date: '2024-07-05 10:00:00',
   },
 ];
 
-const User = [
+const userData: User[] = [
   {
     user_id: 1,
     login_id: 'john_doe',
@@ -64,7 +100,7 @@ const User = [
   },
 ];
 
-const Guesthouse = [
+const guesthouseData: Guesthouse[] = [
   {
     guesthouse_id: 1,
     guesthouse_name: 'Jeju Beach House',
@@ -89,75 +125,70 @@ const Guesthouse = [
   },
 ];
 
-const ReservationBox = ({ reservation }) => (
-  <View className="flex bg-white m-2 w-6/5 h-[130px] w-[365px] rounded-md shadow-lg shadow-black/100">
-    <View className="flex flex-row h-full w-full rounded-l-md">
-      <View className="flex flex-col p-2 w-4/6 h-full">
-        <Text className="font-inter-m py-1 text-xl text-black">
-          {
-            Guesthouse.find(
-              guesthouse =>
-                guesthouse.guesthouse_id === reservation.guesthouse_id,
-            )?.guesthouse_name
-          }
-        </Text>
-        <View className="flex flex-row py-1 w-full h-auto">
-          <LocalIcon width={12.8} height={16} />
-          <Text className="font-inter-r text-sm px-1 text-black">
-            {
-              Guesthouse.find(
-                guesthouse =>
-                  guesthouse.guesthouse_id === reservation.guesthouse_id,
-              )?.address
-            }
+interface ReservationBoxProps {
+  reservation: Reservation;
+  guesthouse: Guesthouse;
+}
+
+function ReservationBox(props: ReservationBoxProps) {
+  const { reservation, guesthouse } = props;
+  return (
+    <View className="flex bg-white m-2 w-6/5 h-[130px] w-[365px] rounded-md shadow-lg shadow-black/100">
+      <View className="flex flex-row h-full w-full rounded-l-md">
+        <View className="flex flex-col p-2 w-4/6 h-full">
+          <Text className="font-inter-m py-1 text-xl text-black">
+            {guesthouse.guesthouse_name}
           </Text>
+          <View className="flex flex-row py-1 w-full h-auto">
+            <LocalIcon width={12.8} height={16} />
+            <Text className="font-inter-r text-sm px-1 text-black">
+              {guesthouse.location}
+            </Text>
+          </View>
+          <View className="flex flex-row py-1 w-full h-auto">
+            <PhoneIcon width={16} height={16} />
+            <Text className="font-inter-m px-1 text-sm text-black">
+              {guesthouse.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')}
+            </Text>
+          </View>
+          <View className="flex flex-row w-2/3 justify-between">
+            <Text className="font-inter-m text-sm text-gray-2">Check-in</Text>
+            <Text className="font-inter-m text-sm text-gray-2">
+              {reservation.checkin_date.split(' ')[1]}
+            </Text>
+          </View>
+          <View className="flex flex-row w-2/3 justify-between">
+            <Text className="font-inter-m text-sm text-gray-2">Check-out</Text>
+            <Text className="font-inter-m text-sm text-gray-2">
+              {reservation.checkout_date.split(' ')[1]}
+            </Text>
+          </View>
         </View>
-        <View className="flex flex-row py-1 w-full h-auto">
-          <PhoneIcon width={16} height={16} />
-          <Text className="font-inter-m px-1 text-sm text-black">
-            {Guesthouse.find(
-              guesthouse =>
-                guesthouse.guesthouse_id === reservation.guesthouse_id,
-            )?.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')}
-          </Text>
-        </View>
-        <View className="flex flex-row w-2/3 justify-between">
-          <Text className="font-inter-m text-sm text-gray-2">Check-in</Text>
-          <Text className="font-inter-m text-sm text-gray-2">
-            {reservation.checkin_date.split(' ')[1]}
-          </Text>
-        </View>
-        <View className="flex flex-row w-2/3 justify-between">
-          <Text className="font-inter-m text-sm text-gray-2">Check-out</Text>
-          <Text className="font-inter-m text-sm text-gray-2">
-            {reservation.checkout_date.split(' ')[1]}
-          </Text>
-        </View>
-      </View>
-      <View className="flex w-1/3 flex-row h-full bg-yellow-300">
-        <View className="flex w-2/5 h-full bg-primary-1 justify-center items-center">
-          <Pressable>
-            <AddProfileIcon width={40} height={40} />
-          </Pressable>
-        </View>
-        {/* <View className="flex w-2/5 h-full bg-white justify-center items-center" /> */}
-        <View className="flex w-3/5 h-full rounded-r-md bg-primary-2 justify-center items-center">
-          <Text className="font-inter-sb text-lg text-white">
-            예약{'\n'}확정
-          </Text>
-        </View>
-        {/* <View className="flex w-3/5 h-full rounded-r-md bg-gray-3 justify-center items-center">
+        <View className="flex w-1/3 flex-row h-full bg-yellow-300">
+          <View className="flex w-2/5 h-full bg-primary-1 justify-center items-center">
+            <Pressable>
+              <AddProfileIcon width={40} height={40} />
+            </Pressable>
+          </View>
+          {/* <View className="flex w-2/5 h-full bg-white justify-center items-center" /> */}
+          <View className="flex w-3/5 h-full rounded-r-md bg-primary-2 justify-center items-center">
+            <Text className="font-inter-sb text-lg text-white">
+              예약{'\n'}확정
+            </Text>
+          </View>
+          {/* <View className="flex w-3/5 h-full rounded-r-md bg-gray-3 justify-center items-center">
           <Text className="font-inter-sb text-lg text-white">예약중</Text>
         </View> */}
-        {/* <View className="flex w-3/5 h-full rounded-r-md bg-point justify-center items-center">
+          {/* <View className="flex w-3/5 h-full rounded-r-md bg-point justify-center items-center">
           <Text className="font-inter-sb text-lg text-white">
             이용{'\n'}완료
           </Text>
         </View> */}
+        </View>
       </View>
     </View>
-  </View>
-);
+  );
+}
 
 export default function MyPageScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -183,7 +214,7 @@ export default function MyPageScreen({
           <View className="flex flex-row w-auto h-1/5 justify-between items-end">
             <View className="flex flex-col h-full justify-end">
               <Text className="font-inter-b text-md text-black">
-                {User.find(user => user.user_id === userId)?.username ??
+                {userData.find(user => user.user_id === userId)?.username ??
                   '사용자를 찾을 수 없습니다.'}
               </Text>
               <Text className="font-inter-m text-sm text-black/[.5]">
@@ -232,14 +263,15 @@ export default function MyPageScreen({
           </View>
           <View className="flex w-full h-full my-4">
             <ScrollView className="flex w-full h-full">
-              {Reservation.filter(
-                reservation => reservation.user_id === userId,
-              ).map(reservation => (
-                <ReservationBox
-                  reservation={reservation}
-                  key={reservation.reservation_id}
-                />
-              ))}
+              {reservationData
+                .filter(reservation => reservation.user_id === userId)
+                .map(reservation => (
+                  <ReservationBox
+                    reservation={reservation}
+                    guesthouse={guesthouseData[reservation.guesthouse_id - 1]}
+                    key={reservation.reservation_id}
+                  />
+                ))}
             </ScrollView>
           </View>
         </View>
