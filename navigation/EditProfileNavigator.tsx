@@ -5,6 +5,11 @@ import ChangeNicknameScreen from '../screens/main/my-page/edit-profile/ChangeNic
 import AddInterestScreen from '../screens/main/my-page/edit-profile/AddInterestScreen';
 import ViewReceivedStickerScreen from '../screens/main/my-page/edit-profile/ViewReceivedStickerScreen';
 import { EditProfileStackParamList } from './types';
+import BackIcon from '../assets/images/icon_goback.svg';
+
+function BackBtn() {
+  return <BackIcon style={{ transform: [{ scaleX: -1 }] }} />;
+}
 
 export default function EditProfileNavigator() {
   const EditProfileStack = createStackNavigator<EditProfileStackParamList>();
@@ -19,17 +24,17 @@ export default function EditProfileNavigator() {
       <EditProfileStack.Screen
         name="ChangeNickname"
         component={ChangeNicknameScreen}
-        options={{ headerShown: false }}
+        options={{ headerBackImage: BackBtn, title: '' }}
       />
       <EditProfileStack.Screen
         name="AddInterest"
         component={AddInterestScreen}
-        options={{ headerShown: false }}
+        options={{ headerBackImage: BackBtn, title: '' }}
       />
       <EditProfileStack.Screen
         name="ViewReceivedSticker"
         component={ViewReceivedStickerScreen}
-        options={{ headerShown: false }}
+        options={{ headerBackImage: BackBtn, title: '' }}
       />
     </EditProfileStack.Navigator>
   );

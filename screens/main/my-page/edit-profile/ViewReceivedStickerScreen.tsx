@@ -1,7 +1,6 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
+import { SafeAreaView, StatusBar, View, Text } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
-import BackIcon from '../../../../assets/images/icon_goback.svg';
 import data from '../../../../data.json';
 import PersonIcon from '../../../../assets/images/icon_person.svg';
 
@@ -50,6 +49,7 @@ export default function ViewReceivedStickerScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: EditProfileStackScreenProps<'ViewReceivedSticker'>) {
   const userId = 1;
@@ -69,21 +69,10 @@ export default function ViewReceivedStickerScreen({
       <StatusBar barStyle="default" />
       <View className="h-screen w-screen bg-white flex items-center">
         <View className="flex w-11/12 h-full items-center">
-          <View className="flex flex-col w-full h-1/6 ">
-            <View className="flex w-full h-1/2 justify-center">
-              <Pressable onPress={() => navigation.goBack()}>
-                <BackIcon
-                  style={{ transform: [{ scaleX: -1 }] }}
-                  width={38}
-                  height={32}
-                />
-              </Pressable>
-            </View>
-            <View className="flex w-full h-1/2 justify-center">
-              <Text className="font-inter-b px-2 text-xl text-black">
-                받은 스티커
-              </Text>
-            </View>
+          <View className="flex flex-col w-full h-auto py-4">
+            <Text className="font-inter-b px-2 text-xl text-black">
+              받은 스티커
+            </Text>
           </View>
           <View className="flex flex-col h-full w-full items-center">
             {mentList.map((_, index) => {
