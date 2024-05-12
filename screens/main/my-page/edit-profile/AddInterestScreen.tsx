@@ -124,7 +124,7 @@ function interestList(props: InterestProps) {
     <Pressable onPress={handlePress}>
       <View
         key={index}
-        className={`flex border-2 mr-2 mb-1 ${borderColor} w-auto h-auto rounded-xl items-center`}
+        className={`flex border-2 mr-2 mb-1 ${borderColor} w-auto h-auto rounded-2xl items-center`}
       >
         <Text className={`font-inter-r px-2 py-1 text-md ${textColor}`}>
           {interests[index]}
