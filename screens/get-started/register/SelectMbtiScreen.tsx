@@ -77,7 +77,7 @@ export default function SelectMbtiScreen({
             mbti2="I"
           />
         </View>
-        <View className="h-1/6 w-full rounded-2xl mt-2">
+        <View className="h-1/6 w-full rounded-2xl mt-2  justify-center items-center">
           <RadioButtons
             activeItem={selectedNS}
             onSelectItem={itemValue => setSelectedNS(itemValue)}
@@ -88,7 +88,7 @@ export default function SelectMbtiScreen({
             mbti2="S"
           />
         </View>
-        <View className="h-1/6 w-full rounded-2xl mt-2">
+        <View className="h-1/6 w-full rounded-2xl mt-2  justify-center items-center">
           <RadioButtons
             activeItem={selectedFT}
             onSelectItem={itemValue => setSelectedFT(itemValue)}
@@ -99,7 +99,7 @@ export default function SelectMbtiScreen({
             mbti2="T"
           />
         </View>
-        <View className="h-1/6 w-full rounded-2xl mt-2">
+        <View className="h-1/6 w-full rounded-2xl mt-2  justify-center items-center">
           <RadioButtons
             activeItem={selectedPJ}
             onSelectItem={itemValue => setSelectedPJ(itemValue)}

@@ -29,12 +29,12 @@ export default function RadioButtons(props: RadioButtonsProps) {
         return 'w-full h-full';
       case 3:
       case 4:
-        return 'w-1/3 h-1/3';
+        return 'w-3/6 h-3/6';
       case 2:
       case 5:
-        return 'w-2/3 h-2/3';
+        return 'w-4/6 h-4/6';
       default:
-        return 'w-2/3 h-2/3';
+        return 'w-full h-full';
     }
   }
   function getTextStyle(
