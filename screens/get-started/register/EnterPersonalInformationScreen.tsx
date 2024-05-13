@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { RegisterStackScreenProps } from '../../../navigation/types';
 import RectButton from '../../../components/common/RectButton';
+import GenderButton from '../../../components/common/GenderRectButton';
 
 export default function EnterPersonalInformationScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -10,6 +11,11 @@ export default function EnterPersonalInformationScreen({
 
   navigation,
 }: RegisterStackScreenProps<'EnterPersonalInformation'>) {
+  const [gender, setGender] = useState('');
+
+  const handleGenderSelect = (selectedGender: string) => {
+    setGender(selectedGender);
+  };
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -19,17 +25,19 @@ export default function EnterPersonalInformationScreen({
             <Text>사용자의 성별을 선택해주세요.</Text>
           </View>
           <View className="flex-row bg-white h-1/3 divide-x-8 divide-white">
-            <View className="h-full w-1/2 ">
-              <Pressable className="flex rounded-xl border-2 border-gray-2 justify-center items-center h-3/5 mt-3 bg-white ">
-                <Text>여자</Text>
-              </Pressable>
-            </View>
+            <Pressable
+              className="h-full w-1/2 "
+              onPress={() => handleGenderSelect('여자')}
+            >
+              <GenderButton text="여자" activate={gender === '여자'} />
+            </Pressable>
 
-            <View className=" h-full w-1/2">
-              <Pressable className="flex rounded-xl border-2 border-gray-2 justify-center items-center h-3/5 mt-3 bg-white ">
-                <Text>남자</Text>
-              </Pressable>
-            </View>
+            <Pressable
+              className=" h-full w-1/2"
+              onPress={() => handleGenderSelect('남자')}
+            >
+              <GenderButton text="남자" activate={gender === '남자'} />
+            </Pressable>
           </View>
           <View className=" bg-white h-1/3 justify-center">
             <Text>사용자의 생일을 선택해주세요.</Text>
