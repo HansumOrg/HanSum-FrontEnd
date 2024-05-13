@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Pressable, Dimensions } from 'react-native';
 
 interface RadioButtonsItem {
   key: string;
@@ -26,17 +26,18 @@ export default function RadioButtons(props: RadioButtonsProps) {
     switch (idx) {
       case 1:
       case 6:
-        return 'w-full h-full';
+        return 'w-16 h-16';
       case 3:
       case 4:
-        return 'w-3/6 h-3/6';
+        return 'w-8 h-8';
       case 2:
       case 5:
-        return 'w-4/6 h-4/6';
+        return 'w-12 h-12';
       default:
         return 'w-full h-full';
     }
   }
+
   function getTextStyle(
     length: number,
     index: string,
@@ -57,7 +58,6 @@ export default function RadioButtons(props: RadioButtonsProps) {
         return <Text />; // 빈 텍스트 반환
     }
   }
-  // TODO: 선이 제대로 적용되지 않는 이슈 및 가운데 텍스트가 들어가는 이튜 해경해야함
 
   return (
     <View className="flex h-full w-full justify-center items-center ">
@@ -68,23 +68,18 @@ export default function RadioButtons(props: RadioButtonsProps) {
           return (
             <React.Fragment key={option.key}>
               {/* Add line before button except for the first one */}
-
               <Pressable
-                className="flex flex-row items-center rounded-full justify-center h-full w-1/6"
+                className={` bg-white items-center justify-center border-2 rounded-full border-primary-2 ${getOptionStyle(
+                  options.length,
+                  option.key,
+                )}`}
                 onPress={() => onSelectItem(option.value)}
               >
-                <View
-                  className={` bg-white items-center justify-center border-2 rounded-full border-primary-2 ${getOptionStyle(
-                    options.length,
-                    option.key,
-                  )}`}
-                >
-                  {isActive ? (
-                    <View className="bg-primary-2 rounded-full w-5/6 h-5/6  " />
-                  ) : (
-                    getTextStyle(options.length, option.key || '', mbti1, mbti2)
-                  )}
-                </View>
+                {isActive ? (
+                  <View className="bg-primary-2 rounded-full w-5/6 h-5/6  " />
+                ) : (
+                  getTextStyle(options.length, option.key || '', mbti1, mbti2)
+                )}
               </Pressable>
             </React.Fragment>
           );

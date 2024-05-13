@@ -63,9 +63,6 @@ export default function SelectMbtiScreen({
         <View className=" flex justify-center w-full rounded-2xl ">
           <Text className=" font-inter-b text-md text-black">INFP유형</Text>
         </View>
-        {/* 
-          TODO: 선이 제대로 적용되지 않는 이슈 및 가운데 텍스트가 들어가는 이튜 해경해야함
-        */}
         <View className="h-1/6 w-full rounded-2xl mt-2 justify-center items-center">
           <RadioButtons
             activeItem={selectedIE}
