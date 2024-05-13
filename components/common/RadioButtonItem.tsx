@@ -62,7 +62,7 @@ export default function RadioButtons(props: RadioButtonsProps) {
   return (
     <View className="flex h-full w-full justify-center items-center ">
       <View className="flex flex-row h-1/2 w-full justify-between items-center">
-        <View className="w-full absolute border border-primary-2" />
+        <View className="w-full absolute h-1  bg-primary-2" />
         {options.map(option => {
           const isActive = activeItem === option.value;
           return (
@@ -73,12 +73,6 @@ export default function RadioButtons(props: RadioButtonsProps) {
                 className="flex flex-row items-center rounded-full justify-center h-full w-1/6"
                 onPress={() => onSelectItem(option.value)}
               >
-                {/* <View
-                  className={`bg-primary-2 z-20 ${getLineStyle(
-                    options.length,
-                    option.key,
-                  )}`}
-                /> */}
                 <View
                   className={` bg-white items-center justify-center border-2 rounded-full border-primary-2 ${getOptionStyle(
                     options.length,
