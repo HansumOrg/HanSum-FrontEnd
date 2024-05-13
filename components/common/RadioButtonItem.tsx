@@ -59,29 +59,10 @@ export default function RadioButtons(props: RadioButtonsProps) {
   }
   // TODO: 선이 제대로 적용되지 않는 이슈 및 가운데 텍스트가 들어가는 이튜 해경해야함
 
-  // function getLineStyle(length: number, index: string): string {
-  //   const idx = parseInt(index, 10);
-  //   switch (idx) {
-  //     case 1:
-  //       return 'hidden';
-  //     case 6:
-  //       return 'w-2 h-1';
-  //     case 3:
-  //       return 'w-4 h-1';
-  //     case 4:
-  //       return 'w-4 h-1';
-  //     case 2:
-  //       return 'w-4 h-1';
-  //     case 5:
-  //       return 'w-4 h-1';
-  //     default:
-  //       return 'w-10 h-1';
-  //   }
-  // }
-
   return (
     <View className="flex h-full w-full justify-center items-center ">
       <View className="flex flex-row h-1/2 w-full justify-between items-center">
+        <View className="w-full absolute border border-primary-2" />
         {options.map(option => {
           const isActive = activeItem === option.value;
           return (
@@ -99,13 +80,13 @@ export default function RadioButtons(props: RadioButtonsProps) {
                   )}`}
                 /> */}
                 <View
-                  className={`items-center justify-center border-2 rounded-full border-primary-2 ${getOptionStyle(
+                  className={` bg-white items-center justify-center border-2 rounded-full border-primary-2 ${getOptionStyle(
                     options.length,
                     option.key,
                   )}`}
                 >
                   {isActive ? (
-                    <View className="bg-primary-2 rounded-full w-5/6 h-5/6" />
+                    <View className="bg-primary-2 rounded-full w-5/6 h-5/6  " />
                   ) : (
                     getTextStyle(options.length, option.key || '', mbti1, mbti2)
                   )}
@@ -116,7 +97,7 @@ export default function RadioButtons(props: RadioButtonsProps) {
         })}
       </View>
       <View className="flex-row w-full justify-between mt-1">
-        <Text className="font-inter-b text-16 text-black">{text1}</Text>
+        <Text className="font-inter-b text-16 text-black ">{text1}</Text>
         <Text className="font-inter-b text-16 text-black">{text2}</Text>
       </View>
     </View>
