@@ -19,7 +19,9 @@ export default function GenderButton(props: GenderButtonProps) {
     >
       <Text
         className={
-          activate ? 'font-inter-b text-primary-2' : 'font-inter-b text-gray-2'
+          activate
+            ? 'font-inter-b text-md text-primary-2'
+            : 'font-inter-b text-md text-gray-2'
         }
       >
         {text}

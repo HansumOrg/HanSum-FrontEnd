@@ -107,7 +107,7 @@ export default function SelectMbtiScreen({
             mbti2="J"
           />
         </View>
-        <View className="h-1/6 w-full mt-2">
+        <View className="h-1/6 w-full mt-12">
           <RectButton
             activate
             onPress={() => navigation.navigate('AgreeTos')}
