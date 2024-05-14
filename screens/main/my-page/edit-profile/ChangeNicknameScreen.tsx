@@ -66,7 +66,7 @@ export default function ChangeNicknameScreen({
       <View className="h-screen w-screen bg-white flex items-center">
         <View className="flex w-11/12 h-full items-center">
           <View className="flex flex-col w-full h-1/5 justify-center">
-            <View className="flex w-full h-1/4 justify-center my-1 px-2 ">
+            <View className="flex w-wrap h-auto justify-center my-1 px-2 ">
               <Text className="font-inter-b text-2xl py-1 text-black ">
                 수정하실 닉네임을 입력해주세요.
               </Text>
