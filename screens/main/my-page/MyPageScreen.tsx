@@ -12,7 +12,6 @@ import NoticeIcon from '../../../assets/images/icon_notice.svg';
 import MoreIcon from '../../../assets/images/icon_more.svg';
 import LocalIcon from '../../../assets/images/icon_local.svg';
 import PhoneIcon from '../../../assets/images/icon_phone.svg';
-import AddProfileIcon from '../../../assets/images/icon_addProfile.svg';
 import data from '../../../data.json';
 
 interface Reservation {
@@ -52,116 +51,89 @@ interface Guesthouse {
 }
 
 interface ReservationBoxProps {
-  navigation: MyPageStackScreenProps<'MyPage'>['navigation'];
   reservation: Reservation;
   guesthouse: Guesthouse;
 }
 
-function DateCheck({ checkin_date, checkout_date }: Reservation): number {
+function DateCheck({ checkin_date }: Reservation): number {
   const today = new Date();
   const checkin = new Date(checkin_date);
-  const checkout = new Date(checkout_date);
   let status = 0;
   if (today < checkin) {
     status = 0;
-  } else if (today >= checkin && today < checkout) {
-    status = 1;
   } else {
-    status = 2;
+    status = 1;
   }
   return status;
 }
-
 function ReservationBox(props: ReservationBoxProps) {
-  const { navigation, reservation, guesthouse } = props;
-  const [dateState, setDateState] = useState(0); // 0: 예약확정, 1: 이용중, 2: 이용완료
+  const { reservation, guesthouse } = props;
+  const [dateState, setDateState] = useState(0); // 0: 예약확정, 1:이용완료
   useEffect(() => {
     setDateState(DateCheck(reservation));
   }, [reservation]);
   return (
-    <View className="flex bg-white m-2 h-[130px] w-[365px] rounded-md shadow-lg shadow-black/100">
-      <View className="flex flex-row h-full w-full rounded-l-md">
-        <View className="flex flex-col p-2 w-2/3 h-full ">
-          <Text className="font-inter-m py-1 text-xl text-black">
-            {guesthouse.guesthouse_name}
-          </Text>
-          <View className="flex flex-col w-full h-1/3 ">
-            <View className="flex flex-row w-full h-auto">
+    <View className="flex bg-white h-auto mb-1 w-full items-center">
+      <View className="flex flex-row m-2 w-11/12 h-auto rounded-xl shadow-md shadow-black/50 bg-pink-500">
+        <View className="flex flex-row h-auto w-full">
+          <View className="flex flex-col w-4/5 h-auto rounded-l-md bg-white">
+            <Text className="font-inter-m mt-2 mb-1 ml-2 text-xl text-black">
+              {guesthouse.guesthouse_name}
+            </Text>
+            <View className="flex flex-row mx-1 px-1 w-full h-auto">
               <LocalIcon width={12.8} height={16} />
-              <Text className="font-inter-r text-sm px-1 text-black">
-                {guesthouse.location}
+              <Text className="font-inter-r mx-1 text-sm  text-black">
+                {guesthouse.address}
               </Text>
             </View>
-            <View className="flex flex-row py-1 w-full h-full">
+            <View className="flex flex-row m-1 px-1 w-full h-auto">
               <PhoneIcon width={16} height={16} />
-              <Text className="font-inter-m px-1 text-sm text-black">
+              <Text className="font-inter-r mx-1 text-sm  text-black">
                 {guesthouse.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')}
               </Text>
             </View>
+            {dateState === 0 ? (
+              <View className="flex flex-col w-3/5 h-auto">
+                <View className="flex px-2 flex-row w-full justify-between">
+                  <Text className="font-inter-m text-sm text-black/[.50]">
+                    Check-in
+                  </Text>
+                  <Text className="font-inter-m text-sm text-black/[.50]">
+                    {reservation.checkin_date.split(' ')[1]}
+                  </Text>
+                </View>
+                <View className="flex px-2 mb-2 flex-row w-full justify-between">
+                  <Text className="font-inter-m text-sm text-black/[.50]">
+                    Check-out
+                  </Text>
+                  <Text className="font-inter-m text-sm text-black/[.50]">
+                    {reservation.checkout_date.split(' ')[1]}
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <Pressable className="flex flex-col w-full h-auto justify-center items-center">
+                <View className="flex bg-gray-3 w-11/12 h-auto items-center m-2 rounded-lg">
+                  <Text className="font-inter-m text-lg m-2 text-black">
+                    후기 작성
+                  </Text>
+                </View>
+              </Pressable>
+            )}
           </View>
-          {dateState !== 2 ? (
-            <View className="flex flex-col w-full h-auto">
-              <View className="flex flex-row w-2/3 justify-between">
-                <Text className="font-inter-m text-sm text-gray-2">
-                  Check-in
-                </Text>
-                <Text className="font-inter-m text-sm text-gray-2">
-                  {reservation.checkin_date.split(' ')[1]}
-                </Text>
-              </View>
-              <View className="flex flex-row w-2/3 justify-between">
-                <Text className="font-inter-m text-sm text-gray-2">
-                  Check-out
-                </Text>
-                <Text className="font-inter-m text-sm text-gray-2">
-                  {reservation.checkout_date.split(' ')[1]}
-                </Text>
-              </View>
+          {dateState === 0 ? (
+            <View className="flex w-1/5 h-auto rounded-r-md bg-primary-2 shadow-md shadow-black/40 items-center justify-center">
+              <Text className="font-inter-sb text-lg text-white">
+                예약{'\n'}확정
+              </Text>
             </View>
           ) : (
-            <Pressable onPress={() => navigation.navigate('Reviews')}>
-              <View className="flex flex-col my-2 w-[270px] h-1/2 bg-gray-3 rounded-lg justify-center items-center">
-                <Text className="font-inter-m text-lg text-black">
-                  후기 작성
-                </Text>
-              </View>
-            </Pressable>
+            <View className="flex w-1/5 h-auto rounded-r-md bg-point shadow-md shadow-black/40 items-center justify-center">
+              <Text className="font-inter-sb text-lg text-white">
+                이용{'\n'}완료
+              </Text>
+            </View>
           )}
-        </View>
-        <View className="flex w-1/3 flex-row h-full">
-          {dateState === 0 ? (
-            <View className="flex flex-row w-full h-full">
-              <View className="flex w-2/5 h-full bg-primary-1 justify-center items-center">
-                <Pressable
-                  onPress={() => navigation.navigate('EditProfileNavigator')}
-                >
-                  <AddProfileIcon width={40} height={40} />
-                </Pressable>
-              </View>
-              <View className="flex w-3/5 h-full rounded-r-md bg-primary-2 justify-center items-center">
-                <Text className="font-inter-sb text-lg text-white">
-                  예약{'\n'}확정
-                </Text>
-              </View>
-            </View>
-          ) : null}
-          {dateState === 1 ? (
-            <View className="flex flex-row w-full h-full">
-              <View className="flex w-2/5 h-full bg-white justify-center items-center" />
-              <View className="flex w-3/5 h-full rounded-r-md bg-gray-2 justify-center items-center">
-                <Text className="font-inter-sb text-lg text-white">이용중</Text>
-              </View>
-            </View>
-          ) : null}
-          {dateState === 2 ? (
-            <View className="flex flex-row w-full h-full justify-end">
-              <View className="flex w-3/5 h-full rounded-r-md bg-point justify-center items-center">
-                <Text className="font-inter-sb text-lg text-white">
-                  이용{'\n'}완료
-                </Text>
-              </View>
-            </View>
-          ) : null}
         </View>
       </View>
     </View>
@@ -182,7 +154,7 @@ export default function MyPageScreen({
     <SafeAreaView>
       <StatusBar barStyle="default" />
       <View className="h-screen w-screen flex items-center bg-white">
-        <View className="flex flex-row w-11/12 h-auto justify-between items-center  py-2">
+        <View className="flex flex-row w-11/12 h-auto justify-between items-center py-2">
           <Text className="font-inter-b w-5/6 text-2xl text-black">
             마이페이지
           </Text>
@@ -240,15 +212,12 @@ export default function MyPageScreen({
             <View className="flex border-b" />
           </View>
         </View>
-        <View className="flex flex-col w-11/12 h-3/6">
-          <View className="flex h-1/6 justify-end">
-            <Text className="font-inter-b text-lg text-black">내 예약</Text>
-          </View>
-          <View className="flex w-full h-full my-4">
-            <ScrollView
-              className="flex w-full h-full"
-              showsVerticalScrollIndicator={false}
-            >
+        <View className="flex flex-col w-11/12 h-auto">
+          <Text className="font-inter-b mt-10 text-lg text-black">내 예약</Text>
+        </View>
+        <View className="flex flex-grow w-full h-1/3">
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View className="flex w-full h-auto mb-20">
               {reservationData
                 .filter(reservation => reservation.user_id === userId)
                 .map(reservation => (
@@ -256,11 +225,10 @@ export default function MyPageScreen({
                     reservation={reservation}
                     guesthouse={guesthouseData[reservation.guesthouse_id - 1]}
                     key={reservation.reservation_id}
-                    navigation={navigation}
                   />
                 ))}
-            </ScrollView>
-          </View>
+            </View>
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>
