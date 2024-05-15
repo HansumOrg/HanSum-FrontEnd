@@ -2,48 +2,8 @@ import React from 'react';
 import { SafeAreaView, StatusBar, View, Text } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
 import data from '../../../../data.json';
-import PersonIcon from '../../../../assets/images/icon_person.svg';
-
-interface Sticker {
-  sticker_id: number;
-  user_id: number;
-  sticker_text: string;
-  sticker_count: number;
-}
-
-interface StickerProps {
-  count: number;
-  mentList: string[];
-  index: number;
-}
-
-function stickerList(props: StickerProps) {
-  // 모든 스티커 리스트를 출력
-  const { count, mentList, index } = props;
-  return (
-    <View className="flex pb-4 flex-row w-full px-1 h-auto " key={index}>
-      <View className="flex flex-row w-full justify-between">
-        {index <= 4 ? (
-          <View className="flex border-2 mr-1 border-primary-2/100 w-auto h-auto rounded-2xl items-center">
-            <Text className="font-inter-r px-2 py-1 text-md text-primary-2">
-              {mentList[index]}
-            </Text>
-          </View>
-        ) : (
-          <View className="flex border-2 mr-1 border-point/100 w-auto h-auto rounded-2xl items-center">
-            <Text className="font-inter-r px-2 py-1 text-md text-point">
-              ⚠ {mentList[index]}
-            </Text>
-          </View>
-        )}
-        <View className="flex flex-row items-center">
-          <PersonIcon width={18} height={24} />
-          <Text className="font-inter-sb mx-1 text-md text-black">{count}</Text>
-        </View>
-      </View>
-    </View>
-  );
-}
+import StickerList from '../../../../components/edit-page/StickerList';
+import { Sticker } from '../../../../types';
 
 export default function ViewReceivedStickerScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -83,7 +43,7 @@ export default function ViewReceivedStickerScreen({
                     sticker.user_id === userId &&
                     sticker.sticker_text === mentList[index],
                 )?.sticker_count ?? 0;
-              return stickerList({ mentList, index, count });
+              return StickerList({ mentList, index, count });
             })}
           </View>
         </View>

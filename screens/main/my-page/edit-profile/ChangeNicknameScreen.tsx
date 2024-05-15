@@ -9,41 +9,8 @@ import {
 } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
 import data from '../../../../data.json';
-
-interface User {
-  user_id: number;
-  login_id: string;
-  password: string;
-  username: string;
-  phone: string;
-  sex: string;
-  birthday: string;
-  nickname: string;
-  mbti: string;
-  user_agreement: number;
-  interested_location: string[];
-  interest_hobby: string[];
-  interested_food: string[];
-}
-
-interface NicknameProps {
-  nickname: string;
-  user: User[];
-  userId: number;
-}
-
-function CheckNickname(props: NicknameProps) {
-  const { nickname, user, userId } = props;
-  let check = 0;
-  if (user.some(inform => inform.nickname === nickname) || nickname === '') {
-    check = 2;
-  }
-  if (check !== 2) {
-    user[userId - 1].nickname = nickname;
-    check = 1;
-  }
-  return check;
-}
+import { User } from '../../../../types';
+import CheckNickname from '../../../../components/edit-page/CheckNickname';
 
 export default function ChangeNicknameScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
