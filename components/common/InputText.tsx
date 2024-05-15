@@ -1,63 +1,39 @@
 import React from 'react';
-import { View, TextInput, TextInputProps } from 'react-native';
-
-interface InputTextProps extends TextInputProps {
-  name: string;
-  onChangeText?: ((text: string) => void) | undefined;
-  textContentType?:
-    | 'none'
-    | 'URL'
-    | 'addressCity'
-    | 'addressCityAndState'
-    | 'addressState'
-    | 'countryName'
-    | 'creditCardNumber'
-    | 'creditCardExpiration'
-    | 'creditCardExpirationMonth'
-    | 'creditCardExpirationYear'
-    | 'creditCardSecurityCode'
-    | 'creditCardType'
-    | 'creditCardName'
-    | 'creditCardGivenName'
-    | 'creditCardMiddleName'
-    | 'creditCardFamilyName'
-    | 'emailAddress'
-    | 'familyName'
-    | 'fullStreetAddress'
-    | 'givenName'
-    | 'jobTitle'
-    | 'location'
-    | 'middleName'
-    | 'name'
-    | 'namePrefix'
-    | 'nameSuffix'
-    | 'nickname'
-    | 'organizationName'
-    | 'postalCode'
-    | 'streetAddressLine1'
-    | 'streetAddressLine2'
-    | 'sublocality'
-    | 'telephoneNumber'
-    | 'username'
-    | 'password'
-    | 'newPassword'
-    | 'oneTimeCode'
-    | 'birthdate'
-    | 'birthdateDay'
-    | 'birthdateMonth'
-    | 'birthdateYear'
-    | undefined;
-  secureTextEntry?: boolean | undefined;
-}
+import { View, TextInput } from 'react-native';
+import { InputTextProps } from '../../screens/get-started/register/types';
 
 export default function InputText(props: InputTextProps) {
   // logic
-  const { name, onChangeText, value, textContentType, secureTextEntry } = props;
+  const {
+    name,
+    isWrong,
+    onChangeText,
+    value,
+    textContentType,
+    secureTextEntry,
+  } = props;
+  if (!isWrong) {
+    return (
+      <View className=" border-b border-black ">
+        <TextInput
+          className="font-inter-r placeholder:font-inter-r text-black"
+          placeholder={name}
+          placeholderTextColor="#"
+          value={value}
+          textContentType={textContentType}
+          secureTextEntry={secureTextEntry}
+          onChangeText={onChangeText}
+        />
+      </View>
+    );
+  }
 
   return (
-    <View className="border-b-2 border-black ">
+    <View className=" border-b border-red-1 ">
       <TextInput
+        className="font-inter-r placeholder:font-inter-r text-black"
         placeholder={name}
+        placeholderTextColor="#"
         value={value}
         textContentType={textContentType}
         secureTextEntry={secureTextEntry}

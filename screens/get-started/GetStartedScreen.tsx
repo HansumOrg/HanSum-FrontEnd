@@ -25,7 +25,7 @@ export default function GetStartedScreen({
           <View className="h-2/3 mt-2">
             <RectButton
               className="bg-gray-400"
-              activate
+              isActivate
               onPress={() => navigation.navigate('RegisterNavigator')}
               text="시작하기"
             />

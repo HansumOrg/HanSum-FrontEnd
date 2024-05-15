@@ -5,56 +5,61 @@ import RadioButtons from '../../../components/common/RadioButtonItem';
 import RectButton from '../../../components/common/RectButton';
 
 export default function SelectMbtiScreen({
-  // route와 navigation 사용 안할 시 제거해주세요.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  route,
-
   navigation,
 }: RegisterStackScreenProps<'SelectMbti'>) {
-  const [selectedIE, setSelectedIE] = useState('mbti');
-  const [selectedNS, setSelectedNS] = useState('mbti');
-  const [selectedFT, setSelectedFT] = useState('mbti');
-  const [selectedPJ, setSelectedPJ] = useState('mbti');
-
-  const options = [
+  const [selectedIE, setSelectedIE] = useState('');
+  const [selectedNS, setSelectedNS] = useState('');
+  const [selectedFT, setSelectedFT] = useState('');
+  const [selectedPJ, setSelectedPJ] = useState('');
+  const MbtiSubmit = () => {
+    if (
+      selectedIE !== '' &&
+      selectedNS !== '' &&
+      selectedFT !== '' &&
+      selectedPJ !== ''
+    ) {
+      console.log('mbti', selectedIE, selectedNS, selectedFT, selectedPJ);
+      navigation.navigate('AgreeTos');
+    }
+  };
+  const options = (a: string, b: string) => [
     {
       key: '1',
-      label: '',
-      value: '1',
+      label: `More ${a}`,
+      value: a,
       size: 6,
     },
     {
       key: '2',
-      label: '',
-      value: '2',
+      label: `Less ${a}`,
+      value: `Less ${a}`,
       size: 6,
     },
     {
       key: '3',
-      label: '',
-      value: '3',
+      label: `Some ${a}`,
+      value: `Some ${a}`,
       size: 6,
     },
     {
       key: '4',
-      label: '',
-      value: '4',
+      label: `More ${b}`,
+      value: b,
       size: 6,
     },
     {
       key: '5',
-      label: '',
-      value: '5',
+      label: `Less ${b}`,
+      value: `Less ${b}`,
       size: 6,
     },
     {
       key: '6',
-      label: '',
-      value: '6',
+      label: `Some ${b}`,
+      value: `Some ${b}`,
       size: 6,
     },
   ];
-
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -67,7 +72,7 @@ export default function SelectMbtiScreen({
           <RadioButtons
             activeItem={selectedIE}
             onSelectItem={itemValue => setSelectedIE(itemValue)}
-            options={options}
+            options={options('E', 'I')}
             text1="외향적이에요"
             text2="내향적이에요"
             mbti1="E"
@@ -78,7 +83,7 @@ export default function SelectMbtiScreen({
           <RadioButtons
             activeItem={selectedNS}
             onSelectItem={itemValue => setSelectedNS(itemValue)}
-            options={options}
+            options={options('N', 'S')}
             text1="미래지향적이에요"
             text2="현실주의적이에요"
             mbti1="N"
@@ -89,7 +94,7 @@ export default function SelectMbtiScreen({
           <RadioButtons
             activeItem={selectedFT}
             onSelectItem={itemValue => setSelectedFT(itemValue)}
-            options={options}
+            options={options('F', 'T')}
             text1="감정이 풍부해요"
             text2="이성적이에요"
             mbti1="F"
@@ -100,7 +105,7 @@ export default function SelectMbtiScreen({
           <RadioButtons
             activeItem={selectedPJ}
             onSelectItem={itemValue => setSelectedPJ(itemValue)}
-            options={options}
+            options={options('P', 'J')}
             text1="즉흥적이고 융통성이 있어요"
             text2="체계적이고 계획적이에요"
             mbti1="P"
@@ -109,8 +114,13 @@ export default function SelectMbtiScreen({
         </View>
         <View className="h-1/6 w-full mt-12">
           <RectButton
-            activate
-            onPress={() => navigation.navigate('AgreeTos')}
+            isActivate={
+              selectedIE !== '' &&
+              selectedNS !== '' &&
+              selectedFT !== '' &&
+              selectedPJ !== ''
+            }
+            onPress={MbtiSubmit}
             text="선택 완료"
           />
         </View>

@@ -1,15 +1,9 @@
 import React from 'react';
 import { View, Pressable } from 'react-native';
 import Check from '../icon/Check';
+import { UiCheckboxProps } from '../../screens/get-started/register/types';
 
-interface Props {
-  isChecked: boolean;
-  onValueChangeHandler?: (checked: boolean) => void;
-  children?: React.ReactNode;
-  className?: string;
-}
-
-const UiCheckbox = (props: Props) => {
+const UiCheckbox = (props: UiCheckboxProps) => {
   const { isChecked, onValueChangeHandler, children, className } = props;
 
   const onPressedHandler = () => {

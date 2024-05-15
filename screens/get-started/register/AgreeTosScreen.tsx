@@ -3,35 +3,7 @@ import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { RegisterStackScreenProps } from '../../../navigation/types';
 import RectButton from '../../../components/common/RectButton';
 import UiCheckbox from '../../../components/common/Checkbox';
-
-interface CheckboxItemProps {
-  label: string;
-  isRequired: boolean;
-  description?: string;
-  isChecked: boolean;
-  onValueChange: (newValue: boolean) => void;
-}
-// TODO: 이 부분은 components/common/CheckboxItem.tsx로 분리해야함 잊지 말 것.
-const CheckboxItem: React.FC<CheckboxItemProps> = ({
-  label,
-  isRequired,
-  description = '',
-  isChecked,
-  onValueChange,
-}) => (
-  <View className="flex-row h-1/6 w-full items-center justify-between">
-    <View className="flex-col">
-      <View className="flex-row">
-        <Text className="text-black text-sm underline">{label}</Text>
-        <Text className="text-gray-400">{isRequired ? '필수' : '선택'}</Text>
-      </View>
-      {description && (
-        <Text className="text-gray-400 text-14">{description}</Text>
-      )}
-    </View>
-    <UiCheckbox isChecked={isChecked} onValueChangeHandler={onValueChange} />
-  </View>
-);
+import CheckboxItem from '../../../components/common/CheckboxItem';
 
 export default function AgreeTosScreen({
   navigation,
@@ -124,7 +96,7 @@ export default function AgreeTosScreen({
         </View>
         <View className="h-1/5 flex">
           <View className="h-2/3 mt-2">
-            <RectButton activate onPress={handleSubmit} text="시작하기" />
+            <RectButton isActivate onPress={handleSubmit} text="시작하기" />
           </View>
         </View>
       </View>

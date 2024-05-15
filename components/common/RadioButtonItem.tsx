@@ -1,22 +1,6 @@
 import React from 'react';
-import { View, Text, Pressable, Dimensions } from 'react-native';
-
-interface RadioButtonsItem {
-  key: string;
-  label: string;
-  value: string;
-  size: number;
-}
-
-interface RadioButtonsProps {
-  options: RadioButtonsItem[];
-  activeItem: string;
-  onSelectItem: (selectedItem: string) => void;
-  text1: string;
-  text2: string;
-  mbti1: string;
-  mbti2: string;
-}
+import { View, Text, Pressable } from 'react-native';
+import { RadioButtonsProps } from '../../screens/get-started/register/types';
 
 export default function RadioButtons(props: RadioButtonsProps) {
   const { options, activeItem, onSelectItem, text1, text2, mbti1, mbti2 } =
@@ -60,7 +44,7 @@ export default function RadioButtons(props: RadioButtonsProps) {
   }
 
   return (
-    <View className="flex h-full w-full bg-red-200 justify-center items-center ">
+    <View className="flex h-full w-full justify-center items-center ">
       <View className="flex flex-row h-1/2 w-full justify-between items-center">
         <View className="w-full absolute h-0.5  bg-primary-2" />
         {options.map(option => {
@@ -86,8 +70,8 @@ export default function RadioButtons(props: RadioButtonsProps) {
         })}
       </View>
       <View className="flex-row w-full justify-between mt-1">
-        <Text className="font-inter-b text-16 text-black ">{text1}</Text>
-        <Text className="font-inter-b text-16 text-black">{text2}</Text>
+        <Text className="font-inter-b text-s text-black w-[30%] ">{text1}</Text>
+        <Text className="font-inter-b text-s text-black w-[30%]">{text2}</Text>
       </View>
     </View>
   );
