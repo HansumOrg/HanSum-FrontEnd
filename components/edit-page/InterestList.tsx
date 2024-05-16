@@ -88,9 +88,8 @@ function interestList(props: InterestProps) {
     : 'text-point';
 
   return (
-    <Pressable onPress={handlePress}>
+    <Pressable key={index} onPress={handlePress}>
       <View
-        key={index}
         className={`flex border-2 mr-2 mb-1 ${borderColor} w-auto h-auto rounded-2xl items-center`}
       >
         <Text className={`font-inter-r px-2 py-1 text-md ${textColor}`}>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import PersonIcon from '../../assets/images/icon_person.svg';
-import { StickerProps } from '../../types';
+import { ViewReceivedStickerProps } from '../../types';
 
-function StickerList(props: StickerProps) {
+function StickerList(props: ViewReceivedStickerProps) {
   // 모든 스티커 리스트를 출력
   const { count, mentList, index } = props;
   return (

@@ -10,62 +10,11 @@ import {
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
 import BackIcon from '../../../../assets/images/icon_goback.svg';
 import InterestIcon from '../../../../assets/images/icon_addInterest.svg';
-import PersonIcon from '../../../../assets/images/icon_person.svg';
 import data from '../../../../data.json';
-
-interface User {
-  user_id: number;
-  login_id: string;
-  password: string;
-  username: string;
-  phone: string;
-  sex: string;
-  birthday: string;
-  nickname: string;
-  mbti: string;
-  user_agreement: number;
-  interested_location: string[];
-  interest_hobby: string[];
-  interested_food: string[];
-}
-
-interface Sticker {
-  sticker_id: number;
-  user_id: number;
-  sticker_text: string;
-  sticker_count: number;
-}
-
-function mbtiCheck(mbti: string): string {
-  const mbtiList = [
-    'INFP',
-    'ENFJ',
-    'ENFP',
-    'ESFJ',
-    'ISTJ',
-    'ISFJ',
-    'ESTJ',
-    'ESFJ',
-    'ISTP',
-    'ISFP',
-    'ESTP',
-    'ESFP',
-    'ISTJ',
-    'ISFJ',
-    'ESTJ',
-    'ESFJ',
-  ];
-  if (mbtiList.slice(0, 4).includes(mbti)) {
-    return 'green';
-  }
-  if (mbtiList.slice(4, 8).includes(mbti)) {
-    return 'blue';
-  }
-  if (mbtiList.slice(8, 12).includes(mbti)) {
-    return 'yellow';
-  }
-  return 'pink';
-}
+import { User, Sticker } from '../../../../types';
+import EditPageStickerList from '../../../../components/edit-page/EditPageStickerList';
+import MbtiCheck from '../../../../components/edit-page/MbtiCheck';
+import InterestBorder from '../../../../components/edit-page/InterestBorder';
 
 function countCheck(count: number): boolean {
   // 관심사 개수 체크(추가 유도 글 노출 여부) true : 노출, false : 미노출
@@ -73,38 +22,6 @@ function countCheck(count: number): boolean {
     return false;
   }
   return true;
-}
-
-function interestBorder(interest: string, index: number) {
-  // 관심사 border 컴포넌트
-  return (
-    <View
-      key={index}
-      className="flex border-2 mr-1 border-primary-2/100 w-auto h-auto rounded-2xl items-center"
-    >
-      <Text className="font-inter-r px-2 py-1 text-md text-primary-2">
-        {interest}
-      </Text>
-    </View>
-  );
-}
-
-function stickerList(sticker: Sticker) {
-  return (
-    <View className="flex py-2 flex-row w-full h-auto">
-      <View className="flex flex-row w-1/5 justify-center items-center">
-        <PersonIcon width={18} height={24} />
-        <Text className="font-inter-sb mx-1 text-md text-black">
-          {sticker.sticker_count}
-        </Text>
-      </View>
-      <View className="flex border-2 mr-1 border-primary-2/100 w-auto h-auto rounded-2xl items-center">
-        <Text className="font-inter-r px-2 py-1 text-md text-primary-2">
-          {sticker.sticker_text}
-        </Text>
-      </View>
-    </View>
-  );
 }
 
 export default function EditProfileScreen({
@@ -116,15 +33,10 @@ export default function EditProfileScreen({
   const userId = 1;
   const userData: User[] = data.user;
   const stickerData: Sticker[] = data.sticker;
-  const [mbtiColor, setMbtiColor] = useState('green');
   const [travleInterestCount, setTravelInterestCount] = useState(false);
   const [hobbyInterestCount, setHobbyInterestCount] = useState(false);
   const [foodInterestCount, setFoodInterestCount] = useState(false);
   const [stickerCount, setStickerCount] = useState(true);
-  useEffect(() => {
-    // mbti 색 설정
-    setMbtiColor(mbtiCheck(userData[userId - 1].mbti));
-  }, [userData]);
   useEffect(() => {
     // 관심사 개수 체크(추가 유도 글 노출 여부)
     setTravelInterestCount(
@@ -182,34 +94,7 @@ export default function EditProfileScreen({
               </Text>
               <View className="flex flex-row w-1/2 justify-between items-center">
                 {/* mbti에 따른 border 테두리 색 변화 */}
-                {mbtiColor === 'green' ? (
-                  <View className="flex border-2 border-mbti-green/100 w-2/5 h-auto rounded-2xl items-center">
-                    <Text className="font-inter-sb text-lg text-black">
-                      {userData[userId - 1].mbti}
-                    </Text>
-                  </View>
-                ) : null}
-                {mbtiColor === 'blue' ? (
-                  <View className="flex border-2 border-mbti-blue/100 w-2/5 h-auto rounded-2xl items-center">
-                    <Text className="font-inter-sb text-lg text-black">
-                      {userData[userId - 1].mbti}
-                    </Text>
-                  </View>
-                ) : null}
-                {mbtiColor === 'yellow' ? (
-                  <View className="flex border-2 border-mbti-yellow/100 w-2/5 h-auto rounded-2xl items-center">
-                    <Text className="font-inter-sb text-lg text-black">
-                      {userData[userId - 1].mbti}
-                    </Text>
-                  </View>
-                ) : null}
-                {mbtiColor === 'pink' ? (
-                  <View className="flex border-2 border-mbti-pink/100 w-2/5 h-auto rounded-2xl items-center">
-                    <Text className="font-inter-sb text-lg text-black">
-                      {userData[userId - 1].mbti}
-                    </Text>
-                  </View>
-                ) : null}
+                <MbtiCheck mbti={userData[userId - 1].mbti} />
                 <Pressable>
                   <Text className="font-inter-m text-sm text-black underline">
                     수정
@@ -233,7 +118,7 @@ export default function EditProfileScreen({
               ) : null}
               <View className="flex flex-row h-auto w-full">
                 {userData[userId - 1].interested_location.map(
-                  (interest, index) => interestBorder(interest, index),
+                  (interest, index) => InterestBorder(interest, index),
                 )}
                 <Pressable
                   className="py-1 mr-1"
@@ -254,7 +139,7 @@ export default function EditProfileScreen({
               ) : null}
               <View className="flex flex-row h-auto w-full">
                 {userData[userId - 1].interest_hobby.map((interest, index) =>
-                  interestBorder(interest, index),
+                  InterestBorder(interest, index),
                 )}
                 <Pressable
                   className="py-1 mr-1"
@@ -275,7 +160,7 @@ export default function EditProfileScreen({
               ) : null}
               <View className="flex flex-row h-auto w-full">
                 {userData[userId - 1].interested_food.map((interest, index) =>
-                  interestBorder(interest, index),
+                  InterestBorder(interest, index),
                 )}
                 <Pressable
                   className="py-1 mr-1"
@@ -307,7 +192,9 @@ export default function EditProfileScreen({
                 <ScrollView showsVerticalScrollIndicator={false}>
                   {stickerData
                     .filter(sticker => sticker.user_id === userId)
-                    .map(sticker => stickerList(sticker))}
+                    .map((sticker, index) =>
+                      EditPageStickerList({ sticker, index }),
+                    )}
                 </ScrollView>
               </View>
             </View>

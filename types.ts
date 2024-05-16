@@ -18,6 +18,7 @@ export interface User {
 }
 
 export interface NicknameProps {
+  // ChangeNicknameScreen.tsx
   nickname: string;
   user: User[];
   userId: number;
@@ -30,13 +31,27 @@ export interface Sticker {
   sticker_count: number;
 }
 
-export interface StickerProps {
+export interface EditPageStickerListProps {
+  // EditProfileScreen.tsx
+  sticker: Sticker;
+  index: number;
+}
+
+export interface ViewReceivedStickerProps {
+  // ViewReceivedStickerScreen.tsx
   count: number;
   mentList: string[];
   index: number;
 }
 
+export interface MbtiCheckProps {
+  // MbtiCheck.tsx
+  mbti: string;
+  userId: number;
+}
+
 export interface InterestProps {
+  // AddInterestScreen.tsx
   interests: string[];
   userinterest: string[];
   index: number;
