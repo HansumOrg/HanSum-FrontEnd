@@ -65,7 +65,7 @@ export default function ChangeNicknameScreen({
               </View>
             </View>
           </View>
-          <View className="flex w-full px-2 h-1/6">
+          <View className="flex w-full p-2 h-1/6 ">
             {changeState !== 2 ? (
               <View className="flex w-full h-2/5 rounded-lg bg-primary-2 justify-center items-center">
                 <Pressable
