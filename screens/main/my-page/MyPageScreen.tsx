@@ -47,7 +47,14 @@ export default function MyPageScreen({
                 Show profile
               </Text>
             </View>
-            <Pressable className="px-1">
+            <Pressable
+              className="px-1"
+              onPress={() =>
+                navigation.navigate('EditProfileNavigator', {
+                  screen: 'EditProfile',
+                })
+              }
+            >
               <MoreIcon width={29} height={29} />
             </Pressable>
           </View>
