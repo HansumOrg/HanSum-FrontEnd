@@ -1,9 +1,17 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, View, Text, TextInput } from 'react-native';
+import {
+  SafeAreaView,
+  StatusBar,
+  View,
+  Text,
+  TextInput,
+  Pressable,
+} from 'react-native';
 import { SearchStackScreenProps } from '../../../navigation/types';
 import SearchIcon from '../../../assets/images/icon_search.svg';
 import CalendarIcon from '../../../assets/images/icon_calendar.svg';
 import MoreIcon from '../../../assets/images/icon_goback.svg';
+import FilterIcon from '../../../assets/images/icon_filter.svg';
 
 export default function SearchScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -23,24 +31,30 @@ export default function SearchScreen({
                 <View className="flex ml-2 w-auto h-full justify-center">
                   <SearchIcon width={26} height={27} />
                 </View>
-                <View className="flex w-3/4 h-full mt-1 justify-center">
-                  <TextInput
-                    className="font-inter-m text-sm text-black/100"
-                    placeholder="지역, 게스트하우스 이름"
-                  />
+                <View className="flex w-3/4 h-full justify-center">
+                  <Text className="font-inter-m text-md text-black/50">
+                    지역, 게스트하우스 이름
+                  </Text>
+                </View>
+                <View className="flex w-auto h-full justify-center">
+                  <FilterIcon width={34} height={34} />
                 </View>
               </View>
-              <View className="flex flex-row w-full h-1/3 mt-1 bg-white border-2 border-gray-1/100 rounded-lg">
-                <View className="flex ml-2 w-auto h-full justify-center">
-                  <CalendarIcon width={26} height={27} />
+              <Pressable
+                className="flex w-full h-1/3"
+                onPress={() => navigation.navigate('Calendar')}
+              >
+                <View className="flex flex-row w-full h-full mt-1 bg-white border-2 border-gray-1/100 rounded-lg">
+                  <View className="flex ml-2 w-auto h-full justify-center">
+                    <CalendarIcon width={26} height={27} />
+                  </View>
+                  <View className="flex w-3/4 h-full justify-center">
+                    <Text className="font-inter-m text-md text-black/50">
+                      날짜 선택
+                    </Text>
+                  </View>
                 </View>
-                <View className="flex w-3/4 h-full mt-1 justify-center">
-                  <TextInput
-                    className="font-inter-m text-sm text-black/100"
-                    placeholder="날짜 선택"
-                  />
-                </View>
-              </View>
+              </Pressable>
             </View>
             <View className="flex w-full h-1/5 justify-end">
               <Text className="font-inter-b text-lg text-black">
