@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
-function GetDayOfWeek(date: Date) {
+function GetDayOfWeek(
+  date: Date,
+  reservationStartDate: Date | null,
+  reservationEndDate: Date | null,
+  setReservationStartDate: (date: Date | null) => void,
+  setReservationEndDate: (date: Date | null) => void,
+) {
   const firstDayOfWeek = new Date(
     date.getFullYear(),
     date.getMonth(),
@@ -15,21 +21,93 @@ function GetDayOfWeek(date: Date) {
   }
   const today = new Date();
   for (let i = 1; i <= lastDay.getDate(); i += 1) {
+    const currentDate = new Date(date.getFullYear(), date.getMonth(), i);
     const isToday =
       today.getDate() === i &&
       today.getMonth() === date.getMonth() &&
       today.getFullYear() === date.getFullYear();
-    week.push(
-      <View className="flex w-[14%] flex-row items-center justify-center">
-        {isToday ? (
-          <View className="flex w-auto h-full rounded-full bg-primary-1 p-3">
+    const isReserved =
+      reservationStartDate &&
+      reservationEndDate &&
+      currentDate >= reservationStartDate &&
+      currentDate <= reservationEndDate;
+    const isReservedBorder = isReserved ? 'bg-primary-1/[.50]' : '';
+    const isTodayColor = isToday ? 'bg-primary-1 rounded-full' : 'bg-white';
+    if (i < 10) {
+      week.push(
+        <Pressable
+          key={i}
+          className="flex w-[14%] flex-row items-center justify-center"
+          onPress={() => {
+            if (!reservationStartDate && currentDate >= today) {
+              setReservationStartDate(currentDate);
+            }
+            if (
+              reservationStartDate &&
+              !reservationEndDate &&
+              currentDate >= today
+            ) {
+              setReservationEndDate(currentDate);
+            }
+            if (
+              reservationStartDate &&
+              reservationEndDate &&
+              currentDate < reservationStartDate
+            ) {
+              setReservationStartDate(currentDate);
+            }
+            if (
+              reservationStartDate &&
+              reservationEndDate &&
+              currentDate > reservationEndDate
+            ) {
+              setReservationEndDate(currentDate);
+            }
+          }}
+        >
+          <View
+            className={`flex w-auto h-full ${isTodayColor} ${isReservedBorder} py-3 px-4`}
+          >
             <Text className="font-inter-r text-sm text-black">{i}</Text>
           </View>
-        ) : (
-          <Text className="font-inter-r text-sm text-black">{i}</Text>
-        )}
-      </View>,
-    );
+        </Pressable>,
+      );
+    } else {
+      week.push(
+        <Pressable
+          key={i}
+          className="flex w-[14%] flex-row items-center justify-center"
+          onPress={() => {
+            if (!reservationStartDate) {
+              setReservationStartDate(currentDate);
+            }
+            if (reservationStartDate && !reservationEndDate) {
+              setReservationEndDate(currentDate);
+            }
+            if (
+              reservationStartDate &&
+              reservationEndDate &&
+              currentDate < reservationStartDate
+            ) {
+              setReservationStartDate(currentDate);
+            }
+            if (
+              reservationStartDate &&
+              reservationEndDate &&
+              currentDate > reservationEndDate
+            ) {
+              setReservationEndDate(currentDate);
+            }
+          }}
+        >
+          <View
+            className={`flex w-auto h-full ${isTodayColor} ${isReservedBorder} p-3`}
+          >
+            <Text className="font-inter-r text-sm text-black">{i}</Text>
+          </View>
+        </Pressable>,
+      );
+    }
 
     if (week.length === 7 || i === lastDay.getDate()) {
       for (let j = week.length; j < 7; j += 1) {
@@ -45,16 +123,25 @@ function GetDayOfWeek(date: Date) {
 }
 
 export default function Calendar() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const currentDate = new Date();
+  const [reservationStartDate, setReservationStartDate] = useState<Date | null>(
+    null,
+  ); // 예약 시작 날짜
+  const [reservationEndDate, setReservationEndDate] = useState<Date | null>(
+    null,
+  ); // 예약 종료 날짜
+
   useEffect(() => {
-    console.log('currentDate', currentDate.getFullYear());
-    console.log('currentDate', currentDate.getDate());
-  }, []);
+    console.log('start', reservationStartDate);
+  }, [reservationStartDate]);
+
+  useEffect(() => {
+    console.log('end', reservationEndDate);
+  }, [reservationEndDate]);
 
   const renderMonths = () => {
     const months = [];
-    for (let i = 0; i < 4; i += 1) {
+    for (let i = 0; i < 6; i += 1) {
       const nextMonth = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth() + i,
@@ -70,7 +157,13 @@ export default function Calendar() {
               {nextMonth.getFullYear()}년
             </Text>
           </View>
-          {GetDayOfWeek(nextMonth)}
+          {GetDayOfWeek(
+            nextMonth,
+            reservationStartDate,
+            reservationEndDate,
+            setReservationStartDate,
+            setReservationEndDate,
+          )}
           <View className="flex w-full border-b border-gray-1" />
         </View>,
       );
@@ -78,9 +171,5 @@ export default function Calendar() {
     return months;
   };
 
-  return (
-    <ScrollView className="flex w-full h-auto mb-100">
-      {renderMonths()}
-    </ScrollView>
-  );
+  return <View className="flex w-full h-auto mb-40">{renderMonths()}</View>;
 }

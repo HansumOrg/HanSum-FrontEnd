@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, StatusBar, View, Text } from 'react-native';
+import { SafeAreaView, StatusBar, View, Text, ScrollView } from 'react-native';
 import { SearchStackScreenProps } from '../../../navigation/types';
 import Calendar from '../../../components/search-page/Calendar';
 
@@ -22,7 +22,12 @@ export default function CalendarScreen({
         </View>
         <View className="flex w-11/12 py-1 border-b border-gray-1/100" />
         <View className="flex w-11/12 h-full bg-white">
-          <Calendar />
+          <ScrollView
+            className="flex w-full h-auto"
+            showsVerticalScrollIndicator={false}
+          >
+            <Calendar />
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>
