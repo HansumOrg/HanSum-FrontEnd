@@ -27,7 +27,10 @@ export default function SearchScreen({
         <View className="flex w-11/12 h-full">
           <View className="flex w-full h-1/4 justify-end">
             <View className="flex w-full h-4/5  items-center justify-end ">
-              <View className="flex flex-row w-full h-1/3 mb-1 bg-white border-2 border-gray-1/100 rounded-lg">
+              <Pressable
+                className="flex flex-row w-full h-1/3 mb-1 bg-white border-2 border-gray-1/100 rounded-lg"
+                onPress={() => navigation.navigate('SearchResult')}
+              >
                 <View className="flex ml-2 w-auto h-full justify-center">
                   <SearchIcon width={26} height={27} />
                 </View>
@@ -36,10 +39,13 @@ export default function SearchScreen({
                     지역, 게스트하우스 이름
                   </Text>
                 </View>
-                <View className="flex w-auto h-full justify-center">
+                <Pressable
+                  className="flex w-auto h-full justify-center"
+                  onPress={() => navigation.navigate('Filter')}
+                >
                   <FilterIcon width={34} height={34} />
-                </View>
-              </View>
+                </Pressable>
+              </Pressable>
               <Pressable
                 className="flex w-full h-1/3"
                 onPress={() => navigation.navigate('Calendar')}
