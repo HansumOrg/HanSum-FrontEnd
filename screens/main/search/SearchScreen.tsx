@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  View,
-  Text,
-  TextInput,
-  Pressable,
-} from 'react-native';
+import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { SearchStackScreenProps } from '../../../navigation/types';
 import SearchIcon from '../../../assets/images/icon_search.svg';
 import CalendarIcon from '../../../assets/images/icon_calendar.svg';
