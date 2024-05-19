@@ -20,6 +20,7 @@ export default function MyPageNavigator() {
       <MyPageStack.Screen
         name="EditProfileNavigator"
         component={EditProfileNavigator}
+        options={{ headerShown: false }}
       />
       <MyPageStack.Screen
         name="Notifications"
