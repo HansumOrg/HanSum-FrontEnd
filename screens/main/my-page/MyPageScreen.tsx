@@ -40,8 +40,8 @@ export default function MyPageScreen({
           <View className="flex flex-row w-auto h-1/5 justify-between items-end">
             <View className="flex flex-col h-full justify-end">
               <Text className="font-inter-b text-md text-black">
-                {userData.find(user => user.user_id === userId)?.username ??
-                  '사용자를 찾을 수 없습니다.'}
+                {userData.find((user: User) => user.user_id === userId)
+                  ?.username ?? '사용자를 찾을 수 없습니다.'}
               </Text>
               <Text className="font-inter-m text-sm text-black/[.5]">
                 Show profile
@@ -100,7 +100,9 @@ export default function MyPageScreen({
           <ScrollView showsVerticalScrollIndicator={false}>
             <View className="flex w-full h-auto mb-20">
               {reservationData
-                .filter(reservation => reservation.user_id === userId)
+                .filter(
+                  (reservation: Reservation) => reservation.user_id === userId,
+                )
                 .map(reservation => (
                   <ReservationBox
                     reservation={reservation}
