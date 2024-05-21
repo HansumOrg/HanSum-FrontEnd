@@ -13,7 +13,7 @@ const screenWidth = Dimensions.get('window').width;
 const AdBanner: React.FC = () => {
   const scrollViewRef = useRef<ScrollView>(null);
   const currentIndexRef = useRef(1);
-  const adCount = 5; // 광고 개수
+  const adCount = 4; // 광고 개수
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,7 +54,7 @@ const AdBanner: React.FC = () => {
       ref={scrollViewRef}
       horizontal
       showsHorizontalScrollIndicator={false}
-      className="bg-gray-200 rounded-lg mb-3 mx-0"
+      className="rounded-lg mb-3 mx-0"
       contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }}
       pagingEnabled
       onScrollEndDrag={handleScrollEndDrag} // 초기 위치 설정
@@ -63,14 +63,14 @@ const AdBanner: React.FC = () => {
         className=" h-3/4  justify-center items-center"
         style={{ width: (screenWidth * 1) / 6 }}
       >
-        <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center" />
+        <View className="rounded-r-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center" />
       </View>
       <View
         className="h-3/4 justify-center items-center"
         style={{ width: (screenWidth * 2) / 3 }}
       >
         <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center">
-          <Text className="text-lg font-bold">광고 3</Text>
+          <Text className="text-lg font-bold">광고 3 카피</Text>
         </View>
       </View>
       <View
@@ -99,9 +99,17 @@ const AdBanner: React.FC = () => {
       </View>
       <View
         className="h-3/4 justify-center items-center"
+        style={{ width: (screenWidth * 2) / 3 }}
+      >
+        <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center">
+          <Text className="text-lg font-bold">광고 1 카피</Text>
+        </View>
+      </View>
+      <View
+        className="h-3/4 justify-center items-center"
         style={{ width: (screenWidth * 1) / 6 }}
       >
-        <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center" />
+        <View className="rounded-l-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center" />
       </View>
     </ScrollView>
   );

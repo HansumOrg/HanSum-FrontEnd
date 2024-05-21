@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text } from 'react-native';
 
 interface ReservationRecord {
   guesthouse_name: string;
@@ -28,34 +28,31 @@ const calculateDday = (date: string): string => {
   return `D-${diffDays}`;
 };
 
-const ReservationItem: React.FC<{ item: ReservationRecord }> = ({ item }) => {
-  const screenHeight = Dimensions.get('window').height;
-
-  return (
-    <View
-      className="flex-row justify-between items-center bg-white rounded-lg m-4 shadow"
-      style={{ height: screenHeight / 10 }}
-    >
-      <View className="w-1/2 mx-2">
-        <Text className="text-sm font-bold">{item.guesthouse_name}</Text>
-        <View className="flex-row justify-between">
-          <Text className="text-gray">Check-in</Text>
-          <Text className="text-dark mb-1">
-            {formatDate(item.checkin_date)}
-          </Text>
-        </View>
-        <View className="flex-row justify-between">
-          <Text className="text-gray">Check-out</Text>
-          <Text className="text-dark">{formatDate(item.checkout_date)}</Text>
-        </View>
+const ReservationItem: React.FC<{ item: ReservationRecord }> = ({ item }) => (
+  <View className="flex-row justify-between items-center bg-white rounded-lg p m-2 h-[35%] shadow-xl shadow-black">
+    <View className="w-1/2 mx-2">
+      <Text className="text-s text-black font-inter-b">
+        {item.guesthouse_name}
+      </Text>
+      <View className="flex-row justify-between">
+        <Text className="text-gray font-inter-r">Check-in</Text>
+        <Text className="text-gray font-inter-r">
+          {formatDate(item.checkin_date)}
+        </Text>
       </View>
-      <View className="bg-primary-2 h-full w-1/4 justify-center items-center p-2 rounded-r-md">
-        <Text className="text-white text-sm font-inter-r">
-          {calculateDday(item.checkin_date)}
+      <View className="flex-row justify-between">
+        <Text className="text-gray font-inter-r">Check-out</Text>
+        <Text className="text-gray font-inter-r">
+          {formatDate(item.checkout_date)}
         </Text>
       </View>
     </View>
-  );
-};
+    <View className="bg-primary-2 h-full w-1/4 justify-center items-center rounded-r-md">
+      <Text className="text-white text-sm font-inter-r">
+        {calculateDday(item.checkin_date)}
+      </Text>
+    </View>
+  </View>
+);
 
 export default ReservationItem;

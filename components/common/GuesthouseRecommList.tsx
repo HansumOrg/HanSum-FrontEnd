@@ -46,14 +46,14 @@ const GuesthouseRecommList: React.FC = () => {
 
   const renderItem = ({ item }: { item: Guesthouse }) => (
     <View
-      className="flex-1/2 bg-blue-300 rounded-md justify-center items-center m-2"
-      style={{ width: screenWidth / 2 }}
+      className="flex-1/2 rounded-lg justify-center items-center m-2 shadow-md shadow-black "
+      style={{ width: screenWidth / 3 }}
     >
       <Image
         source={{ uri: item.imageUrl }}
-        className="w-full h-full rounded-t-md"
+        className="w-full h-full rounded-lg bg-blue-300"
       />
-      <Text className="absolute p-2 text-lg font-bold bottom-2">
+      <Text className="absolute text-left left-0 px-2 text-s text-white font-inter-b bottom-2">
         {item.guesthouse_name}
       </Text>
     </View>
@@ -61,7 +61,6 @@ const GuesthouseRecommList: React.FC = () => {
 
   return (
     <FlatList
-      className="p-2"
       data={DATA.sort((a, b) =>
         a.guesthouse_name.localeCompare(b.guesthouse_name),
       )}
