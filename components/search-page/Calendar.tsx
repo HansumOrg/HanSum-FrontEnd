@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { CalendarProps } from '../../types';
 
 function OnPressFunction( // 예약 범위 설정
   currentDate: Date,
@@ -54,7 +55,7 @@ function GetDayOfWeek(
   let week = [];
   for (let i = 0; i < firstDayOfWeek; i += 1) {
     // 첫째 주 시작 전까지 빈 칸 채우기
-    week.push(<View className="flex w-[14%]" />);
+    week.push(<View key={i} className="flex w-[14%]" />);
   }
   const today = new Date();
   for (let i = 1; i <= lastDay.getDate(); i += 1) {
@@ -85,7 +86,7 @@ function GetDayOfWeek(
     if (i < 10) {
       week.push(
         <Pressable
-          key={i}
+          key={currentDate.getMonth() + currentDate.getDate()}
           className="flex w-[14%] flex-row items-center justify-center"
           onPress={() =>
             OnPressFunction(
@@ -110,7 +111,7 @@ function GetDayOfWeek(
     } else {
       week.push(
         <Pressable
-          key={i}
+          key={currentDate.getMonth() + currentDate.getDate()}
           className="flex w-[14%] flex-row items-center justify-center"
           onPress={() =>
             OnPressFunction(
@@ -124,7 +125,7 @@ function GetDayOfWeek(
           }
         >
           <View
-            className={`flex w-auto h-full ${isTodayColor} ${isReservationStartColor} ${isReservationEndColor}  p-3`}
+            className={`flex w-auto h-full ${isTodayColor} ${isReservationStartColor} ${isReservationEndColor} p-3`}
           >
             <Text className={`font-inter-r text-sm ${isReservedText}`}>
               {i}
@@ -136,10 +137,15 @@ function GetDayOfWeek(
 
     if (week.length === 7 || i === lastDay.getDate()) {
       for (let j = week.length; j < 7; j += 1) {
-        week.push(<View className="flex w-[14%] items-center" />);
+        week.push(<View key={j} className="flex w-[14%] items-center" />);
       }
       weeks.push(
-        <View className="flex flex-row flex-wrap w-full py-6">{week}</View>,
+        <View
+          key={weeks.length}
+          className="flex flex-row flex-wrap w-full py-6"
+        >
+          {week}
+        </View>,
       );
       week = [];
     }
@@ -147,14 +153,13 @@ function GetDayOfWeek(
   return weeks;
 }
 
-export default function Calendar() {
+export default function Calendar({
+  reservationStartDate,
+  reservationEndDate,
+  setReservationStartDate,
+  setReservationEndDate,
+}: CalendarProps) {
   const currentDate = new Date();
-  const [reservationStartDate, setReservationStartDate] = useState<Date | null>(
-    null,
-  ); // 예약 시작 날짜
-  const [reservationEndDate, setReservationEndDate] = useState<Date | null>(
-    null,
-  ); // 예약 종료 날짜
   const renderMonths = () => {
     const months = [];
     for (let i = 0; i < 6; i += 1) {
