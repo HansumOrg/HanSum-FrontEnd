@@ -33,23 +33,24 @@ const GuestReview: React.FC = () => {
     });
   };
   return (
-    <View className="flex flex-wrap gap-2">
+    <View className="flex flex-wrap flex-row gap-2">
       {reviews.map(review => {
         const isNegative = negativeReviews.includes(review);
         const isSelected = selectedReviews.includes(review);
 
-        let buttonClassName =
-          'flex flex-row items-center px-3 py-1 border rounded-2xl';
-        let textClassName = 'text-md';
-        if (isNegative) {
-          buttonClassName += ' border-red-300 bg-red-100';
-          textClassName += ' text-red-600';
-        } else {
-          buttonClassName += ' border-gray-300';
-        }
+        let buttonClassName = 'flex flex-row items-center px-2 py-1 border';
+        let textClassName = 'text-s  font-inter-r';
         if (isSelected) {
-          buttonClassName += ' bg-blue-100';
-          textClassName += ' font-bold';
+          buttonClassName += isNegative
+            ? ' border-orange-400 rounded-md'
+            : ' border-primary-2 rounded-2xl';
+          textClassName += isNegative
+            ? ' font-inter-r text-orange-400'
+            : ' font-inter-r text-primary-2';
+        } else if (isNegative) {
+          buttonClassName += ' border-gray-300 rounded-md';
+        } else {
+          buttonClassName += ' border-gray-300 rounded-2xl';
         }
 
         return (
