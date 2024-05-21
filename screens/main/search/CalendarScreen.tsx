@@ -8,10 +8,13 @@ import {
   Pressable,
 } from 'react-native';
 import Calendar from '../../../components/search-page/Calendar';
+import { SearchStackScreenProps } from '../../../navigation/types';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
-export default function CalendarScreen() {
+export default function CalendarScreen({
+  navigation,
+}: SearchStackScreenProps<'Calendar'>) {
   const [reservationStartDate, setReservationStartDate] = useState<Date | null>(
     null,
   ); // 예약 시작 날짜
@@ -76,7 +79,13 @@ export default function CalendarScreen() {
             />
           </ScrollView>
         </View>
-        <Pressable className="absolute z-5 w-full h-auto bottom-20 justify-center items-center">
+        <Pressable
+          className="absolute z-5 w-full h-auto bottom-20 justify-center items-center"
+          disabled={!isReservationable}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
           <View
             className={`flex w-full h-auto mt-4 ${footerColor} items-center shadow-2xl shadow-black/100`}
           >
