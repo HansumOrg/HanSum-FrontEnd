@@ -25,6 +25,9 @@ interface Guesthouse {
 const dummyDibs: Dibs[] = [
   { dibs_id: 456, guesthouse_id: 789 },
   { dibs_id: 457, guesthouse_id: 790 },
+  { dibs_id: 458, guesthouse_id: 791 },
+  { dibs_id: 459, guesthouse_id: 792 },
+  { dibs_id: 460, guesthouse_id: 793 },
 ];
 
 const dummyGuesthouses: Guesthouse[] = [
@@ -37,6 +40,24 @@ const dummyGuesthouses: Guesthouse[] = [
   {
     guesthouse_id: 790,
     guesthouse_name: '게으른 하루',
+    address: '제주특별자치도 제주시 구좌읍 한동북1길 54-5',
+    imageUrl: 'https://example.com/images/book-hotel.jpg',
+  },
+  {
+    guesthouse_id: 791,
+    guesthouse_name: '아 배고파',
+    address: '제주특별자치도 제주시 구좌읍 한동북1길 54-5',
+    imageUrl: 'https://example.com/images/book-hotel.jpg',
+  },
+  {
+    guesthouse_id: 792,
+    guesthouse_name: '이지한 하루',
+    address: '제주특별자치도 제주시 구좌읍 한동북1길 54-5',
+    imageUrl: 'https://example.com/images/book-hotel.jpg',
+  },
+  {
+    guesthouse_id: 793,
+    guesthouse_name: '게으른 이지현',
     address: '제주특별자치도 제주시 구좌읍 한동북1길 54-5',
     imageUrl: 'https://example.com/images/book-hotel.jpg',
   },
@@ -68,11 +89,12 @@ const FavoritesScreen: React.FC<MainTabScreenProps<'Favorites'>> = ({
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
-      <View className="h-screen w-screen bg-slate-500 flex justify-center items-center">
+      <View className="bg-white flex w-full justify-center items-center">
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <FlatList
+            className="w-full"
             data={guesthouses}
             renderItem={({ item }) => <GuesthouseItem item={item} />}
             keyExtractor={item => item.guesthouse_id.toString()}
