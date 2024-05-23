@@ -6,4 +6,6 @@ export interface CalendarProps {
   reservationEndDate: Date | null;
   setReservationStartDate: (date: Date | null) => void;
   setReservationEndDate: (date: Date | null) => void;
+  date: Date;
+  today: Date;
 }

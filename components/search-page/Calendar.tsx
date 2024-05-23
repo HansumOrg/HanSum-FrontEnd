@@ -2,49 +2,55 @@ import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { CalendarProps } from '../../types';
 
-function OnPressFunction( // 예약 범위 설정
-  currentDate: Date,
-  today: Date,
-  reservationStartDate: Date | null,
-  reservationEndDate: Date | null,
-  setReservationStartDate: (date: Date | null) => void,
-  setReservationEndDate: (date: Date | null) => void,
-) {
-  if (!reservationStartDate && currentDate >= today) {
-    // 예약 시작 날짜가 없고, 현재 날짜가 오늘 이후일 때
-    setReservationStartDate(currentDate);
-  }
-  if (reservationStartDate && !reservationEndDate && currentDate >= today) {
-    // 예약 시작 날짜가 있고, 예약 종료 날짜가 없고, 현재 날짜가 오늘 이후일 때
-    setReservationEndDate(currentDate);
-  }
-  if (reservationStartDate && currentDate < today) {
-    // 예약 시작 날짜가 있고, 현재 날짜가 오늘 이전일 때
-    setReservationStartDate(null);
-    setReservationEndDate(null);
-  }
-  if (reservationStartDate && reservationEndDate && currentDate >= today) {
-    // 예약 시작 날짜와 예약 종료 날짜가 있고, 현재 날짜가 오늘 이후일 때
-    setReservationEndDate(currentDate);
-  }
-  if (
-    reservationStartDate &&
-    reservationEndDate &&
-    currentDate < reservationStartDate
-  ) {
-    // 예약 시작 날짜와 예약 종료 날짜가 있고, 현재 날짜가 예약 시작일 이전일 때
-    setReservationStartDate(null);
-    setReservationEndDate(null);
+function SelectDays({
+  // 예약 범위 설정 함수
+  reservationStartDate,
+  reservationEndDate,
+  setReservationStartDate,
+  setReservationEndDate,
+  date,
+  today,
+}: CalendarProps) {
+  if (date) {
+    today.setHours(0, 0, 0, 0);
+    if (!reservationStartDate && date >= today) {
+      // 예약 시작 날짜가 없고, 현재 날짜가 오늘 이후일 때
+      setReservationStartDate(date);
+    }
+    if (reservationStartDate && !reservationEndDate && date >= today) {
+      // 예약 시작 날짜가 있고, 예약 종료 날짜가 없고, 현재 날짜가 오늘 이후일 때
+      setReservationEndDate(date);
+    }
+    if (reservationStartDate && date < today) {
+      // 예약 시작 날짜가 있고, 현재 날짜가 오늘 이전일 때
+      setReservationStartDate(null);
+      setReservationEndDate(null);
+    }
+    if (reservationStartDate && reservationEndDate && date >= today) {
+      // 예약 시작 날짜와 예약 종료 날짜가 있고, 현재 날짜가 오늘 이후일 때
+      setReservationEndDate(date);
+    }
+    if (
+      reservationStartDate &&
+      reservationEndDate &&
+      date < reservationStartDate
+    ) {
+      // 예약 시작 날짜와 예약 종료 날짜가 있고, 현재 날짜가 예약 시작일 이전일 때
+      setReservationStartDate(null);
+      setReservationEndDate(null);
+    }
   }
 }
 
-function GetDayOfWeek(
-  date: Date,
-  reservationStartDate: Date | null,
-  reservationEndDate: Date | null,
-  setReservationStartDate: (date: Date | null) => void,
-  setReservationEndDate: (date: Date | null) => void,
-) {
+function GetDayOfWeek({
+  // 각 월별 날짜 렌더링 생성 함수
+  date,
+  reservationStartDate,
+  reservationEndDate,
+  setReservationStartDate,
+  setReservationEndDate,
+  today,
+}: CalendarProps) {
   const firstDayOfWeek = new Date(
     date.getFullYear(),
     date.getMonth(),
@@ -57,7 +63,6 @@ function GetDayOfWeek(
     // 첫째 주 시작 전까지 빈 칸 채우기
     week.push(<View key={i} className="flex w-[14%]" />);
   }
-  const today = new Date();
   for (let i = 1; i <= lastDay.getDate(); i += 1) {
     const currentDate = new Date(date.getFullYear(), date.getMonth(), i);
     const isToday =
@@ -83,22 +88,22 @@ function GetDayOfWeek(
     const isReservationEndColor = isReservationEnd
       ? 'bg-primary-2/[.50] rounded-full'
       : '';
-    if (i < 10) {
-      week.push(
-        <Pressable
-          key={currentDate.getMonth() + currentDate.getDate()}
-          className="flex w-[14%] flex-row items-center justify-center"
-          onPress={() =>
-            OnPressFunction(
-              currentDate,
-              today,
-              reservationStartDate,
-              reservationEndDate,
-              setReservationStartDate,
-              setReservationEndDate,
-            )
-          }
-        >
+    week.push(
+      <Pressable
+        key={currentDate.getMonth() + currentDate.getDate()}
+        className="flex w-[14%] flex-row items-center justify-center"
+        onPress={() =>
+          SelectDays({
+            date: currentDate,
+            today,
+            reservationStartDate,
+            reservationEndDate,
+            setReservationStartDate,
+            setReservationEndDate,
+          })
+        }
+      >
+        {i < 10 ? (
           <View
             className={`flex w-auto h-full ${isTodayColor} ${isReservationStartColor} ${isReservationEndColor} py-3 px-4`}
           >
@@ -106,24 +111,7 @@ function GetDayOfWeek(
               {i}
             </Text>
           </View>
-        </Pressable>,
-      );
-    } else {
-      week.push(
-        <Pressable
-          key={currentDate.getMonth() + currentDate.getDate()}
-          className="flex w-[14%] flex-row items-center justify-center"
-          onPress={() =>
-            OnPressFunction(
-              currentDate,
-              today,
-              reservationStartDate,
-              reservationEndDate,
-              setReservationStartDate,
-              setReservationEndDate,
-            )
-          }
-        >
+        ) : (
           <View
             className={`flex w-auto h-full ${isTodayColor} ${isReservationStartColor} ${isReservationEndColor} p-3`}
           >
@@ -131,10 +119,9 @@ function GetDayOfWeek(
               {i}
             </Text>
           </View>
-        </Pressable>,
-      );
-    }
-
+        )}
+      </Pressable>,
+    );
     if (week.length === 7 || i === lastDay.getDate()) {
       for (let j = week.length; j < 7; j += 1) {
         week.push(<View key={j} className="flex w-[14%] items-center" />);
@@ -178,13 +165,14 @@ export default function Calendar({
               {nextMonth.getFullYear()}년
             </Text>
           </View>
-          {GetDayOfWeek(
-            nextMonth,
+          {GetDayOfWeek({
+            date: nextMonth,
             reservationStartDate,
             reservationEndDate,
             setReservationStartDate,
             setReservationEndDate,
-          )}
+            today: currentDate,
+          })}
           <View className="flex w-full border-b border-gray-1" />
         </View>,
       );
