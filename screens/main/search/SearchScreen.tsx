@@ -29,9 +29,12 @@ export default function SearchScreen({
                     지역, 게스트하우스 이름
                   </Text>
                 </View>
-                <View className="flex w-auto h-full justify-center">
+                <Pressable
+                  className="flex w-auto h-full justify-center"
+                  onPress={() => navigation.navigate('Filter')}
+                >
                   <FilterIcon width={34} height={34} />
-                </View>
+                </Pressable>
               </View>
               <Pressable
                 className="flex w-full h-1/3"
