@@ -62,13 +62,13 @@ export default function SearchScreen({
                 </View>
               </Pressable>
             </View>
-            <View className="flex w-full h-1/5 justify-end">
+            <View className="flex w-full h-1/4 justify-end">
               <Text className="font-inter-b text-lg text-black">
                 제주도 여행지
               </Text>
             </View>
           </View>
-          <View className="flex w-full h-full my-4">
+          <View className="flex w-full h-full my-2">
             <View className="flex w-full h-1/2">
               <View className="flex flex-col w-full h-auto py-3">
                 <View className="flex flex-row w-full h-auto justify-between">
