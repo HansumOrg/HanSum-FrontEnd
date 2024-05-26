@@ -8,6 +8,7 @@ import BedroomIcon from '../../../assets/images/icon_bedroom.svg';
 import ParkingIcon from '../../../assets/images/icon_parking.svg';
 import SwimmingIcon from '../../../assets/images/icon_swimming.svg';
 import WomanIcon from '../../../assets/images/icon_woman.svg';
+import MultiSlider from '../../../components/filter-page/MultiSlider';
 
 export default function FilterScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -243,7 +244,11 @@ export default function FilterScreen({
             <View className="flex w-full h-auto">
               <Text className="font-inter-sb text-xl text-black">가격</Text>
             </View>
-            <View className="flex w-full h-2/5 bg-blue-500"></View>
+            <View className="flex w-full h-2/5 items-center">
+              <View className="flex w-11/12 h-full">
+                <MultiSlider min={1} max={10} steps={10} />
+              </View>
+            </View>
           </View>
         </View>
       </View>
