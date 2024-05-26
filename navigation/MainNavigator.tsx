@@ -1,4 +1,5 @@
 import React from 'react';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RecommendationsScreen from '../screens/main/RecommendationsScreen';
 import SearchNavigator from './SearchNavigator';
@@ -20,7 +21,15 @@ export default function MainNavigator() {
       <MainTab.Screen
         name="SearchNavigator"
         component={SearchNavigator}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          tabBarStyle: {
+            display:
+              getFocusedRouteNameFromRoute(route) === 'Filter'
+                ? 'none'
+                : 'flex',
+          },
+          headerShown: false,
+        })}
       />
       <MainTab.Screen name="ChatNavigator" component={ChatNavigator} />
       <MainTab.Screen name="MyPageNavigator" component={MyPageNavigator} />

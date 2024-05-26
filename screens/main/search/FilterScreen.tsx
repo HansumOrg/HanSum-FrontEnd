@@ -252,6 +252,16 @@ export default function FilterScreen({
           </View>
         </View>
       </View>
+      <Pressable
+        className="absolute z-5 w-full h-1/6 bottom-1 justify-center items-center"
+        onPress={() => {
+          navigation.navigate('SearchResult');
+        }}
+      >
+        <View className="flex w-full h-full bg-primary-2 items-center shadow-2xl shadow-black/100">
+          <Text className="font-inter-sb text-md text-white p-6">적용하기</Text>
+        </View>
+      </Pressable>
     </SafeAreaView>
   );
 }
