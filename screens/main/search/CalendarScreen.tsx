@@ -80,7 +80,7 @@ export default function CalendarScreen({
           </ScrollView>
         </View>
         <Pressable
-          className="absolute z-5 w-full h-auto bottom-20 justify-center items-center"
+          className="absolute z-5 w-full h-1/4 bottom-1 justify-center items-center"
           disabled={!isReservationable}
           onPress={() => {
             navigation.goBack();
