@@ -48,12 +48,21 @@ module.exports = {
           fontWeight: '700',
         },
       ],
+      '4xl': [
+        '45px',
+        {
+          lineHeight: '48px',
+          letterSpacing: '-0.24px',
+          fontWeight: '900',
+        },
+      ],
     },
     extend: {
       colors: {
         'gray-1': '#F0F0F0',
         'gray-2': '#C2C2C2',
         'gray-3': '#D9D9D9',
+        'gray-4': '#F2F2F2',
         'primary-1': '#C6F3F3',
         'primary-2': '#39C3C5',
         point: '#F19B22',

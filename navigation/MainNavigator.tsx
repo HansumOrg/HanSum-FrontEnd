@@ -12,7 +12,15 @@ export default function MainNavigator() {
   const MainTab = createBottomTabNavigator<MainTabParamList>();
 
   return (
-    <MainTab.Navigator initialRouteName="Recommendations">
+    <MainTab.Navigator
+      initialRouteName="Recommendations"
+      screenOptions={({ route }) => ({
+        tabBarStyle: {
+          display:
+            route.name === 'GuesthouseDetailsNavigator' ? 'none' : 'flex',
+        },
+      })}
+    >
       <MainTab.Screen
         name="Recommendations"
         component={RecommendationsScreen}
@@ -28,6 +36,7 @@ export default function MainNavigator() {
       <MainTab.Screen
         name="GuesthouseDetailsNavigator"
         component={GuesthouseDetailsNavigator}
+        options={{ headerShown: false }}
       />
     </MainTab.Navigator>
   );
