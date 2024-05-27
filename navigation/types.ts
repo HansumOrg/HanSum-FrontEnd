@@ -126,3 +126,11 @@ export type GuesthouseDetailsStackScreenProps<
   StackScreenProps<GuesthouseDetailsStackParamList, T>,
   MainTabScreenProps<keyof MainTabParamList>
 >;
+
+export type ApiTestStackParamList = {
+  ApiTest: undefined;
+  Join: undefined;
+};
+
+export type ApiTestStackScreenProps<T extends keyof ApiTestStackParamList> =
+  StackScreenProps<ApiTestStackParamList, T>;

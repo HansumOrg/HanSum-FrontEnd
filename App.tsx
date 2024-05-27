@@ -1,12 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, Pressable, StatusBar } from 'react-native';
+import { Provider } from 'react-redux';
 import GetStartedNavigator from './navigation/GetStartedNavigator';
 import MainNavigator from './navigation/MainNavigator';
+import ApiTestNavigator from './navigation/ApiTestNavigator';
+import store from './api/store';
 
 const App = () => {
-  type Mode = 'getStarted' | 'main' | 'develop';
-  const [mode, setMode] = useState<Mode>('develop');
+  type Mode = 'getStarted' | 'main' | 'apiTest' | undefined;
+  const [mode, setMode] = useState<Mode>(undefined);
 
   const handleMode = (newMode: Mode) => () => {
     setMode(newMode);
@@ -14,36 +17,57 @@ const App = () => {
 
   if (mode === 'getStarted') {
     return (
-      <NavigationContainer>
-        <GetStartedNavigator />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <GetStartedNavigator />
+        </NavigationContainer>
+      </Provider>
     );
   }
   if (mode === 'main') {
     return (
-      <NavigationContainer>
-        <MainNavigator />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <MainNavigator />
+        </NavigationContainer>
+      </Provider>
+    );
+  }
+  if (mode === 'apiTest') {
+    return (
+      <Provider store={store}>
+        <NavigationContainer>
+          <ApiTestNavigator />
+        </NavigationContainer>
+      </Provider>
     );
   }
   return (
-    <SafeAreaView>
-      <StatusBar barStyle="default" />
-      <View className="h-screen bg-slate-800">
-        <Pressable
-          className="h-20 bg-blue-300 flex justify-center items-center"
-          onPress={handleMode('getStarted')}
-        >
-          <Text className="text-2xl">getStarted</Text>
-        </Pressable>
-        <Pressable
-          className="h-20 bg-red-300 flex justify-center items-center"
-          onPress={handleMode('main')}
-        >
-          <Text className="text-2xl">main</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView>
+        <StatusBar barStyle="default" />
+        <View className="h-screen bg-slate-800">
+          <Pressable
+            className="h-20 bg-blue-300 flex justify-center items-center"
+            onPress={handleMode('getStarted')}
+          >
+            <Text className="text-2xl">getStarted</Text>
+          </Pressable>
+          <Pressable
+            className="h-20 bg-red-300 flex justify-center items-center"
+            onPress={handleMode('main')}
+          >
+            <Text className="text-2xl">main</Text>
+          </Pressable>
+          <Pressable
+            className="h-20 bg-purple-300 flex justify-center items-center"
+            onPress={handleMode('apiTest')}
+          >
+            <Text className="text-2xl">apiTest</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    </Provider>
   );
 };
 
