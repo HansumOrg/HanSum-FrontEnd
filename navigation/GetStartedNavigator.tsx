@@ -9,7 +9,14 @@ export default function GetStartedNavigator() {
   const GetStartedStack = createStackNavigator<GetStartedStackParamList>();
 
   return (
-    <GetStartedStack.Navigator initialRouteName="GetStarted">
+    <GetStartedStack.Navigator
+      initialRouteName="GetStarted"
+      screenOptions={{ headerShown: false }}
+    >
+      {/* <GetStartedStack.Navigator
+      initialRouteName="LoginNavigator"
+      screenOptions={{ headerShown: false }}
+    > */}
       <GetStartedStack.Screen name="GetStarted" component={GetStartedScreen} />
       <GetStartedStack.Screen
         name="LoginNavigator"
