@@ -12,6 +12,7 @@ import SearchIcon from '../../../assets/images/icon_search.svg';
 import CalendarIcon from '../../../assets/images/icon_calendar.svg';
 import MoreIcon from '../../../assets/images/icon_goback.svg';
 import FilterIcon from '../../../assets/images/icon_filter.svg';
+import { SearchResultProps } from '../../../types';
 
 export default function SearchScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -27,17 +28,29 @@ export default function SearchScreen({
         <View className="flex w-11/12 h-full">
           <View className="flex w-full h-1/4 justify-end">
             <View className="flex w-full h-4/5  items-center justify-end ">
-              <Pressable
-                className="flex flex-row w-full h-1/3 mb-1 bg-white border-2 border-gray-1/100 rounded-lg"
-                onPress={() => navigation.navigate('SearchResult')}
-              >
+              <View className="flex flex-row w-full h-1/3 mb-1 bg-white border-2 border-gray-1/100 rounded-lg">
                 <View className="flex ml-2 w-auto h-full justify-center">
                   <SearchIcon width={26} height={27} />
                 </View>
                 <View className="flex w-3/4 h-full justify-center">
-                  <Text className="font-inter-m text-md text-black/50">
-                    지역, 게스트하우스 이름
-                  </Text>
+                  <TextInput
+                    className="font-inter-m text-md text-black"
+                    placeholder="지역, 게스트하우스 이름"
+                    placeholderTextColor="#BDBDBD"
+                    onSubmitEditing={event => {
+                      const searchProps: SearchResultProps = {
+                        location: '중문',
+                        checkin_date: '2024-05-10',
+                        checkout_date: '2024-05-20',
+                        guesthouse_name: event.nativeEvent.text,
+                        mood: '액티비티가 다양한',
+                        facility: '수영장',
+                        min_price: 1,
+                        max_price: 10,
+                      };
+                      navigation.navigate('SearchResult', { ...searchProps });
+                    }}
+                  />
                 </View>
                 <Pressable
                   className="flex w-auto h-full justify-center"
@@ -45,7 +58,7 @@ export default function SearchScreen({
                 >
                   <FilterIcon width={34} height={34} />
                 </Pressable>
-              </Pressable>
+              </View>
               <Pressable
                 className="flex w-full h-1/3"
                 onPress={() => navigation.navigate('Calendar')}
@@ -55,7 +68,8 @@ export default function SearchScreen({
                     <CalendarIcon width={26} height={27} />
                   </View>
                   <View className="flex w-3/4 h-full justify-center">
-                    <Text className="font-inter-m text-md text-black/50">
+                    <Text className="font-inter-m text-md text-gray-2">
+                      {' '}
                       날짜 선택
                     </Text>
                   </View>
