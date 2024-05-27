@@ -4,6 +4,9 @@ import GuesthouseDetailsScreen from '../screens/main/guesthouse-details/Guesthou
 import ChatGuideScreen from '../screens/main/guesthouse-details/ChatGuideScreen';
 import ReservationScreen from '../screens/main/guesthouse-details/ReservationScreen';
 import { GuesthouseDetailsStackParamList } from './types';
+import Header from '../components/gesthouse-detail/HeaderComponent';
+
+const GuesthouseDetailHeader = () => <Header />;
 
 export default function GuesthouseDetailsNavigator() {
   const GuesthouseDetailsStack =
@@ -14,6 +17,10 @@ export default function GuesthouseDetailsNavigator() {
       <GuesthouseDetailsStack.Screen
         name="GuesthouseDetails"
         component={GuesthouseDetailsScreen}
+        options={{
+          headerTransparent: true,
+          headerTitle: GuesthouseDetailHeader,
+        }}
       />
       <GuesthouseDetailsStack.Screen
         name="ChatGuide"
