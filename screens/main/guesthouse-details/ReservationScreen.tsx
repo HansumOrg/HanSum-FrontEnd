@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
-import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
-import LocalSvg from '../../assets/images/icon_local.svg';
-import PhoneSVG from '../../assets/images/icon_phone.svg';
-import GoFront from '../../assets/images/icon_goback.svg';
-import UnChecked from '../../components/Reservation/unchecked_rectangle.svg';
-import Checked from '../../components/Reservation/checked_rectangle.svg';
+import {
+  SafeAreaView,
+  StatusBar,
+  View,
+  Text,
+  Pressable,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import LocalSvg from '../../../assets/images/icon_local.svg';
+import PhoneSVG from '../../../assets/images/icon_phone.svg';
+import GoFront from '../../../assets/images/icon_goback.svg';
+import UnChecked from '../../../components/reservation/unchecked_rectangle.svg';
+import Checked from '../../../components/reservation/checked_rectangle.svg';
 
 interface ReservationRecord {
   guesthouse_name: string;
@@ -34,15 +42,11 @@ const formatDate = (dateString: string) => {
     hour12: false,
   });
 };
-export default function ReservationScreen({
-  // route와 navigation 사용 안할 시 제거해주세요.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  navigation,
-}: GuesthouseDetailsStackScreenProps<'Reservation'>) {
+
+export default function ReservationScreen() {
   const [agreeMbti, setAgreeMbti] = useState(false);
   const [agreeNickname, setAgreeNickname] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const reservation: ReservationRecord = {
     guesthouse_name: '서점 숙소',
@@ -58,6 +62,64 @@ export default function ReservationScreen({
     name: '이나영',
     mbti: 'INFP',
   };
+
+  const handleAgreeNickname = (agree: boolean) => {
+    setAgreeNickname(agree);
+    setModalVisible(false);
+  };
+
+  const handleReservation = () => {
+    if (!agreeNickname) {
+      setModalVisible(true);
+    } else {
+      // 예약하기 로직을 추가하세요.
+      console.log('예약 완료');
+    }
+  };
+  const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 22,
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: 'white',
+      borderRadius: 20,
+      padding: 35,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      marginTop: 15,
+    },
+    button: {
+      borderRadius: 10,
+      padding: 10,
+      elevation: 2,
+      backgroundColor: '#2196F3',
+      marginHorizontal: 10,
+    },
+    textStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: 'center',
+    },
+  });
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -148,7 +210,7 @@ export default function ReservationScreen({
             <Text className="w-full text-left font-inter-sb text-md text-black">
               이용약관 동의
             </Text>
-            <View className="flex-row w-full h-2/6 justify-between items-center mt-2 ">
+            <View className="flex-row w-full h-2/6 justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-between items-center">
                 <Text className="font-inter-m text-sm text-black">
                   MBTI를 공개하는 것을 동의합니다. (필수)
@@ -156,7 +218,11 @@ export default function ReservationScreen({
                 <GoFront width="10%" height="100%" />
               </View>
               <Pressable onPress={() => setAgreeMbti(!agreeMbti)}>
-                {agreeMbti ? <Checked /> : <UnChecked />}
+                {agreeMbti ? (
+                  <Checked width={24} height={24} />
+                ) : (
+                  <UnChecked width={24} height={24} />
+                )}
               </Pressable>
             </View>
             <View className="flex-row w-full h-2/6 justify-between items-center mt-2">
@@ -168,14 +234,52 @@ export default function ReservationScreen({
                 <GoFront width="10%" height="100%" />
               </View>
               <Pressable onPress={() => setAgreeNickname(!agreeNickname)}>
-                {agreeNickname ? <Checked /> : <UnChecked />}
+                {agreeNickname ? (
+                  <Checked width={24} height={24} />
+                ) : (
+                  <UnChecked width={24} height={24} />
+                )}
               </Pressable>
             </View>
           </View>
-          <Pressable className="my-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl">
+          <Pressable
+            className="my-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
+            onPress={handleReservation}
+          >
             <Text className="font-inter-b text-lg text-white">예약하기</Text>
           </Pressable>
         </View>
+        <Modal
+          animationType="slide"
+          transparent
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                닉네임, 관심사 공개를 하지 않으시면 채팅기능을 이용할 수
+                없습니다. 공개를 원하시지 않습니까?
+              </Text>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handleAgreeNickname(true)}
+                >
+                  <Text style={styles.textStyle}>예(공개)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handleAgreeNickname(false)}
+                >
+                  <Text style={styles.textStyle}>아니요(비공개)</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     </SafeAreaView>
   );
