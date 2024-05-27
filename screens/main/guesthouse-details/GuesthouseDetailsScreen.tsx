@@ -13,7 +13,7 @@ import PhoneSVG from '../../../assets/images/icon_phone.svg';
 import CalendarSVG from '../../../assets/icon/calendar.svg';
 import MbtiCheck from '../../../components/edit-page/MbtiCheck';
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
-import RatingStarsDisplay from '../../../components/common/RatingStarsDisplay';
+import RatingStarsDisplay from '../../../components/gesthouse-detail/RatingStarsDisplay';
 import GoFront from '../../../assets/images/icon_goback.svg';
 
 const screenHeight = Dimensions.get('window').height;
@@ -125,11 +125,7 @@ export default function GuesthouseDetailsScreen({
             </View>
             <View className="w-full h-1/6 flex-row justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-start items-center">
-                <PhoneSVG
-                  height="100%"
-                  width="10%"
-                  preserveAspectRatio="none"
-                />
+                <PhoneSVG height="50%" width="5%" preserveAspectRatio="none" />
                 <Text className="text-lg font-inter-r text-black ml-4">
                   {guesthouse.phone}
                 </Text>

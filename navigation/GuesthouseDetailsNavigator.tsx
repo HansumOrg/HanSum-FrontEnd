@@ -4,7 +4,7 @@ import GuesthouseDetailsScreen from '../screens/main/guesthouse-details/Guesthou
 import ChatGuideScreen from '../screens/main/guesthouse-details/ChatGuideScreen';
 import ReservationScreen from '../screens/main/guesthouse-details/ReservationScreen';
 import { GuesthouseDetailsStackParamList } from './types';
-import Header from '../components/common/HeaderComponent';
+import Header from '../components/gesthouse-detail/HeaderComponent';
 
 const GuesthouseDetailHeader = () => <Header />;
 
