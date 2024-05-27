@@ -26,6 +26,10 @@ module.exports = {
       2,
       { namedComponents: ['arrow-function', 'function-declaration'] },
     ],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      { checksVoidReturn: { attributes: false } },
+    ],
   },
   overrides: [
     {
