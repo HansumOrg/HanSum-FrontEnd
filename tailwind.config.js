@@ -8,6 +8,30 @@ module.exports = {
   theme: {
     // 14 16 18 20 25
     fontSize: {
+      sss: [
+        '12px',
+        {
+          lineHeight: '1.5',
+          letterSpacing: '-0.24px',
+          fontweight: '500',
+        },
+      ],
+      ss: [
+        '14px',
+        {
+          lineHeight: '1.5',
+          letterSpacing: '-0.24px',
+          fontweight: '500',
+        },
+      ],
+      s: [
+        '16px',
+        {
+          lineHeight: '1.5',
+          letterSpacing: '-0.24px',
+          fontweight: '500',
+        },
+      ],
       sm: [
         '14px',
         {
@@ -54,8 +78,10 @@ module.exports = {
         'gray-1': '#F0F0F0',
         'gray-2': '#C2C2C2',
         'gray-3': '#D9D9D9',
+        'gray-5': '#E5E5E5',
         'primary-1': '#C6F3F3',
         'primary-2': '#39C3C5',
+        'red-1': '#FF0000',
         point: '#F19B22',
         failed: '#FF0000',
         'mbti-green': '#33A373',
