@@ -5,7 +5,6 @@ import {
   View,
   Pressable,
   Dimensions,
-  Text,
 } from 'react-native';
 import { RegisterStackScreenProps } from '../../../navigation/types';
 import RectButton from '../../../components/common/RectButton';
@@ -38,7 +37,7 @@ const EnterPersonalInformationScreen = ({
     <SafeAreaView>
       <StatusBar barStyle="default" />
       <View className="h-screen px-6 pt-6 bg-white">
-        <View className="h-2/5">
+        <View className="h-2/5 w-full">
           <View className="bg-white h-1/3 justify-center">
             <Title text="사용자의 성별을 선택해주세요." />
           </View>
@@ -59,10 +58,10 @@ const EnterPersonalInformationScreen = ({
           <View className="bg-white h-1/3 justify-center">
             <Title text="사용자의 생일을 선택해주세요." />
           </View>
-          <View className="flex-row bg-red-200 h-2/3 items-center justify-between">
-            <View className="absolute h-1/5 w-full bg-gray-5 rounded-lg" />
-            <View className="flex-row justify-between w-full px-8">
-              <View className="flex-row justify-center items-center">
+          <View className="flex-row h-2/3 items-start justify-between">
+            <View className="flex-row justify-between items-center w-full">
+              <View className="absolute h-1/5 w-full bg-gray-5 rounded-lg" />
+              <View className="flex-row justify-center items-start ml-8">
                 <WheelPicker
                   items={years}
                   onItemChange={setYear}
@@ -78,7 +77,7 @@ const EnterPersonalInformationScreen = ({
                   itemdoc="월"
                 />
               </View>
-              <View className="flex-row justify-center items-center">
+              <View className="flex-row justify-center items-start mr-8">
                 <WheelPicker
                   items={days}
                   onItemChange={setDay}

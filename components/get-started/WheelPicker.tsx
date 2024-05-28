@@ -42,14 +42,17 @@ const WheelPicker: React.FC<Props> = ({
 
     return (
       <Animated.View
-        className="items-center justify-center"
+        className="items-center justify-center "
         key={item}
         style={{
           height: itemHeight,
           transform: [{ scale }],
         }}
       >
-        <Text className="text-center text-md  font-inter-r text-black">
+        <Text
+          className="text-md font-inter-r text-black shrink"
+          numberOfLines={1}
+        >
           {item}
           {itemdoc}
         </Text>
