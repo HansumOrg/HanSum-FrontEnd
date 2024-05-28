@@ -25,6 +25,11 @@ const EnterPersonalInformationScreen = ({
     setGender(selectedGender);
   };
 
+  const submitPersonalInformation = () => {
+    console.log('submitPersonalInformation');
+    console.log(gender, year, month, day);
+  };
+
   const years = Array.from({ length: 50 }, (_, i) => (1970 + i).toString());
   const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString());
   const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
@@ -86,7 +91,10 @@ const EnterPersonalInformationScreen = ({
           <View className="bg-white h-1/3 mt-2">
             <RectButton
               isActivate
-              onPress={() => navigation.navigate('EnterNickname')}
+              onPress={() => {
+                submitPersonalInformation();
+                navigation.navigate('EnterNickname');
+              }}
               text="선택완료"
             />
           </View>
