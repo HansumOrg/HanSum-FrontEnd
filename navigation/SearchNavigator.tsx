@@ -11,10 +11,18 @@ export default function SearchNavigator() {
 
   return (
     <SearchStack.Navigator initialRouteName="Search">
-      <SearchStack.Screen name="Search" component={SearchScreen} />
+      <SearchStack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
       <SearchStack.Screen name="Filter" component={FilterScreen} />
       <SearchStack.Screen name="Calendar" component={CalendarScreen} />
-      <SearchStack.Screen name="SearchResult" component={SearchResultScreen} />
+      <SearchStack.Screen
+        name="SearchResult"
+        component={SearchResultScreen}
+        options={{ headerShown: false }}
+      />
     </SearchStack.Navigator>
   );
 }

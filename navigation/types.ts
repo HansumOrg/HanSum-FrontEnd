@@ -63,7 +63,16 @@ export type SearchStackParamList = {
   Search: undefined;
   Filter: undefined;
   Calendar: undefined;
-  SearchResult: undefined;
+  SearchResult: {
+    location: string | null;
+    checkin_date: string | null;
+    checkout_date: string | null;
+    guesthouse_name: string | null;
+    mood: string | null;
+    facility: string | null;
+    min_price: number | null;
+    max_price: number | null;
+  };
 };
 
 export type SearchStackScreenProps<T extends keyof SearchStackParamList> =
