@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  View,
-  Text,
-  TextInput,
-  Pressable,
-} from 'react-native';
+import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { SearchStackScreenProps } from '../../../navigation/types';
 import SearchIcon from '../../../assets/images/icon_search.svg';
 import CalendarIcon from '../../../assets/images/icon_calendar.svg';
@@ -18,7 +11,6 @@ export default function SearchScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: SearchStackScreenProps<'Search'>) {
   return (
