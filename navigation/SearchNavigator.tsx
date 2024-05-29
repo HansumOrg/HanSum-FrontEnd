@@ -5,11 +5,6 @@ import SearchResultScreen from '../screens/main/search/SearchResultScreen';
 import FilterScreen from '../screens/main/search/FilterScreen';
 import SearchScreen from '../screens/main/search/SearchScreen';
 import { SearchStackParamList } from './types';
-import BackIcon from '../assets/images/icon_goback.svg';
-
-function BackBtn() {
-  return <BackIcon style={{ transform: [{ scaleX: -1 }] }} />;
-}
 
 export default function SearchNavigator() {
   const SearchStack = createStackNavigator<SearchStackParamList>();
