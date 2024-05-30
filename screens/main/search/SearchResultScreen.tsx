@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -13,52 +13,40 @@ import SearchIcon from '../../../assets/images/icon_search.svg';
 import CalendarIcon from '../../../assets/images/icon_calendar.svg';
 import FilterIcon from '../../../assets/images/icon_filter.svg';
 import SearchResultList from '../../../components/search-result-page/SearchResultList';
+import { useSearchContext } from '../../../components/search-page/SearchContext';
 
-interface Guesthouse {
-  guesthouse_id: number;
-  guesthouse_name: string;
-  address: string;
-  location: string;
-  price: number;
-  phone: string;
-  rating: number;
-  imageUrl: string;
-  mood: string;
-}
+// searchContext를 통해 검색 결과를 받아올 수 있습니다.
+// searchContext는 checkin_date, checkout_date, location, guesthouse_name, min_price, max_price, mood, facility를 포함합니다.
 
 const guesthousSampleData = [
   {
-    guesthouse_id: 1,
-    guesthouse_name: 'Jeju Beach House',
-    address: '123 Beach Road, Jeju City',
-    location: 'Jeju City',
-    price: 30000,
-    phone: '01011112222',
-    rating: 4.2,
-    imageUrl: 'https://example.com/jeju-beach.jpg',
-    mood: '액티비티가 다양한',
-  },
-  {
-    guesthouse_id: 2,
-    guesthouse_name: 'Seogwipo Sunset Inn',
-    address: '456 Sunset Street, Seogwipo',
-    location: 'Seogwipo',
-    price: 35000,
-    phone: '01033334444',
-    rating: 4.0,
-    imageUrl: 'https://example.com/seogwipo-sunset.jpg',
-    mood: '여유로운',
-  },
-  {
-    guesthouse_id: 3,
-    guesthouse_name: 'Seogwipo Sunset Inn',
-    address: '456 Sunset Street, Seogwipo',
-    location: 'Seogwipo',
-    price: 35000,
-    phone: '01033334444',
-    rating: 4.0,
-    imageUrl: 'https://example.com/seogwipo-sunset.jpg',
-    mood: '여유로운',
+    location: '중문',
+    checkinDate: '2024-05-10',
+    checkoutDate: '2024-05-15',
+    guesthouses: [
+      {
+        guesthouse_id: 123,
+        guesthouse_name: 'Jeju Beach Guesthouse',
+        address: '제주 서귀포시 성산읍 신양로122번길 30-8',
+        location: '중문',
+        price: 50000,
+        phone: '010-1234-5678',
+        rating: 4.7,
+        imageUrl: 'asdfasdfasdfg',
+        mood: '액티비티가 다양한',
+      },
+      {
+        guesthouse_id: 456,
+        guesthouse_name: 'Ocean View Guesthouse',
+        address: '456 Ocean Rd, Jungmun',
+        location: '중문',
+        price: 70000,
+        phone: '010-9876-5432',
+        rating: 4.5,
+        imageUrl: 'asasdfkjlkjzlxcvlkl;askdfl...',
+        mood: '활기 넘치는',
+      },
+    ],
   },
 ];
 
@@ -66,24 +54,15 @@ export default function SearchResultScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: SearchStackScreenProps<'SearchResult'>) {
+  const context = useSearchContext();
   const {
     location,
-    checkin_date: checkinDate, // eslint 상에서 camelCase를 권장하여 변경
+    checkin_date: checkinDate,
     checkout_date: checkoutDate,
     guesthouse_name: guesthouseName,
-    mood,
-    facility,
-    min_price,
-    max_price,
-  } = route.params;
-  const [guesthouses, setGuesthouses] =
-    useState<Guesthouse[]>(guesthousSampleData);
-  useEffect(()=>{
-    console.log(guesthouses[1]);
-  },[])
+  } = context.searchState;
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -140,7 +119,7 @@ export default function SearchResultScreen({
         </View>
         <FlatList
           className="w-11/12"
-          data={guesthouses}
+          data={guesthousSampleData.flatMap(data => data.guesthouses)}
           renderItem={({ item }) => <SearchResultList item={item} />}
           keyExtractor={item => item.guesthouse_id.toString()}
         />

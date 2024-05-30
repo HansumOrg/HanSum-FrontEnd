@@ -5,12 +5,17 @@ import { MultiSliderProps } from '../../types';
 
 const WIDTH = Dimensions.get('window').width * 0.75;
 
-function MultiSlider({ min, max, steps }: MultiSliderProps) {
+function MultiSlider({
+  min,
+  max,
+  minStep,
+  setMinStep,
+  maxStep,
+  setMaxStep,
+}: MultiSliderProps) {
   const sliderWidth = 40;
   const [translateX1, setTranslateX1] = useState(0);
   const [translateX2, setTranslateX2] = useState(WIDTH - sliderWidth);
-  const [minStep, setMinStep] = useState(1);
-  const [maxStep, setMaxStep] = useState(steps);
 
   const handleGestureEvent1 = ({
     nativeEvent,
@@ -82,7 +87,7 @@ function MultiSlider({ min, max, steps }: MultiSliderProps) {
           <Text className="font-inter-r text-md text-primary-2">
             {maxStep}만원
           </Text>
-          {maxStep === steps && (
+          {maxStep === 10 && (
             <Text className="font-inter-r text-md text-primary-2"> 이상</Text>
           )}
         </View>

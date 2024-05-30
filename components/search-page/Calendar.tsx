@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { CalendarProps } from '../../types';
+import { CalendarProps, CalendarSeletedDaysProps } from '../../types';
 
 function SelectDays({
   // 예약 범위 설정 함수
@@ -10,7 +10,7 @@ function SelectDays({
   setReservationEndDate,
   date,
   today,
-}: CalendarProps) {
+}: CalendarSeletedDaysProps) {
   if (date) {
     today.setHours(0, 0, 0, 0);
     if (!reservationStartDate && date >= today) {
@@ -50,7 +50,7 @@ function GetDayOfWeek({
   setReservationStartDate,
   setReservationEndDate,
   today,
-}: CalendarProps) {
+}: CalendarSeletedDaysProps) {
   const firstDayOfWeek = new Date(
     date.getFullYear(),
     date.getMonth(),

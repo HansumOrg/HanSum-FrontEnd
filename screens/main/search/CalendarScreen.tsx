@@ -9,21 +9,25 @@ import {
 } from 'react-native';
 import Calendar from '../../../components/search-page/Calendar';
 import { SearchStackScreenProps } from '../../../navigation/types';
+import { SearchResultProps } from '../../../types';
+import { useSearchContext } from '../../../components/search-page/SearchContext';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function CalendarScreen({
   navigation,
 }: SearchStackScreenProps<'Calendar'>) {
+  const context = useSearchContext();
   const [reservationStartDate, setReservationStartDate] = useState<Date | null>(
     null,
-  ); // 예약 시작 날짜
+  );
   const [reservationEndDate, setReservationEndDate] = useState<Date | null>(
     null,
-  ); // 예약 종료 날짜
-  const [isReservationable, setIsReservationable] = useState<boolean>(false); // 예약 가능 여부
+  );
+  const [isReservationable, setIsReservationable] = useState<boolean>(false);
   const [footerColor, setFooterColor] = useState<string>('bg-gray-1/100');
   const [reservationString, setReservationString] = useState<string>('');
+
   useEffect(() => {
     if (reservationStartDate && reservationEndDate) {
       setIsReservationable(true);
@@ -45,6 +49,7 @@ export default function CalendarScreen({
       setIsReservationable(false);
     }
   }, [reservationStartDate, reservationEndDate]);
+
   useEffect(() => {
     if (isReservationable) {
       setFooterColor('bg-primary-2/100');
@@ -52,6 +57,7 @@ export default function CalendarScreen({
       setFooterColor('bg-gray-2/100');
     }
   }, [isReservationable]);
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -83,6 +89,21 @@ export default function CalendarScreen({
           className="absolute z-5 w-full h-1/4 bottom-1 justify-center items-center"
           disabled={!isReservationable}
           onPress={() => {
+            if (reservationStartDate && reservationEndDate) {
+              context.setSearchState((prevState: SearchResultProps) => ({
+                ...prevState,
+                checkin_date: new Date(
+                  reservationStartDate.getTime() + 1000 * 60 * 60 * 24,
+                )
+                  .toISOString()
+                  .split('T')[0],
+                checkout_date: new Date(
+                  reservationEndDate.getTime() + 1000 * 60 * 60 * 24,
+                )
+                  .toISOString()
+                  .split('T')[0],
+              }));
+            }
             navigation.goBack();
           }}
         >

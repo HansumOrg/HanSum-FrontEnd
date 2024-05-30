@@ -2,19 +2,11 @@
 import React from 'react';
 import { View, Text, Dimensions, Pressable } from 'react-native';
 import FavoriteSelect from '../../assets/images/icon_Heart.svg';
-
-interface GuesthouseListProps {
-  guesthouse_id: number;
-  guesthouse_name: string;
-  address: string;
-  imageUrl: string;
-}
+import { Guesthouse } from '../../types';
 
 const screenHeight = Dimensions.get('window').height;
 
-const SearchResultList: React.FC<{ item: GuesthouseListProps }> = ({
-  item,
-}) => (
+const SearchResultList: React.FC<{ item: Guesthouse }> = ({ item }) => (
   <View
     className="border-t border-gray-100 px-2 bg-white w-full shadow"
     style={{

@@ -9,6 +9,8 @@ import ParkingIcon from '../../../assets/images/icon_parking.svg';
 import SwimmingIcon from '../../../assets/images/icon_swimming.svg';
 import WomanIcon from '../../../assets/images/icon_woman.svg';
 import MultiSlider from '../../../components/filter-page/MultiSlider';
+import { useSearchContext } from '../../../components/search-page/SearchContext';
+import { SearchResultProps } from '../../../types';
 
 export default function FilterScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -17,6 +19,7 @@ export default function FilterScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: SearchStackScreenProps<'Filter'>) {
+  const context = useSearchContext();
   // 분위기 필터
   const [activity, setActivity] = useState(false);
   const [healing, setHealing] = useState(false);
@@ -30,6 +33,10 @@ export default function FilterScreen({
   const [swimming, setSwimming] = useState(false);
   const [womenOnly, setWomenOnly] = useState(false);
   const [count, setCount] = useState(0);
+  // 가격 필터
+  const [minStep, setMinStep] = useState(1);
+  const [maxStep, setMaxStep] = useState(10);
+
   useEffect(() => {
     setCount(
       [party, breakfast, singleRoom, parking, swimming, womenOnly].filter(
@@ -54,7 +61,17 @@ export default function FilterScreen({
                   </Text>
                   <Pressable
                     className="flex w-auto h-auto rounded-md mx-1"
-                    onPress={() => setActivity(!activity)}
+                    onPress={() => {
+                      setActivity(!activity);
+                      if (!activity) {
+                        context.setSearchState(
+                          (prevState: SearchResultProps) => ({
+                            ...prevState,
+                            mood: '액티비티가 다양한',
+                          }),
+                        );
+                      }
+                    }}
                   >
                     <CheckIcon
                       width={19}
@@ -69,7 +86,17 @@ export default function FilterScreen({
                   </Text>
                   <Pressable
                     className="flex w-auto h-auto rounded-md mx-1"
-                    onPress={() => setHealing(!healing)}
+                    onPress={() => {
+                      setHealing(!healing);
+                      if (!healing) {
+                        context.setSearchState(
+                          (prevState: SearchResultProps) => ({
+                            ...prevState,
+                            mood: '힐링하기 좋은',
+                          }),
+                        );
+                      }
+                    }}
                   >
                     <CheckIcon
                       width={19}
@@ -86,7 +113,17 @@ export default function FilterScreen({
                   </Text>
                   <Pressable
                     className="flex w-auto h-auto rounded-md mx-1"
-                    onPress={() => setEnergetic(!energetic)}
+                    onPress={() => {
+                      setEnergetic(!energetic);
+                      if (!energetic) {
+                        context.setSearchState(
+                          (prevState: SearchResultProps) => ({
+                            ...prevState,
+                            mood: '활기 넘치는',
+                          }),
+                        );
+                      }
+                    }}
                   >
                     <CheckIcon
                       width={19}
@@ -101,7 +138,17 @@ export default function FilterScreen({
                   </Text>
                   <Pressable
                     className="flex w-auto h-auto rounded-md mx-1"
-                    onPress={() => setLeisure(!leisure)}
+                    onPress={() => {
+                      setLeisure(!leisure);
+                      if (!leisure) {
+                        context.setSearchState(
+                          (prevState: SearchResultProps) => ({
+                            ...prevState,
+                            mood: '여유로운',
+                          }),
+                        );
+                      }
+                    }}
                   >
                     <CheckIcon
                       width={19}
@@ -131,7 +178,17 @@ export default function FilterScreen({
               <View className="flex flex-row w-10/12 h-full justify-between items-center">
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => setParty(!party)}
+                  onPress={() => {
+                    setParty(!party);
+                    if (!party) {
+                      context.setSearchState(
+                        (prevState: SearchResultProps) => ({
+                          ...prevState,
+                          facility: '파티',
+                        }),
+                      );
+                    }
+                  }}
                 >
                   <PartyIcon
                     width={37}
@@ -149,7 +206,17 @@ export default function FilterScreen({
                 </Pressable>
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => setBreakfast(!breakfast)}
+                  onPress={() => {
+                    setBreakfast(!breakfast);
+                    if (!breakfast) {
+                      context.setSearchState(
+                        (prevState: SearchResultProps) => ({
+                          ...prevState,
+                          facility: '조식',
+                        }),
+                      );
+                    }
+                  }}
                 >
                   <BreakfastIcon
                     width={42}
@@ -167,7 +234,17 @@ export default function FilterScreen({
                 </Pressable>
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => setSingleRoom(!singleRoom)}
+                  onPress={() => {
+                    setSingleRoom(!singleRoom);
+                    if (!singleRoom) {
+                      context.setSearchState(
+                        (prevState: SearchResultProps) => ({
+                          ...prevState,
+                          facility: '1인실',
+                        }),
+                      );
+                    }
+                  }}
                 >
                   <BedroomIcon
                     width={44}
@@ -188,7 +265,17 @@ export default function FilterScreen({
               <View className="flex flex-row w-10/12 h-full justify-between items-center">
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => setParking(!parking)}
+                  onPress={() => {
+                    setParking(!parking);
+                    if (!parking) {
+                      context.setSearchState(
+                        (prevState: SearchResultProps) => ({
+                          ...prevState,
+                          facility: '주차',
+                        }),
+                      );
+                    }
+                  }}
                 >
                   <ParkingIcon
                     width={50}
@@ -205,7 +292,17 @@ export default function FilterScreen({
                 </Pressable>
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => setSwimming(!swimming)}
+                  onPress={() => {
+                    setSwimming(!swimming);
+                    if (!swimming) {
+                      context.setSearchState(
+                        (prevState: SearchResultProps) => ({
+                          ...prevState,
+                          facility: '수영',
+                        }),
+                      );
+                    }
+                  }}
                 >
                   <SwimmingIcon
                     width={48}
@@ -222,7 +319,17 @@ export default function FilterScreen({
                 </Pressable>
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => setWomenOnly(!womenOnly)}
+                  onPress={() => {
+                    setWomenOnly(!womenOnly);
+                    if (!womenOnly) {
+                      context.setSearchState(
+                        (prevState: SearchResultProps) => ({
+                          ...prevState,
+                          facility: '여성전용',
+                        }),
+                      );
+                    }
+                  }}
                 >
                   <WomanIcon
                     width={46}
@@ -246,7 +353,14 @@ export default function FilterScreen({
             </View>
             <View className="flex w-full h-2/5 items-center">
               <View className="flex w-11/12 h-full">
-                <MultiSlider min={1} max={10} steps={10} />
+                <MultiSlider
+                  min={1}
+                  max={10}
+                  minStep={minStep}
+                  setMinStep={setMinStep}
+                  maxStep={maxStep}
+                  setMaxStep={setMaxStep}
+                />
               </View>
             </View>
           </View>
@@ -255,7 +369,12 @@ export default function FilterScreen({
       <Pressable
         className="absolute z-5 w-full h-1/6 bottom-1 justify-center items-center"
         onPress={() => {
-          navigation.navigate('SearchResult');
+          context.setSearchState((prevState: SearchResultProps) => ({
+            ...prevState,
+            min_price: minStep,
+            max_price: maxStep,
+          }));
+          navigation.goBack();
         }}
       >
         <View className="flex w-full h-full bg-primary-2 items-center shadow-2xl shadow-black/100">

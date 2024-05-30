@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -12,6 +12,7 @@ import SearchIcon from '../../../assets/images/icon_search.svg';
 import CalendarIcon from '../../../assets/images/icon_calendar.svg';
 import MoreIcon from '../../../assets/images/icon_goback.svg';
 import FilterIcon from '../../../assets/images/icon_filter.svg';
+import { useSearchContext } from '../../../components/search-page/SearchContext';
 import { SearchResultProps } from '../../../types';
 
 export default function SearchScreen({
@@ -20,6 +21,7 @@ export default function SearchScreen({
   route,
   navigation,
 }: SearchStackScreenProps<'Search'>) {
+  const searchContext = useSearchContext();
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -37,17 +39,13 @@ export default function SearchScreen({
                     placeholder="지역, 게스트하우스 이름"
                     placeholderTextColor="#BDBDBD"
                     onSubmitEditing={event => {
-                      const searchProps: SearchResultProps = {
-                        location: '중문',
-                        checkin_date: '2024-05-10',
-                        checkout_date: '2024-05-20',
-                        guesthouse_name: event.nativeEvent.text,
-                        mood: '액티비티가 다양한',
-                        facility: '수영장',
-                        min_price: 1,
-                        max_price: 10,
-                      };
-                      navigation.navigate('SearchResult', { ...searchProps });
+                      searchContext.setSearchState(
+                        (prevState: SearchResultProps) => ({
+                          ...prevState,
+                          guesthouse_name: event.nativeEvent.text,
+                        }),
+                      );
+                      navigation.navigate('SearchResult');
                     }}
                   />
                 </View>
@@ -60,18 +58,29 @@ export default function SearchScreen({
               </View>
               <Pressable
                 className="flex w-full h-1/3"
-                onPress={() => navigation.navigate('Calendar')}
+                onPress={() => {
+                  navigation.navigate('Calendar');
+                }}
               >
                 <View className="flex flex-row w-full h-full mt-1 bg-white border-2 border-gray-1/100 rounded-lg">
                   <View className="flex ml-2 w-auto h-full justify-center">
                     <CalendarIcon width={26} height={27} />
                   </View>
-                  <View className="flex w-3/4 h-full justify-center">
-                    <Text className="font-inter-m text-md text-gray-2">
-                      {' '}
-                      날짜 선택
-                    </Text>
-                  </View>
+                  {searchContext.searchState.checkin_date &&
+                  searchContext.searchState.checkout_date ? (
+                    <View className="flex w-3/4 h-full justify-center">
+                      <Text className="font-inter-m text-md text-black">
+                        {`${searchContext.searchState.checkin_date} ~ ${searchContext.searchState.checkout_date}`}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View className="flex w-3/4 h-full justify-center">
+                      <Text className="font-inter-m text-md text-gray-2">
+                        {' '}
+                        날짜 선택
+                      </Text>
+                    </View>
+                  )}
                 </View>
               </Pressable>
             </View>
@@ -84,57 +93,124 @@ export default function SearchScreen({
           <View className="flex w-full h-full my-2">
             <View className="flex w-full h-1/2">
               <View className="flex flex-col w-full h-auto py-3">
-                <View className="flex flex-row w-full h-auto justify-between">
+                <Pressable
+                  className="flex flex-row w-full h-auto justify-between"
+                  onPress={() => {
+                    searchContext.setSearchState(
+                      (prevState: SearchResultProps) => ({
+                        ...prevState,
+                        location: '제주공항 서부(용담, 도두, 연동, 노형동)',
+                      }),
+                    );
+                    navigation.navigate('SearchResult');
+                  }}
+                >
                   <Text className="font-inter-r inter-sm text-black">
                     제주공항 서부(용담, 도두, 연동, 노형동)
                   </Text>
                   <MoreIcon width={23} height={22} />
-                </View>
+                </Pressable>
                 <View className="flex w-full py-1 border-b border-gray-2" />
               </View>
               <View className="flex flex-col w-full h-auto py-3">
-                <View className="flex flex-row w-full h-auto justify-between">
+                <Pressable
+                  className="flex flex-row w-full h-auto justify-between"
+                  onPress={() => {
+                    searchContext.setSearchState(
+                      (prevState: SearchResultProps) => ({
+                        ...prevState,
+                        location:
+                          '제주공항 동부(제주시청, 탑동, 건입동)/추자도',
+                      }),
+                    );
+                    navigation.navigate('SearchResult');
+                  }}
+                >
                   <Text className="font-inter-r inter-sm text-black">
                     제주공항 동부(제주시청, 탑동, 건입동)/추자도
                   </Text>
                   <MoreIcon width={23} height={22} />
-                </View>
+                </Pressable>
                 <View className="flex w-full py-1 border-b border-gray-2" />
               </View>
               <View className="flex flex-col w-full h-auto py-3">
-                <View className="flex flex-row w-full h-auto justify-between">
+                <Pressable
+                  className="flex flex-row w-full h-auto justify-between"
+                  onPress={() => {
+                    searchContext.setSearchState(
+                      (prevState: SearchResultProps) => ({
+                        ...prevState,
+                        location: '서귀포시/중문/모슬포',
+                      }),
+                    );
+                    navigation.navigate('SearchResult');
+                  }}
+                >
                   <Text className="font-inter-r inter-sm text-black">
                     서귀포시/중문/모슬포
                   </Text>
                   <MoreIcon width={23} height={22} />
-                </View>
+                </Pressable>
                 <View className="flex w-full py-1 border-b border-gray-2" />
               </View>
               <View className="flex flex-col w-full h-auto py-3">
-                <View className="flex flex-row w-full h-auto justify-between">
+                <Pressable
+                  className="flex flex-row w-full h-auto justify-between"
+                  onPress={() => {
+                    searchContext.setSearchState(
+                      (prevState: SearchResultProps) => ({
+                        ...prevState,
+                        location: '이호테우/하귀/애월/한림/협재',
+                      }),
+                    );
+                    navigation.navigate('SearchResult');
+                  }}
+                >
                   <Text className="font-inter-r inter-sm text-black">
                     이호테우/하귀/애월/한림/협재
                   </Text>
                   <MoreIcon width={23} height={22} />
-                </View>
+                </Pressable>
                 <View className="flex w-full py-1 border-b border-gray-2" />
               </View>
               <View className="flex flex-col w-full h-auto py-3">
-                <View className="flex flex-row w-full h-auto justify-between">
+                <Pressable
+                  className="flex flex-row w-full h-auto justify-between"
+                  onPress={() => {
+                    searchContext.setSearchState(
+                      (prevState: SearchResultProps) => ({
+                        ...prevState,
+                        location: '함덕/김녕/세화',
+                      }),
+                    );
+                    navigation.navigate('SearchResult');
+                  }}
+                >
                   <Text className="font-inter-r inter-sm text-black">
                     함덕/김녕/세화
                   </Text>
                   <MoreIcon width={23} height={22} />
-                </View>
+                </Pressable>
                 <View className="flex w-full py-1 border-b border-gray-2" />
               </View>
               <View className="flex flex-col w-full h-auto py-3">
-                <View className="flex flex-row w-full h-auto justify-between">
+                <Pressable
+                  className="flex flex-row w-full h-auto justify-between"
+                  onPress={() => {
+                    searchContext.setSearchState(
+                      (prevState: SearchResultProps) => ({
+                        ...prevState,
+                        location: '남원/표선/성산',
+                      }),
+                    );
+                    navigation.navigate('SearchResult');
+                  }}
+                >
                   <Text className="font-inter-r inter-sm text-black">
                     남원/표선/성산
                   </Text>
                   <MoreIcon width={23} height={22} />
-                </View>
+                </Pressable>
                 <View className="flex w-full py-1 border-b border-gray-2" />
               </View>
             </View>
