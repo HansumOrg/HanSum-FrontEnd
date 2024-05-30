@@ -25,7 +25,8 @@ export default function MainNavigator() {
           tabBarStyle: {
             display:
               getFocusedRouteNameFromRoute(route) === 'SearchResult' ||
-              getFocusedRouteNameFromRoute(route) === 'Calendar'
+              getFocusedRouteNameFromRoute(route) === 'Calendar' ||
+              getFocusedRouteNameFromRoute(route) === 'Filter'
                 ? 'none'
                 : 'flex',
           },
