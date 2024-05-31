@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  View,
-  Text,
-  Dimensions,
-  Pressable,
-  ScrollView,
-} from 'react-native';
+import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { MainTabScreenProps } from '../../navigation/types';
 import ReservationItem from '../../components/common/ReservationItem';
 import GuesthouseRecommList from '../../components/common/GuesthouseRecommList';
@@ -54,8 +46,6 @@ export default function RecommendationsScreen({
   route,
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
-  const screenHeight = Dimensions.get('window').height;
-
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator'); // 'ReservationList'는 다른 페이지의 이름입니다.
   };
@@ -63,22 +53,14 @@ export default function RecommendationsScreen({
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
-      <View className="relative h-screen w-screen flex justify-center items-center">
-        <ScrollView
-          contentContainerStyle={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <View className="mt-4" style={{ height: (screenHeight * 2) / 5 }}>
+      <View className="relative h-screen w-screen flex justify-center items-center bg-white">
+        <View className="w-full h-full">
+          <View className="mt-4 h-2/6 ">
             <GuesthouseRecommList />
           </View>
-          <View
-            className="w-screen pt-1 overflow-y-auto"
-            style={{ height: (screenHeight * 4) / 5 }}
-          >
+          <View className="pt-1overflow-y-auto h-3/5">
             <View className="h-1/2 w-full">
-              <View className="flex-row justify-between px-4">
+              <View className="flex-row justify-between px-2 pt-2 border-t border-gray-2 mx-2">
                 <Text className="text-sm font-inter-b text-black mb-5">
                   이한님의 예약 현황
                 </Text>
@@ -88,17 +70,17 @@ export default function RecommendationsScreen({
                   </Text>
                 </Pressable>
               </View>
-              <View>
+              <View className=" h-4/5">
                 {reservationRecords.slice(0, 2).map(item => (
                   <ReservationItem key={item.reservation_id} item={item} />
                 ))}
               </View>
-            </View>
-            <View className="h-1/5 w-full justify-center items-center">
-              <AdBanner />
+              <View className="h-1/2 w-full justify-center items-center">
+                <AdBanner />
+              </View>
             </View>
           </View>
-        </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
