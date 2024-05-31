@@ -14,6 +14,7 @@ import CalendarIcon from '../../../assets/images/icon_calendar.svg';
 import FilterIcon from '../../../assets/images/icon_filter.svg';
 import SearchResultList from '../../../components/search-result-page/SearchResultList';
 import { useSearchContext } from '../../../components/search-page/SearchContext';
+import { SearchResultProps } from '../../../types';
 
 // searchContext를 통해 검색 결과를 받아올 수 있습니다.
 // searchContext는 checkin_date, checkout_date, location, guesthouse_name, min_price, max_price, mood, facility를 포함합니다.
@@ -74,11 +75,28 @@ export default function SearchResultScreen({
                 <SearchIcon width={26} height={27} />
               </View>
               <View className="flex w-3/4 h-full justify-center">
-                <TextInput
-                  className="font-inter-m text-md text-black"
-                  placeholder={`${guesthouseName}`}
-                  placeholderTextColor="black"
-                />
+                {guesthouseName ? (
+                  <TextInput
+                    className="font-inter-m text-md text-black"
+                    placeholder={`${guesthouseName}`}
+                    placeholderTextColor="black"
+                    onSubmitEditing={event => {
+                      context.setSearchState(
+                        (prevState: SearchResultProps) => ({
+                          ...prevState,
+                          guesthouse_name: event.nativeEvent.text,
+                        }),
+                      );
+                      navigation.navigate('SearchResult');
+                    }}
+                  />
+                ) : (
+                  <TextInput
+                    className="font-inter-m text-md text-black"
+                    placeholder="지역, 게스트하우스 이름"
+                    placeholderTextColor="#BDBDBD"
+                  />
+                )}
               </View>
               <Pressable
                 className="flex w-auto h-full justify-center"
