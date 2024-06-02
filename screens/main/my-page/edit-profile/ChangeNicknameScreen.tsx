@@ -8,9 +8,24 @@ import {
   TextInput,
 } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
-import data from '../../../../data.json';
-import { User } from '../../../../types';
-import CheckNickname from '../../../../components/edit-page/CheckNickname';
+import { user } from '../../../../data.json'; // 중복 확인을 위한 데이터
+import { useMyPageContext } from '../../../../components/my-page/MyPageContext';
+import { MyPageStateType, NicknameProps } from '../../../../types';
+
+function CheckNickname({ context, nickname }: NicknameProps) {
+  let check = 0;
+  if (user.some(inform => inform.username === nickname) || nickname === '') {
+    check = 2;
+  }
+  if (check !== 2) {
+    context.setMyPageState((prevState: MyPageStateType) => ({
+      ...prevState,
+      username: nickname,
+    }));
+    check = 1;
+  }
+  return check;
+}
 
 export default function ChangeNicknameScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -19,10 +34,9 @@ export default function ChangeNicknameScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: EditProfileStackScreenProps<'ChangeNickname'>) {
-  const userId = 1;
-  const userData: User[] = data.user;
+  const context = useMyPageContext();
   const [changeState, setChangeState] = useState(0); // 닉네임 중복확인 상태 0=미확인, 1=확인, 2=불가
-  const [ChangeNickname, setChangeNickname] = useState(''); // 변경할 닉네임
+  const [changeNickname, setChangeNickname] = useState(''); // 변경할 닉네임
 
   const handleInputUpdate = (text: string) => {
     setChangeNickname(text);
@@ -72,9 +86,9 @@ export default function ChangeNicknameScreen({
                   onPress={() =>
                     setChangeState(
                       CheckNickname({
-                        nickname: ChangeNickname,
-                        user: userData,
-                        userId,
+                        context,
+                        nickname: changeNickname,
+                        user,
                       }),
                     )
                   }
@@ -90,9 +104,9 @@ export default function ChangeNicknameScreen({
                   onPress={() =>
                     setChangeState(
                       CheckNickname({
-                        nickname: ChangeNickname,
-                        user: userData,
-                        userId,
+                        context,
+                        nickname: changeNickname,
+                        user,
                       }),
                     )
                   }

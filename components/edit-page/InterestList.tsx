@@ -1,25 +1,34 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { InterestProps } from '../../types';
+import { MyPageStateType, InterestProps } from '../../types';
 
 function deleteInterest(props: InterestProps) {
-  const { interests, userinterest, index, user, type } = props;
+  const { context, interests, userinterest, index, type } = props;
   if (userinterest.length > 0) {
     switch (type) {
       case 0:
-        user.interested_location = userinterest.filter(
-          interest => interest !== interests[index],
-        );
+        context.setMyPageState((prevState: MyPageStateType) => ({
+          ...prevState,
+          interested_location: userinterest.filter(
+            interest => interest !== interests[index],
+          ),
+        }));
         break;
       case 1:
-        user.interest_hobby = userinterest.filter(
-          interest => interest !== interests[index],
-        );
+        context.setMyPageState((prevState: MyPageStateType) => ({
+          ...prevState,
+          interested_hobby: userinterest.filter(
+            interest => interest !== interests[index],
+          ),
+        }));
         break;
       case 2:
-        user.interested_food = userinterest.filter(
-          interest => interest !== interests[index],
-        );
+        context.setMyPageState((prevState: MyPageStateType) => ({
+          ...prevState,
+          interested_food: userinterest.filter(
+            interest => interest !== interests[index],
+          ),
+        }));
         break;
       default:
         break;
@@ -28,17 +37,29 @@ function deleteInterest(props: InterestProps) {
 }
 
 function pushInterest(props: InterestProps) {
-  const { interests, userinterest, index, user, type } = props;
+  const { context, interests, userinterest, index, type } = props;
   if (userinterest.length < 3) {
     switch (type) {
       case 0:
-        user.interested_location.push(interests[index]);
+        context.setMyPageState((prevState: MyPageStateType) => ({
+          ...prevState,
+          interested_location: [
+            ...prevState.interested_location,
+            interests[index],
+          ],
+        }));
         break;
       case 1:
-        user.interest_hobby.push(interests[index]);
+        context.setMyPageState((prevState: MyPageStateType) => ({
+          ...prevState,
+          interested_hobby: [...prevState.interested_hobby, interests[index]],
+        }));
         break;
       case 2:
-        user.interested_food.push(interests[index]);
+        context.setMyPageState((prevState: MyPageStateType) => ({
+          ...prevState,
+          interested_food: [...prevState.interested_food, interests[index]],
+        }));
         break;
       default:
         break;
@@ -47,36 +68,26 @@ function pushInterest(props: InterestProps) {
 }
 
 function interestList(props: InterestProps) {
-  const { interests, userinterest, index, user, type, setUserData } = props;
+  const { context, interests, userinterest, index, type } = props;
 
   const handlePress = () => {
     // onPress 이벤트가 있을 때 추가와 삭제를 수행
     if (userinterest.includes(interests[index])) {
-      const newUserInterest = deleteInterest({
+      deleteInterest({
+        context,
         interests,
         userinterest,
         index,
-        user,
         type,
-        setUserData,
       });
-      setUserData(prevState => ({
-        ...prevState,
-        userinterest: newUserInterest,
-      }));
     } else {
-      const newUserInterest = pushInterest({
+      pushInterest({
+        context,
         interests,
         userinterest,
         index,
-        user,
         type,
-        setUserData,
       });
-      setUserData(prevState => ({
-        ...prevState,
-        userinterest: newUserInterest,
-      }));
     }
   };
 
