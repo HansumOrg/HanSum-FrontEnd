@@ -34,10 +34,35 @@ export type LoginStackScreenProps<T extends keyof LoginStackParamList> =
 
 export type RegisterStackParamList = {
   Register: undefined;
-  EnterPersonalInformation: undefined;
-  EnterNickname: undefined;
-  SelectMbti: undefined;
-  AgreeTos: undefined;
+  EnterPersonalInformation: {
+    userName: string;
+    userId: string;
+    password: string;
+  };
+  EnterNickname: {
+    userName: string;
+    userId: string;
+    password: string;
+    gender: string;
+    brithday: string;
+  };
+  SelectMbti: {
+    userName: string;
+    userId: string;
+    password: string;
+    gender: string;
+    brithday: string;
+    nickName: string;
+  };
+  AgreeTos: {
+    userName: string;
+    userId: string;
+    password: string;
+    gender: string;
+    brithday: string;
+    nickName: string;
+    mbti: string;
+  };
   Start: undefined;
 };
 
@@ -115,7 +140,9 @@ export type EditProfileStackScreenProps<
 >;
 
 export type GuesthouseDetailsStackParamList = {
-  GuesthouseDetails: undefined;
+  GuesthouseDetails: {
+    guesthouseId: number;
+  };
   ChatGuide: undefined;
   Reservation: undefined;
 };
