@@ -2,7 +2,9 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SuccessResponse, FailedResponse } from '../api/types';
 
 /**
- * Type predicate to narrow an unknown error to `FetchBaseQueryError`
+ * 주어진 오류가 FetchBaseQueryError의 인스턴스인지 확인합니다.
+ * @param error - 확인할 오류입니다.
+ * @returns FetchBaseQueryError인지 여부를 나타내는 부울 값입니다.
  */
 export function isFetchBaseQueryError(
   error: unknown,
@@ -11,7 +13,9 @@ export function isFetchBaseQueryError(
 }
 
 /**
- * Type predicate to narrow an unknown error to an object with a string 'message' property
+ * 알 수 없는 오류를 문자열 'message' 속성을 가진 객체로 좁히는 타입 프레디케이트입니다.
+ * @param error - 확인할 오류입니다.
+ * @returns 'message' 속성이 문자열 타입인지 여부를 나타내는 부울 값입니다.
  */
 export function isErrorWithMessage(
   error: unknown,
@@ -24,7 +28,11 @@ export function isErrorWithMessage(
   );
 }
 
-// 요청이 성공한 응답인지 구분하는 함수입니다.
+/**
+ * 주어진 응답이 SuccessResponse의 인스턴스인지 확인합니다.
+ * @param response - 확인할 응답입니다.
+ * @returns SuccessResponse인지 여부를 나타내는 부울 값입니다.
+ */
 export function isSuccessResponse(
   response: unknown,
 ): response is SuccessResponse {
@@ -33,7 +41,11 @@ export function isSuccessResponse(
   );
 }
 
-// 요청이 실패한 응답인지 구분하는 함수입니다.
+/**
+ * 주어진 응답이 FailedResponse의 인스턴스인지 확인합니다.
+ * @param response - 확인할 응답입니다.
+ * @returns FailedResponse인지 여부를 나타내는 부울 값입니다.
+ */
 export function isFailedResponse(
   response: unknown,
 ): response is FailedResponse {
