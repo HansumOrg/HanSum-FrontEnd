@@ -118,6 +118,7 @@ export type GuesthouseDetailsStackParamList = {
   GuesthouseDetails: undefined;
   ChatGuide: undefined;
   Reservation: undefined;
+  ReservationComplete: undefined;
 };
 
 export type GuesthouseDetailsStackScreenProps<
@@ -130,6 +131,7 @@ export type GuesthouseDetailsStackScreenProps<
 export type ApiTestStackParamList = {
   ApiTest: undefined;
   Join: undefined;
+  Login: undefined;
 };
 
 export type ApiTestStackScreenProps<T extends keyof ApiTestStackParamList> =
