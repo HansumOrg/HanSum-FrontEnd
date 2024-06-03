@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { RegisterStackScreenProps } from '../../../navigation/types';
 import RectButton from '../../../components/common/RectButton';
@@ -6,8 +6,12 @@ import UiCheckbox from '../../../components/common/Checkbox';
 import CheckboxItem from '../../../components/common/CheckboxItem';
 
 export default function AgreeTosScreen({
+  route,
   navigation,
 }: RegisterStackScreenProps<'AgreeTos'>) {
+  const { userName, userId, password, gender, brithday, nickName, mbti } =
+    route.params;
+  const [userAgreement, setUserAgreement] = useState(false);
   const [agreements, setAgreements] = useState({
     terms: false,
     privacy: false,
@@ -15,6 +19,10 @@ export default function AgreeTosScreen({
     sensitive: false,
     marketing: false,
   });
+  useEffect(() => {
+    const { terms, privacy, location, sensitive } = agreements;
+    setUserAgreement(terms && privacy && location && sensitive);
+  }, [agreements]);
 
   const handleSelectAll = (selectAll: boolean) => {
     setAgreements({
@@ -34,7 +42,16 @@ export default function AgreeTosScreen({
   };
 
   const handleSubmit = () => {
-    console.log(agreements);
+    console.log(
+      `username :${userId}`,
+      `password :${password}`,
+      `name :${userName}`,
+      `sex :${gender}`,
+      `birthday :${brithday}`,
+      `nickname :${nickName}`,
+      `mbti :${mbti}`,
+      `userAgreement :${userAgreement}`,
+    );
     navigation.navigate('Start');
   };
 
@@ -96,7 +113,11 @@ export default function AgreeTosScreen({
         </View>
         <View className="h-1/5 flex">
           <View className="h-2/3 mt-2">
-            <RectButton isActivate onPress={handleSubmit} text="시작하기" />
+            <RectButton
+              isActivate={userAgreement}
+              onPress={handleSubmit}
+              text="시작하기"
+            />
           </View>
         </View>
       </View>

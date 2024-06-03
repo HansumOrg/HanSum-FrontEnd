@@ -13,12 +13,15 @@ import Title from '../../../components/common/Title';
 import WheelPicker from '../../../components/get-started/WheelPicker'; // Assuming the file location
 
 const EnterPersonalInformationScreen = ({
+  route,
   navigation,
 }: RegisterStackScreenProps<'EnterPersonalInformation'>) => {
+  const { userName, userId, password } = route.params;
   const [gender, setGender] = useState('');
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
+  const brithday = `${year}-${month}-${day}`;
 
   const handleGenderSelect = (selectedGender: string) => {
     setGender(selectedGender);
@@ -26,7 +29,7 @@ const EnterPersonalInformationScreen = ({
 
   const submitPersonalInformation = () => {
     console.log('submitPersonalInformation');
-    console.log(gender, year, month, day);
+    console.log(gender, brithday);
   };
 
   const years = Array.from({ length: 50 }, (_, i) => (1970 + i).toString());
@@ -92,7 +95,13 @@ const EnterPersonalInformationScreen = ({
               isActivate
               onPress={() => {
                 submitPersonalInformation();
-                navigation.navigate('EnterNickname');
+                navigation.navigate('EnterNickname', {
+                  userName,
+                  userId,
+                  password,
+                  gender,
+                  brithday,
+                });
               }}
               text="선택완료"
             />

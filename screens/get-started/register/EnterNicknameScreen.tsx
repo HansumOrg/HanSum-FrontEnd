@@ -7,11 +7,13 @@ import Title from '../../../components/common/Title';
 import DuplicateNicName from '../../../components/api/DuplicateNicName';
 
 export default function EnterNicknameScreen({
+  route,
   navigation,
 }: RegisterStackScreenProps<'EnterNickname'>) {
   const [nickName, setNickName] = React.useState('');
   const [isDuplicate, setIsDuplicate] = React.useState(true);
   const [isChecked, setIsChecked] = React.useState(false);
+  const { userName, userId, password, gender, brithday } = route.params;
 
   const nickNameSubmit = async () => {
     try {
@@ -68,7 +70,16 @@ export default function EnterNicknameScreen({
             ) : (
               <RectButton
                 isActivate
-                onPress={() => navigation.navigate('SelectMbti')}
+                onPress={() =>
+                  navigation.navigate('SelectMbti', {
+                    nickName,
+                    userName,
+                    userId,
+                    password,
+                    gender,
+                    brithday,
+                  })
+                }
                 text="선택완료"
               />
             )}

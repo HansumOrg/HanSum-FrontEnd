@@ -110,20 +110,16 @@ export default function RegisterScreen({
               }
               onPress={() => {
                 signupSumit();
-                navigation.navigate('EnterPersonalInformation');
+                navigation.navigate('EnterPersonalInformation', {
+                  userName,
+                  userId,
+                  password,
+                });
+                // 이름과 아이디, 비밀번호를 파라미터로 넘겨줘야함
               }}
               text="다음"
             />
           </View>
-          {/* <View className="flex space-x-2 flex-row divide-x-2 items-center justify-center mt-2 w-full ">
-              <View>
-                <Text className="text-black">아이디 찾기</Text>
-              </View>
-              <View>
-                <Text className="ml-2 text-black">비밀번호 찾기</Text>
-              </View> 
-            </View>
-            */}
         </View>
       </View>
     </SafeAreaView>

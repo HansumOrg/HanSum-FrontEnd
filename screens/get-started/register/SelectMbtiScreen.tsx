@@ -5,12 +5,20 @@ import RadioButtons from '../../../components/common/RadioButtonItem';
 import RectButton from '../../../components/common/RectButton';
 
 export default function SelectMbtiScreen({
+  route,
   navigation,
 }: RegisterStackScreenProps<'SelectMbti'>) {
+  const { userName, userId, password, gender, brithday, nickName } =
+    route.params;
+
   const [selectedIE, setSelectedIE] = useState('');
   const [selectedNS, setSelectedNS] = useState('');
   const [selectedFT, setSelectedFT] = useState('');
   const [selectedPJ, setSelectedPJ] = useState('');
+  const mbti = `${selectedIE}${selectedNS}${selectedFT}${selectedPJ}`
+    .replace(/More /g, '')
+    .replace(/Less /g, '')
+    .replace(/Some /g, '');
   const MbtiSubmit = () => {
     if (
       selectedIE !== '' &&
@@ -19,7 +27,15 @@ export default function SelectMbtiScreen({
       selectedPJ !== ''
     ) {
       console.log('mbti', selectedIE, selectedNS, selectedFT, selectedPJ);
-      navigation.navigate('AgreeTos');
+      navigation.navigate('AgreeTos', {
+        userName,
+        userId,
+        password,
+        brithday,
+        gender,
+        nickName,
+        mbti,
+      });
     }
   };
   const options = (a: string, b: string) => [
@@ -43,8 +59,8 @@ export default function SelectMbtiScreen({
     },
     {
       key: '4',
-      label: `More ${b}`,
-      value: b,
+      label: `Some ${b}`,
+      value: `Some ${b}`,
       size: 6,
     },
     {
@@ -55,8 +71,8 @@ export default function SelectMbtiScreen({
     },
     {
       key: '6',
-      label: `Some ${b}`,
-      value: `Some ${b}`,
+      label: `More ${b}`,
+      value: `More ${b}`,
       size: 6,
     },
   ];
@@ -66,7 +82,7 @@ export default function SelectMbtiScreen({
 
       <View className="h-screen bg-white flex justify-start items-center px-6 pt-6">
         <View className=" flex justify-center w-full rounded-2xl ">
-          <Text className=" font-inter-b text-md text-black">INFP유형</Text>
+          <Text className=" font-inter-b text-md text-black">{mbti}유형</Text>
         </View>
         <View className="h-1/6 w-full rounded-2xl mt-2 justify-center items-center">
           <RadioButtons
