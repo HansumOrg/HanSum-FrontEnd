@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import GuesthouseDetailsScreen from '../screens/main/guesthouse-details/GuesthouseDetailsScreen';
 import ChatGuideScreen from '../screens/main/guesthouse-details/ChatGuideScreen';
 import ReservationScreen from '../screens/main/guesthouse-details/ReservationScreen';
+import ReservationCompleteScreen from '../screens/main/guesthouse-details/ReservationCompleteScreen';
 import { GuesthouseDetailsStackParamList } from './types';
 import Header from '../components/gesthouse-detail/HeaderComponent';
 
@@ -29,6 +30,10 @@ export default function GuesthouseDetailsNavigator() {
       <GuesthouseDetailsStack.Screen
         name="Reservation"
         component={ReservationScreen}
+      />
+      <GuesthouseDetailsStack.Screen
+        name="ReservationComplete"
+        component={ReservationCompleteScreen}
       />
     </GuesthouseDetailsStack.Navigator>
   );
