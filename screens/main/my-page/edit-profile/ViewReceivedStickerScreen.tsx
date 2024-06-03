@@ -1,9 +1,8 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, View, Text } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
-import data from '../../../../data.json';
 import StickerList from '../../../../components/edit-page/StickerList';
-import { Sticker } from '../../../../types';
+import { useMyPageContext } from '../../../../components/my-page/MyPageContext';
 
 export default function ViewReceivedStickerScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -12,8 +11,7 @@ export default function ViewReceivedStickerScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: EditProfileStackScreenProps<'ViewReceivedSticker'>) {
-  const userId = 1;
-  const stickerData: Sticker[] = data.sticker;
+  const context = useMyPageContext();
   const mentList = [
     '항상 웃음을 잃지 않아요',
     '대화가 즐거웠어요',
@@ -38,10 +36,8 @@ export default function ViewReceivedStickerScreen({
             {mentList.map((_, index) => {
               // user_id와 sticker_text가 일치하는 sticker_count를 찾아서 count에 저장
               const count =
-                stickerData.find(
-                  sticker =>
-                    sticker.user_id === userId &&
-                    sticker.sticker_text === mentList[index],
+                context.myPageState.sticker.find(
+                  sticker => sticker.sticker_text === mentList[index],
                 )?.sticker_count ?? 0;
               return StickerList({ mentList, index, count });
             })}

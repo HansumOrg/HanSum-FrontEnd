@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SafeAreaView, StatusBar, View, Text, ScrollView } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
-import data from '../../../../data.json';
-import { User } from '../../../../types';
 import InterestList from '../../../../components/edit-page/InterestList';
+import { useMyPageContext } from '../../../../components/my-page/MyPageContext';
 
 const travleList = [
   '성산일출봉',
@@ -35,19 +34,10 @@ export default function AddInterestScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: EditProfileStackScreenProps<'AddInterest'>) {
-  const userId = 1;
-  const [userData, setUserData] = useState<User[]>(data.user);
-  const [travleInterest, setTravleInterest] = useState<string[]>([]);
-  const [hobbyInterest, setHobbyInterest] = useState<string[]>([]);
-  const [foodInterest, setFoodInterest] = useState<string[]>([]);
-
-  useEffect(() => {
-    setTravleInterest(userData[userId - 1].interested_location);
-    setHobbyInterest(userData[userId - 1].interest_hobby);
-    setFoodInterest(userData[userId - 1].interested_food);
-    data.user[userId - 1] = userData[userId - 1];
-  }, [userData]);
-
+  const context = useMyPageContext();
+  const travleInterest = context.myPageState.interested_location;
+  const hobbyInterest = context.myPageState.interested_hobby;
+  const foodInterest = context.myPageState.interested_food;
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -65,12 +55,11 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {travleList.map((_, index) =>
                 InterestList({
+                  context,
                   interests: travleList,
                   userinterest: travleInterest,
                   index,
-                  user: userData[userId - 1],
                   type: 0,
-                  setUserData,
                 }),
               )}
             </View>
@@ -83,12 +72,11 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {hobbyList.map((_, index) =>
                 InterestList({
+                  context,
                   interests: hobbyList,
                   userinterest: hobbyInterest,
                   index,
-                  user: userData[userId - 1],
                   type: 1,
-                  setUserData,
                 }),
               )}
             </View>
@@ -103,12 +91,11 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {foodList.map((_, index) =>
                 InterestList({
+                  context,
                   interests: foodList,
                   userinterest: foodInterest,
                   index,
-                  user: userData[userId - 1],
                   type: 2,
-                  setUserData,
                 }),
               )}
             </View>

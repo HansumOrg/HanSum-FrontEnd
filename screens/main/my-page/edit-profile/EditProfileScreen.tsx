@@ -10,11 +10,10 @@ import {
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
 import BackIcon from '../../../../assets/images/icon_goback.svg';
 import InterestIcon from '../../../../assets/images/icon_addInterest.svg';
-import data from '../../../../data.json';
-import { User, Sticker } from '../../../../types';
 import EditPageStickerList from '../../../../components/edit-page/EditPageStickerList';
 import MbtiCheck from '../../../../components/edit-page/MbtiCheck';
 import InterestBorder from '../../../../components/edit-page/InterestBorder';
+import { useMyPageContext } from '../../../../components/my-page/MyPageContext';
 
 function countCheck(count: number): boolean {
   // 관심사 개수 체크(추가 유도 글 노출 여부) true : 노출, false : 미노출
@@ -30,9 +29,7 @@ export default function EditProfileScreen({
   route,
   navigation,
 }: EditProfileStackScreenProps<'EditProfile'>) {
-  const userId = 1;
-  const userData: User[] = data.user;
-  const stickerData: Sticker[] = data.sticker;
+  const context = useMyPageContext();
   const [travleInterestCount, setTravelInterestCount] = useState(false);
   const [hobbyInterestCount, setHobbyInterestCount] = useState(false);
   const [foodInterestCount, setFoodInterestCount] = useState(false);
@@ -40,22 +37,16 @@ export default function EditProfileScreen({
   useEffect(() => {
     // 관심사 개수 체크(추가 유도 글 노출 여부)
     setTravelInterestCount(
-      countCheck(userData[userId - 1].interested_location.length),
+      countCheck(context.myPageState.interested_location.length),
     );
     setHobbyInterestCount(
-      countCheck(userData[userId - 1].interest_hobby.length),
+      countCheck(context.myPageState.interested_hobby.length),
     );
     setFoodInterestCount(
-      countCheck(userData[userId - 1].interested_food.length),
+      countCheck(context.myPageState.interested_food.length),
     );
-    setStickerCount(!stickerData.some(sticker => sticker.user_id === userId));
-  }, [
-    foodInterestCount,
-    hobbyInterestCount,
-    travleInterestCount,
-    stickerData,
-    userData,
-  ]);
+    setStickerCount(context.myPageState.sticker.length === 0);
+  }, [context]);
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -77,7 +68,7 @@ export default function EditProfileScreen({
               </Text>
               <View className="flex flex-row w-1/2 justify-between items-cente">
                 <Text className="font-inter-sb text-xl text-black">
-                  {userData[userId - 1].username}
+                  {context.myPageState.username}
                 </Text>
                 <Pressable
                   onPress={() => navigation.navigate('ChangeNickname')}
@@ -94,7 +85,7 @@ export default function EditProfileScreen({
               </Text>
               <View className="flex flex-row w-1/2 justify-between items-center">
                 {/* mbti에 따른 border 테두리 색 변화 */}
-                <MbtiCheck mbti={userData[userId - 1].mbti} />
+                <MbtiCheck mbti={context.myPageState.mbti} />
                 <Pressable>
                   <Text className="font-inter-m text-sm text-black underline">
                     수정
@@ -117,7 +108,7 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {userData[userId - 1].interested_location.map(
+                {context.myPageState.interested_location.map(
                   (interest, index) => InterestBorder(interest, index),
                 )}
                 <Pressable
@@ -138,7 +129,7 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {userData[userId - 1].interest_hobby.map((interest, index) =>
+                {context.myPageState.interested_hobby.map((interest, index) =>
                   InterestBorder(interest, index),
                 )}
                 <Pressable
@@ -159,7 +150,7 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {userData[userId - 1].interested_food.map((interest, index) =>
+                {context.myPageState.interested_food.map((interest, index) =>
                   InterestBorder(interest, index),
                 )}
                 <Pressable
@@ -190,11 +181,9 @@ export default function EditProfileScreen({
             <View className="flex h-1/4 w-full">
               <View className="flex flex-col w-full h-auto">
                 <ScrollView showsVerticalScrollIndicator={false}>
-                  {stickerData
-                    .filter(sticker => sticker.user_id === userId)
-                    .map((sticker, index) =>
-                      EditPageStickerList({ sticker, index }),
-                    )}
+                  {context.myPageState.sticker.map((sticker, index) =>
+                    EditPageStickerList({ sticker, index }),
+                  )}
                 </ScrollView>
               </View>
             </View>

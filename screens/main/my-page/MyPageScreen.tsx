@@ -11,8 +11,9 @@ import { MyPageStackScreenProps } from '../../../navigation/types';
 import NoticeIcon from '../../../assets/images/icon_notice.svg';
 import MoreIcon from '../../../assets/images/icon_more.svg';
 import data from '../../../data.json';
-import { User, Reservation, Guesthouse } from '../../../types';
+import { Reservation, Guesthouse } from '../../../types';
 import ReservationBox from '../../../components/my-page/ReservationBox';
+import { useMyPageContext } from '../../../components/my-page/MyPageContext';
 
 export default function MyPageScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -20,8 +21,8 @@ export default function MyPageScreen({
   route,
   navigation,
 }: MyPageStackScreenProps<'MyPage'>) {
-  const userId = 1;
-  const userData: User[] = data.user;
+  const context = useMyPageContext();
+  const userId = context.myPageState.user_id;
   const reservationData: Reservation[] = data.reservation;
   const guesthouseData: Guesthouse[] = data.guesthouse;
   return (
@@ -40,8 +41,9 @@ export default function MyPageScreen({
           <View className="flex flex-row w-auto h-1/5 justify-between items-end">
             <View className="flex flex-col h-full justify-end">
               <Text className="font-inter-b text-md text-black">
-                {userData.find(user => user.user_id === userId)?.username ??
-                  '사용자를 찾을 수 없습니다.'}
+                {userId
+                  ? context.myPageState.username
+                  : '사용자를 찾을 수 없습니다.'}
               </Text>
               <Text className="font-inter-m text-sm text-black/[.5]">
                 Show profile

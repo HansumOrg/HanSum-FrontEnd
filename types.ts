@@ -3,6 +3,52 @@
 import { PressableProps, TextInputProps } from 'react-native';
 import { MainTabScreenProps } from './navigation/types';
 
+// SearchResultScreen.tsx
+export interface SearchResultScreenProps {
+  location: string;
+  checkinDate: string;
+  checkoutDate: string;
+  guesthouses: Guesthouse[];
+}
+
+// SearchScreen.tsx
+export interface CalendarProps {
+  reservationStartDate: Date | null;
+  reservationEndDate: Date | null;
+  setReservationStartDate: (date: Date | null) => void;
+  setReservationEndDate: (date: Date | null) => void;
+}
+
+export interface CalendarSeletedDaysProps {
+  reservationStartDate: Date | null;
+  reservationEndDate: Date | null;
+  setReservationStartDate: (date: Date | null) => void;
+  setReservationEndDate: (date: Date | null) => void;
+  date: Date;
+  today: Date;
+}
+
+// MultiSlider.tsx
+export interface MultiSliderProps {
+  min: number;
+  max: number;
+  minStep: number;
+  setMinStep: (value: number) => void;
+  maxStep: number;
+  setMaxStep: (value: number) => void;
+}
+
+export interface SearchResultProps {
+  location: string | null;
+  checkin_date: string | null;
+  checkout_date: string | null;
+  guesthouse_name: string | null;
+  mood: string | null;
+  facility: string | null;
+  min_price: number | null;
+  max_price: number | null;
+}
+
 // common
 
 export interface User {
@@ -17,7 +63,7 @@ export interface User {
   mbti: string;
   user_agreement: number;
   interested_location: string[];
-  interest_hobby: string[];
+  interested_hobby: string[];
   interested_food: string[];
 }
 
@@ -126,13 +172,26 @@ export interface ReservationBoxProps {
   guesthouse: Guesthouse;
 }
 
+export interface MyPageStateType {
+  user_id: number;
+  username: string;
+  mbti: string;
+  interested_location: string[];
+  interested_hobby: string[];
+  interested_food: string[];
+  sticker: Sticker[];
+}
+
 // edit-page types
 
 export interface NicknameProps {
   // ChangeNicknameScreen.tsx
+  context: {
+    myPageState: MyPageStateType;
+    setMyPageState: React.Dispatch<React.SetStateAction<MyPageStateType>>;
+  };
   nickname: string;
   user: User[];
-  userId: number;
 }
 
 export interface Sticker {
@@ -163,10 +222,13 @@ export interface MbtiCheckProps {
 
 export interface InterestProps {
   // AddInterestScreen.tsx
+  context: {
+    myPageState: MyPageStateType;
+    setMyPageState: React.Dispatch<React.SetStateAction<MyPageStateType>>;
+  };
   interests: string[];
   userinterest: string[];
   index: number;
-  user: User;
   type: number; // 0: 여행지, 1: 취미, 2: 음식
   setUserData: React.Dispatch<React.SetStateAction<User[]>>;
 }
