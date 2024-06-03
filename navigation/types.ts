@@ -144,8 +144,12 @@ export type GuesthouseDetailsStackParamList = {
     guesthouseId: number;
   };
   ChatGuide: undefined;
-  Reservation: undefined;
-  ReservationComplete: undefined;
+  Reservation: {
+    guesthouseId: number;
+  };
+  ReservationComplete: {
+    guesthouseId: number;
+  };
 };
 
 export type GuesthouseDetailsStackScreenProps<
