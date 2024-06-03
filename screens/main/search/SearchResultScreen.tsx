@@ -138,7 +138,19 @@ export default function SearchResultScreen({
         <FlatList
           className="w-11/12"
           data={guesthousSampleData.flatMap(data => data.guesthouses)}
-          renderItem={({ item }) => <SearchResultList item={item} />}
+          renderItem={({ item }) => (
+            <SearchResultList
+              guesthouse_id={item.guesthouse_id}
+              guesthouse_name={item.guesthouse_name}
+              address={item.address}
+              location={item.location}
+              price={item.price}
+              phone={item.phone}
+              rating={item.rating}
+              imageUrl={item.imageUrl}
+              mood={item.mood}
+            />
+          )}
           keyExtractor={item => item.guesthouse_id.toString()}
         />
       </View>
