@@ -1,19 +1,14 @@
-import {
-  CheckNicknameProps,
-  CheckNicknameResponse,
-} from '../../screens/get-started/register/types';
+import { CheckNicknameProps, CheckNicknameResponse } from '../../types';
 // API의 기본 URL 설정
-const API_BASE_URL = 'https://example.com'; // 실제 백엔드 서버 URL로 대체
+const API_BASE_URL = 'https://example.com'; // 실제 백엔드 서버 URL로 대체 혹은 현규 형이 설정해줄거임
 
-// 아이디 중복 확인 함수
+// 닉네임 중복 확인 함수
 export default async function DuplicateNicName({
   nickName,
   onCheck,
 }: CheckNicknameProps): Promise<void> {
   try {
-    const url = `${API_BASE_URL}/users/nickname?nickname=${encodeURIComponent(
-      nickName,
-    )}`;
+    const url = `${API_BASE_URL}  =${encodeURIComponent(nickName)}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`HTTP status ${response.status}`);

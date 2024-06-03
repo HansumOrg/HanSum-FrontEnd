@@ -1,10 +1,7 @@
-import {
-  CheckDuplicateProps,
-  CheckDuplicateResponse,
-} from '../../screens/get-started/register/types'; // 타입 정의 import
+import { CheckDuplicateProps, CheckDuplicateResponse } from '../../types'; // 타입 정의 import
 
 // API의 기본 URL 설정
-const API_BASE_URL = 'https://example.com'; // 실제 백엔드 서버 URL로 대체
+const API_BASE_URL = 'https://example.com'; // 실제 백엔드 서버 URL로 대체 혹은 현규 형이 설정해줄거임
 
 // 아이디 중복 확인 함수
 export default async function DuplicateId({
