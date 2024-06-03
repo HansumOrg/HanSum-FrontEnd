@@ -75,7 +75,7 @@ const getDayOfWeek = (dateString: string) => {
 
 export default function GuesthouseDetailsScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   route,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
@@ -83,11 +83,11 @@ export default function GuesthouseDetailsScreen({
   const guesthouse = guesthouseData;
   const { members } = membersData;
   const reservation = reservationRecords[0];
-
   const checkinDate = reservation.checkin_date.split(' ')[0];
   const checkoutDate = reservation.checkout_date.split(' ')[0];
   const checkinDayOfWeek = getDayOfWeek(checkinDate);
   const checkoutDayOfWeek = getDayOfWeek(checkoutDate);
+  // const { guesthouseId } = route.params;
 
   return (
     <SafeAreaView>
@@ -185,8 +185,9 @@ export default function GuesthouseDetailsScreen({
           <Pressable
             className="my-4 bg-primary-2 items-center justify-center w-full shadow-black drop-shadow-xl"
             style={{ height: (screenHeight * 1) / 14 }}
+            onPress={() => navigation.navigate('Reservation', { guesthouseId })}
           >
-            <Text className="font-inter-b text-lg text-white">등록하기</Text>
+            <Text className="font-inter-b text-lg text-white">예약하기</Text>
           </Pressable>
         </View>
       </ScrollView>

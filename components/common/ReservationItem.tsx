@@ -1,11 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-
-interface ReservationRecord {
-  guesthouse_name: string;
-  checkin_date: string;
-  checkout_date: string;
-}
+import { ReservationRecord } from '../../types';
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);

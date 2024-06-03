@@ -14,21 +14,8 @@ import PhoneSVG from '../../../assets/images/icon_phone.svg';
 import GoFront from '../../../assets/images/icon_goback.svg';
 import UnChecked from '../../../components/reservation/unchecked_rectangle.svg';
 import Checked from '../../../components/reservation/checked_rectangle.svg';
-
-interface ReservationRecord {
-  guesthouse_name: string;
-  guesthouse_address: string;
-  guesthouse_phone: string;
-  checkin_date: string;
-  checkout_date: string;
-  nights: number;
-}
-
-interface GuestInfo {
-  nickname: string;
-  name: string;
-  mbti: string;
-}
+import { ReservationRecord, GuestInfo } from '../../../types';
+import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -43,10 +30,14 @@ const formatDate = (dateString: string) => {
   });
 };
 
-export default function ReservationScreen() {
+export default function ReservationScreen({
+  route,
+  navigation,
+}: GuesthouseDetailsStackScreenProps<'Reservation'>) {
   const [agreeMbti, setAgreeMbti] = useState(false);
   const [agreeNickname, setAgreeNickname] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const { guesthouseId } = route.params;
 
   const reservation: ReservationRecord = {
     guesthouse_name: '서점 숙소',
@@ -73,7 +64,8 @@ export default function ReservationScreen() {
       setModalVisible(true);
     } else {
       // 예약하기 로직을 추가하세요.
-      console.log('예약 완료');
+      navigation.navigate('ReservationComplete', { guesthouseId });
+      console.log('예약 완료', guesthouseId);
     }
   };
   const styles = StyleSheet.create({

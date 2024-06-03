@@ -42,7 +42,7 @@ const reservationRecords = [
 
 export default function RecommendationsScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   route,
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
@@ -56,7 +56,7 @@ export default function RecommendationsScreen({
       <View className="relative h-screen w-screen flex justify-center items-center bg-white">
         <View className="w-full h-full">
           <View className="mt-4 h-2/6 ">
-            <GuesthouseRecommList />
+            <GuesthouseRecommList navigation={navigation} route={route} />
           </View>
           <View className="pt-1overflow-y-auto h-3/5">
             <View className="h-1/2 w-full">
