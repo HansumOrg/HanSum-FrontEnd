@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { FindButtonProps } from '../../screens/get-started/register/types';
+import { FindButtonProps } from '../../types';
 
 export default function FindButton(props: FindButtonProps) {
   const { onPress1, onPress2, text1, text2 } = props;

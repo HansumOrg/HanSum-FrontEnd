@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { CheckboxItemProps } from '../../screens/get-started/register/types';
+import { CheckboxItemProps } from '../../types';
 import UiCheckbox from './Checkbox';
 
 // TODO: 이 부분은 components/common/CheckboxItem.tsx로 분리해야함 잊지 말 것.

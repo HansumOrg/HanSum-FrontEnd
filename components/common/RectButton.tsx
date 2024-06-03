@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Pressable } from 'react-native';
-import { RectButtonProps } from '../../screens/get-started/register/types';
+import { RectButtonProps } from '../../types';
 
 export default function RectButton(props: RectButtonProps) {
   const { onPress, text, isActivate } = props;

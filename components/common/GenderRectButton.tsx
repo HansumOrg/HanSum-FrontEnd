@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { GenderButtonProps } from '../../screens/get-started/register/types';
+import { GenderButtonProps } from '../../types';
 
 export default function GenderButton(props: GenderButtonProps) {
   const { text, isActivate } = props;

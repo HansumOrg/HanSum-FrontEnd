@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Pressable } from 'react-native';
 import Check from '../icon/Check';
-import { UiCheckboxProps } from '../../screens/get-started/register/types';
+import { UiCheckboxProps } from '../../types';
 
 const UiCheckbox = (props: UiCheckboxProps) => {
   const { isChecked, onValueChangeHandler, children, className } = props;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TextInput } from 'react-native';
-import { InputTextProps } from '../../screens/get-started/register/types';
+import { InputTextProps } from '../../types';
 
 export default function InputText(props: InputTextProps) {
   // logic
@@ -18,7 +18,7 @@ export default function InputText(props: InputTextProps) {
         <TextInput
           className="font-inter-r placeholder:font-inter-r text-black"
           placeholder={name}
-          placeholderTextColor="#"
+          placeholderTextColor="#000000"
           value={value}
           textContentType={textContentType}
           secureTextEntry={secureTextEntry}
@@ -33,7 +33,7 @@ export default function InputText(props: InputTextProps) {
       <TextInput
         className="font-inter-r placeholder:font-inter-r text-black"
         placeholder={name}
-        placeholderTextColor="#"
+        placeholderTextColor="#000000"
         value={value}
         textContentType={textContentType}
         secureTextEntry={secureTextEntry}

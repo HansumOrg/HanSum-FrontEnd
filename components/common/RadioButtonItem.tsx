@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { RadioButtonsProps } from '../../screens/get-started/register/types';
+import { RadioButtonsProps } from '../../types';
 
 export default function RadioButtons(props: RadioButtonsProps) {
   const { options, activeItem, onSelectItem, text1, text2, mbti1, mbti2 } =
