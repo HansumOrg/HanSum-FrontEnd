@@ -28,12 +28,6 @@ export default function ApiTestScreen({
         >
           <Text>회원가입 테스트</Text>
         </Pressable>
-        <Pressable
-          className="h-10 bg-purple-200 flex justify-center items-center"
-          onPress={() => navigation.navigate('Login')}
-        >
-          <Text>로그인 테스트</Text>
-        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
