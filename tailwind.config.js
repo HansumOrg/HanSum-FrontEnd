@@ -13,13 +13,13 @@ module.exports = {
         {
           lineHeight: '1.5',
           letterSpacing: '-0.24px',
-          fontWeight: '500',
+          fontWeight: '300',
         },
       ],
       ss: [
         '14px',
         {
-          lineHeight: '1.5',
+          lineHeight: '0.5',
           letterSpacing: '-0.24px',
           fontWeight: '500',
         },
@@ -33,38 +33,6 @@ module.exports = {
         },
       ],
       sm: [
-        '14px',
-        {
-          lineHeight: '17px',
-          letterSpacing: '-0.24px',
-          fontWeight: '500',
-        },
-      ],
-      sm2: [
-        '18.667px',
-        {
-          lineHeight: '22px',
-          letterSpacing: '-0.24px',
-          fontWeight: '500',
-        },
-      ],
-      md: [
-        '16px',
-        {
-          lineHeight: '19px',
-          letterSpacing: '-0.24px',
-          fontWeight: '600',
-        },
-      ],
-      md2: [
-        '21.333px',
-        {
-          lineHeight: '26px',
-          letterSpacing: '-0.24px',
-          fontWeight: '500',
-        },
-      ],
-      lg: [
         '18px',
         {
           lineHeight: '21px',
@@ -72,34 +40,42 @@ module.exports = {
           fontWeight: '500',
         },
       ],
-      lg2: [
-        '24px',
+      md: [
+        '20px',
         {
-          lineHeight: '28px',
+          lineHeight: '22px',
+          letterSpacing: '-0.24px',
+          fontWeight: '500',
+        },
+      ],
+      lg: [
+        '21px',
+        {
+          lineHeight: '23px',
           letterSpacing: '-0.24px',
           fontWeight: '500',
         },
       ],
       xl: [
-        '20px',
+        '24px',
         {
-          lineHeight: '23px',
+          lineHeight: '28px',
           letterSpacing: '-0.24px',
-          fontWeight: '600',
+          fontWeight: '700',
         },
       ],
       xl2: [
-        '26.667px',
-        {
-          lineHeight: '32px',
-          letterSpacing: '-0.24px',
-          fontWeight: '500',
-        },
-      ],
-      '2xl': [
         '25px',
         {
           lineHeight: '28px',
+          letterSpacing: '-0.24px',
+          fontWeight: '700',
+        },
+      ],
+      '2xl': [
+        '26.667px',
+        {
+          lineHeight: '32px',
           letterSpacing: '-0.24px',
           fontWeight: '700',
         },
@@ -109,7 +85,7 @@ module.exports = {
         {
           lineHeight: '40px',
           letterSpacing: '-0.24px',
-          fontWeight: '500',
+          fontWeight: '800',
         },
       ],
       '4xl': [
