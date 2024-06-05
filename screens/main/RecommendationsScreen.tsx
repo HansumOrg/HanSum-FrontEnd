@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { MainTabScreenProps } from '../../navigation/types';
 import ReservationItem from '../../components/common/ReservationItem';
 import GuesthouseRecommList from '../../components/common/GuesthouseRecommList';
@@ -49,10 +50,19 @@ export default function RecommendationsScreen({
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator'); // 'ReservationList'는 다른 페이지의 이름입니다.
   };
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content'); // 상태 바 스타일을 설정
+      return () => {
+        StatusBar.setBarStyle('dark-content'); // 화면을 벗어날 때 기본 상태로 되돌림
+        StatusBar.setTranslucent(false);
+      };
+    }, []),
+  );
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" />
       <View className="relative h-screen w-screen flex justify-center items-center bg-white">
         <View className="w-full h-full">
           <View className="flex-row mt-4 w-full justify-start items-center">

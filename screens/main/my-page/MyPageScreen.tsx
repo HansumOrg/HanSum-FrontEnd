@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -7,6 +7,7 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { MyPageStackScreenProps } from '../../../navigation/types';
 import NoticeIcon from '../../../assets/images/icon_notice.svg';
 import MoreIcon from '../../../assets/images/icon_more.svg';
@@ -17,7 +18,7 @@ import { useMyPageContext } from '../../../components/my-page/MyPageContext';
 
 export default function MyPageScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   route,
   navigation,
 }: MyPageStackScreenProps<'MyPage'>) {
@@ -25,9 +26,18 @@ export default function MyPageScreen({
   const userId = context.myPageState.user_id;
   const reservationData: Reservation[] = data.reservation;
   const guesthouseData: Guesthouse[] = data.guesthouse;
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content'); // 상태 바 스타일을 설정
+      return () => {
+        StatusBar.setBarStyle('dark-content'); // 화면을 벗어날 때 기본 상태로 되돌림
+        StatusBar.setTranslucent(false);
+      };
+    }, []),
+  );
   return (
     <SafeAreaView>
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle="dark-content" />
       <View className="h-screen w-screen flex items-center bg-white">
         <View className="flex flex-row w-11/12 h-auto justify-between items-center py-2">
           <Text className="font-inter-b w-5/6 text-2xl text-black">
@@ -105,6 +115,8 @@ export default function MyPageScreen({
                 .filter(reservation => reservation.user_id === userId)
                 .map(reservation => (
                   <ReservationBox
+                    route={route}
+                    navigation={navigation}
                     reservation={reservation}
                     guesthouse={guesthouseData[reservation.guesthouse_id - 1]}
                     key={reservation.reservation_id}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useFocusEffect } from '@react-navigation/native';
 import LocalSvg from '../../../assets/images/icon_local.svg';
 import PhoneSVG from '../../../assets/images/icon_phone.svg';
 import CalendarSVG from '../../../assets/icon/calendar.svg';
@@ -17,6 +18,7 @@ import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
 import RatingStarsDisplay from '../../../components/gesthouse-detail/RatingStarsDisplay';
 import GoFront from '../../../assets/images/icon_goback.svg';
 import dummyImage from '../../../assets/images/dummy_img';
+import { useSearchContext } from '../../../components/search-page/SearchContext';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -51,23 +53,6 @@ const membersData = {
   ],
 };
 
-const reservationRecords = [
-  {
-    reservation_id: 123456,
-    user_id: 456,
-    guesthouse_id: 123,
-    checkin_date: '2024-05-25 14:00:00',
-    checkout_date: '2024-05-26 12:00:00',
-  },
-  {
-    reservation_id: 223344,
-    user_id: 456,
-    guesthouse_id: 11415,
-    checkin_date: '2024-06-01 14:00:00',
-    checkout_date: '2024-06-05 12:00:00',
-  },
-];
-
 const getDayOfWeek = (dateString: string) => {
   const date = new Date(dateString);
   const dayOfWeek = date.getDay();
@@ -85,16 +70,39 @@ export default function GuesthouseDetailsScreen({
 }: GuesthouseDetailsStackScreenProps<'GuesthouseDetails'>) {
   const guesthouse = guesthouseData;
   const { members } = membersData;
-  const reservation = reservationRecords[0];
-  const checkinDate = reservation.checkin_date.split(' ')[0];
-  const checkoutDate = reservation.checkout_date.split(' ')[0];
+  const searchContext = useSearchContext();
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const checkinDate = searchContext.searchState.checkin_date
+    ? searchContext.searchState.checkin_date.split(' ')[0]
+    : today.toISOString().split('T')[0];
+  const checkoutDate = searchContext.searchState.checkout_date
+    ? searchContext.searchState.checkout_date.split(' ')[0]
+    : tomorrow.toISOString().split('T')[0];
   const checkinDayOfWeek = getDayOfWeek(checkinDate);
   const checkoutDayOfWeek = getDayOfWeek(checkoutDate);
+  const nights = Math.floor(
+    (new Date(checkoutDate).getTime() - new Date(checkinDate).getTime()) /
+      (1000 * 60 * 60 * 24),
+  );
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('light-content'); // 상태 바 스타일 설정
+      StatusBar.setTranslucent(true); // 상태 바를 투명하게 설정
+      StatusBar.setBackgroundColor('transparent'); // 상태 바 배경색 설정
+      return () => {
+        StatusBar.setBarStyle('default'); // 화면을 벗어날 때 기본 상태로 되돌림
+        StatusBar.setTranslucent(false); // 기본 상태로 되돌림 // 기본 상태로 되돌림
+      };
+    }, []),
+  );
 
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" translucent backgroundColor="transparent" />
-      <ScrollView className="bg-gray-4">
+      <ScrollView className="bg-gray-4" keyboardShouldPersistTaps="handled">
         <View
           className="w-full flex justify-start items-center bg-white"
           style={{
@@ -132,14 +140,19 @@ export default function GuesthouseDetailsScreen({
                 </Text>
               </View>
             </View>
-            <View className="w-full h-1/5 mt-4 flex-row justify-between items-center">
+            <Pressable
+              onPress={() => {
+                navigation.navigate('Calendar');
+              }}
+              className="w-full h-1/5 mt-4 flex-row justify-between items-center"
+            >
               <View className="flex-row border border-gray-3 p-2 h-full justify-start items-center">
                 <CalendarSVG width="12.5%" />
                 <Text className="text-sm font-inter-r text-black ml-4">
-                  {`${checkinDate} (${checkinDayOfWeek}) ~ ${checkoutDate} (${checkoutDayOfWeek}) - 1박`}
+                  {`${checkinDate} (${checkinDayOfWeek}) ~ ${checkoutDate} (${checkoutDayOfWeek}) - ${nights}박`}
                 </Text>
               </View>
-            </View>
+            </Pressable>
             <Text className="mt-4 w-full text-left text-sm font-inter-r text-black-50%">
               예약취소가능
             </Text>

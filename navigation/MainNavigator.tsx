@@ -74,6 +74,12 @@ export default function MainNavigator() {
         name="Favorites"
         component={FavoritesScreen}
         options={{
+          headerTitle: '위시리스트',
+          headerTitleStyle: {
+            fontSize: 24, // xl2를 24로 가정했습니다. 필요시 조정 가능합니다.
+            fontFamily: 'Inter-bold',
+            color: '#000000',
+          },
           title: '찜',
           tabBarIcon: ({ focused }) => BottomIconFavorites({ focused }),
         }}

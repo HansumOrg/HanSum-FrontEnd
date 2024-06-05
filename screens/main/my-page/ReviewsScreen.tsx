@@ -34,7 +34,7 @@ export default function ReviewsScreen({
             <View className="flex-row w-[80%] my-2  justify-between items-start pl-2">
               <Text className="text-s font-inter-r text-black">숙소 정보</Text>
               <Text className="text-s font-inter-r text-black">
-                게스트하우스 이름 params
+                게스트하우스 이름 state
               </Text>
             </View>
             <View className="bg-gray-2 h-[2%] w-full" />
