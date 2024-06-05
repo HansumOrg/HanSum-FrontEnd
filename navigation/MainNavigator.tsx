@@ -10,6 +10,7 @@ import IconHeart from '../assets/images/icon_heartnavigator.svg';
 import IconProfile from '../assets/images/icon_profilenavigator.svg';
 import IconHome from '../assets/images/icon_homenavigator.svg';
 import IconSearch from '../assets/images/icon_serachnavigator.svg';
+import GuesthouseDetailsNavigator from './GuesthouseDetailsNavigator';
 
 const BottomIconHeart = ({ focused }: { focused: boolean }) => (
   <IconHome width={24} height={24} fill={focused ? '#000000' : '#C2C2C2'} />
@@ -83,6 +84,13 @@ export default function MainNavigator() {
           headerShown: false,
           title: '내 정보',
           tabBarIcon: ({ focused }) => BottomIconProfile({ focused }),
+        }}
+      />
+      <MainTab.Screen
+        name="GuesthouseDetailsNavigator"
+        component={GuesthouseDetailsNavigator}
+        options={{
+          tabBarButton: () => null,
         }}
       />
     </MainTab.Navigator>
