@@ -116,9 +116,11 @@ export type EditProfileStackScreenProps<
 
 export type GuesthouseDetailsStackParamList = {
   GuesthouseDetails: undefined;
+  Calendar: undefined;
   ChatGuide: undefined;
   Reservation: undefined;
   ReservationComplete: undefined;
+  GuesthouseItem: undefined;
 };
 
 export type GuesthouseDetailsStackScreenProps<

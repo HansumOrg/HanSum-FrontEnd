@@ -1,7 +1,7 @@
 // this file contains all the types that are used in the application except for navigation types
 
 import { PressableProps, TextInputProps } from 'react-native';
-import { MainTabScreenProps } from './navigation/types';
+import { MainTabScreenProps, MyPageStackScreenProps } from './navigation/types';
 
 // SearchResultScreen.tsx
 export interface SearchResultScreenProps {
@@ -167,7 +167,7 @@ export interface Guesthouse {
   mood: string;
 }
 
-export interface ReservationBoxProps {
+export interface ReservationBoxProps extends MyPageStackScreenProps<'MyPage'> {
   reservation: Reservation;
   guesthouse: Guesthouse;
 }
@@ -268,8 +268,8 @@ export interface ReservationRecord {
   guesthouse_name: string | undefined;
   guesthouse_address: string | undefined;
   guesthouse_phone: string | undefined;
-  checkin_date: string | undefined;
-  checkout_date: string | undefined;
+  checkin_date: string;
+  checkout_date: string;
   nights: number | undefined;
 }
 
