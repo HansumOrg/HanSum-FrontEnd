@@ -34,6 +34,7 @@ export default function GuesthouseDetailsNavigator() {
       <GuesthouseDetailsStack.Screen
         name="ReservationComplete"
         component={ReservationCompleteScreen}
+        options={{ headerShown: false }}
       />
     </GuesthouseDetailsStack.Navigator>
   );
