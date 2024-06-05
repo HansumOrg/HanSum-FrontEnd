@@ -1,5 +1,6 @@
 import {
   FetchBaseQueryError,
+  FetchBaseQueryMeta,
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
@@ -10,38 +11,16 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:8080/',
     prepareHeaders: (headers, { getState }) => {
-      const { accessToken } = (getState() as RootState).auth;
-      if (accessToken) {
-        headers.set('Authorization', `Bearer ${accessToken}`);
+      const { access } = (getState() as RootState).auth;
+      if (access) {
+        headers.set('access', access);
       }
       return headers;
     },
   }),
   endpoints: builder => ({
-    join: builder.mutation<
-      void,
-      {
-        username: string;
-        password: string;
-        name: string;
-        phone: string;
-        sex: string;
-        birthday: string;
-        nickname: string;
-        mbti: string;
-        userAgreement: number;
-      }
-    >({
-      query: credentials => ({
-        url: 'join',
-        method: 'POST',
-        body: credentials,
-      }),
-      // transformResponse: response => response.data,
-      transformErrorResponse: (response: FetchBaseQueryError) => response,
-    }),
     login: builder.mutation<
-      { accessToken: string; refreshToken: string },
+      { access: string; refresh: string; message: string },
       { username: string; password: string }
     >({
       query: credentials => ({
@@ -49,31 +28,45 @@ export const authApi = createApi({
         method: 'POST',
         body: credentials,
       }),
+      transformResponse: (
+        response: { message: string },
+        meta: FetchBaseQueryMeta,
+      ) => {
+        const access = meta.response?.headers.get('access') ?? '';
+        const refresh = meta.response?.headers.get('refresh') ?? '';
+        return { access, refresh, ...response };
+      },
+      transformErrorResponse: (response: FetchBaseQueryError) => response,
     }),
-    logout: builder.mutation<void, void>({
+    logout: builder.mutation<{ message: string }, void>({
       query: () => ({
         url: 'logout',
         method: 'POST',
       }),
     }),
-    reissue: builder.mutation<
-      { newAccessToken: string; newRefreshToken: string },
+    refresh: builder.mutation<
+      { newAccess: string; newRefresh: string; message: string },
       string
     >({
       query: refreshToken => ({
-        url: 'reissue',
+        url: 'refresh',
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${refreshToken}`,
+          refresh: refreshToken,
         },
       }),
+      transformResponse: (
+        response: { message: string },
+        meta: FetchBaseQueryMeta,
+      ) => {
+        const newAccess = meta.response?.headers.get('access') ?? '';
+        const newRefresh = meta.response?.headers.get('refresh') ?? '';
+        return { newAccess, newRefresh, ...response };
+      },
+      transformErrorResponse: (response: FetchBaseQueryError) => response,
     }),
   }),
 });
 
-export const {
-  useJoinMutation,
-  useLoginMutation,
-  useLogoutMutation,
-  useReissueMutation,
-} = authApi;
+export const { useLoginMutation, useLogoutMutation, useRefreshMutation } =
+  authApi;
