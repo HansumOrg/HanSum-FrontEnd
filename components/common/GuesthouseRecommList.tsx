@@ -11,6 +11,7 @@ import {
   GuesthouseRecommListProps,
   GuesthouseRecommListPropsWithNavigation,
 } from '../../types';
+import dummyImage from '../../assets/images/dummy_img';
 
 const DATA: GuesthouseRecommListProps[] = [
   {
@@ -59,7 +60,6 @@ const GuesthouseRecommList: React.FC<
       onPress={() =>
         navigation.navigate('GuesthouseDetailsNavigator', {
           screen: 'GuesthouseDetails',
-          params: { guesthouseId: item.guesthouseId },
         })
       }
     >
@@ -68,7 +68,7 @@ const GuesthouseRecommList: React.FC<
         style={{ width: screenWidth / 3 }}
       >
         <Image
-          source={{ uri: item.image }}
+          source={{ uri: dummyImage }}
           className="w-full h-full rounded-lg bg-blue-300"
         />
         <Text className="absolute text-left left-0 px-2 text-s text-white font-inter-b bottom-2">
@@ -87,6 +87,7 @@ const GuesthouseRecommList: React.FC<
       keyExtractor={item => item.rank.toString()}
       horizontal
       showsHorizontalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
     />
   );
 };

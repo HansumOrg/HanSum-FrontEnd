@@ -48,6 +48,7 @@ export default function MainNavigator() {
         name="Recommendations"
         component={RecommendationsScreen}
         options={{
+          headerShown: false,
           title: '홈',
           tabBarIcon: focused => BottomIconHeart(focused),
         }}
@@ -90,6 +91,7 @@ export default function MainNavigator() {
         name="GuesthouseDetailsNavigator"
         component={GuesthouseDetailsNavigator}
         options={{
+          headerShown: false,
           tabBarButton: () => null,
         }}
       />
