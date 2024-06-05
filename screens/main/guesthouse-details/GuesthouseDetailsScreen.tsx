@@ -78,6 +78,7 @@ const getDayOfWeek = (dateString: string) => {
 export default function GuesthouseDetailsScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
 
   navigation,
@@ -89,7 +90,6 @@ export default function GuesthouseDetailsScreen({
   const checkoutDate = reservation.checkout_date.split(' ')[0];
   const checkinDayOfWeek = getDayOfWeek(checkinDate);
   const checkoutDayOfWeek = getDayOfWeek(checkoutDate);
-  const { guesthouseId } = route.params || { guesthouseId: 0 };
 
   return (
     <SafeAreaView>
@@ -103,7 +103,10 @@ export default function GuesthouseDetailsScreen({
         >
           <View className=" w-full justify-center items-center h-1/2 bg-slate-500 shadow-lg shadow-black">
             <View className="flex justify-center h-full w-full items-center shadow-inner shadow-black">
-              <Image source={{ uri: dummyImage }} className="h-full w-full" />
+              <Image
+                source={{ uri: dummyImage as string }}
+                className="h-full w-full"
+              />
             </View>
           </View>
           <View className=" h-2/5 w-full justify-start items-center pt-8 px-4">
@@ -183,7 +186,7 @@ export default function GuesthouseDetailsScreen({
           <Pressable
             className="my-4 bg-primary-2 items-center justify-center w-full shadow-black drop-shadow-xl"
             style={{ height: (screenHeight * 1) / 14 }}
-            onPress={() => navigation.navigate('Reservation', { guesthouseId })}
+            onPress={() => navigation.navigate('Reservation')}
           >
             <Text className="font-inter-b text-lg text-white">예약하기</Text>
           </Pressable>
