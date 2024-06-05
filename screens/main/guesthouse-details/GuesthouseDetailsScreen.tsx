@@ -6,6 +6,7 @@ import {
   Text,
   Dimensions,
   Pressable,
+  Image,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LocalSvg from '../../../assets/images/icon_local.svg';
@@ -15,6 +16,7 @@ import MbtiCheck from '../../../components/edit-page/MbtiCheck';
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
 import RatingStarsDisplay from '../../../components/gesthouse-detail/RatingStarsDisplay';
 import GoFront from '../../../assets/images/icon_goback.svg';
+import dummyImage from '../../../assets/images/dummy_img';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -25,7 +27,7 @@ const guesthouseData = {
   location: '중문',
   price: 50000,
   phone: '010-1234-5678',
-  rating: 3.5,
+  rating: 4.2,
   imageBase64: 'asdfsdfsdfsdfsdfsdfg',
   mood: '여유로운',
 };
@@ -77,7 +79,7 @@ export default function GuesthouseDetailsScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
 
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   navigation,
 }: GuesthouseDetailsStackScreenProps<'GuesthouseDetails'>) {
   const guesthouse = guesthouseData;
@@ -87,7 +89,7 @@ export default function GuesthouseDetailsScreen({
   const checkoutDate = reservation.checkout_date.split(' ')[0];
   const checkinDayOfWeek = getDayOfWeek(checkinDate);
   const checkoutDayOfWeek = getDayOfWeek(checkoutDate);
-  // const { guesthouseId } = route.params;
+  const { guesthouseId } = route.params || { guesthouseId: 0 };
 
   return (
     <SafeAreaView>
@@ -100,8 +102,8 @@ export default function GuesthouseDetailsScreen({
           }}
         >
           <View className=" w-full justify-center items-center h-1/2 bg-slate-500 shadow-lg shadow-black">
-            <View className="flex justify-center items-center shadow-inner shadow-black">
-              <Text className="text-5xl text-white">여기 사진이 들가야함</Text>
+            <View className="flex justify-center h-full w-full items-center shadow-inner shadow-black">
+              <Image source={{ uri: dummyImage }} className="h-full w-full" />
             </View>
           </View>
           <View className=" h-2/5 w-full justify-start items-center pt-8 px-4">
@@ -110,11 +112,7 @@ export default function GuesthouseDetailsScreen({
             </Text>
             <View className="w-full h-1/6 flex-row justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-start items-center">
-                <LocalSvg
-                  height="100%"
-                  width="10%"
-                  preserveAspectRatio="none"
-                />
+                <LocalSvg height="80%" width="10%" />
                 <Text className="text-lg font-inter-r text-black ml-4">
                   {guesthouse.address}
                 </Text>
@@ -125,7 +123,7 @@ export default function GuesthouseDetailsScreen({
             </View>
             <View className="w-full h-1/6 flex-row justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-start items-center">
-                <PhoneSVG height="50%" width="5%" preserveAspectRatio="none" />
+                <PhoneSVG height="80%" width="10%" />
                 <Text className="text-lg font-inter-r text-black ml-4">
                   {guesthouse.phone}
                 </Text>
