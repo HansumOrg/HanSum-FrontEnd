@@ -1,7 +1,7 @@
 // this file contains all the types that are used in the application except for navigation types
 
 import { PressableProps, TextInputProps } from 'react-native';
-import { MainTabScreenProps } from './navigation/types';
+import { MainTabScreenProps, MyPageStackScreenProps } from './navigation/types';
 
 // SearchResultScreen.tsx
 export interface SearchResultScreenProps {
@@ -167,7 +167,7 @@ export interface Guesthouse {
   mood: string;
 }
 
-export interface ReservationBoxProps {
+export interface ReservationBoxProps extends MyPageStackScreenProps<'MyPage'> {
   reservation: Reservation;
   guesthouse: Guesthouse;
 }
@@ -256,25 +256,35 @@ export interface CheckDuplicateProps {
 
 export interface CheckDuplicateResponse {
   // DuplicateId.tsx
-  login_id: string;
-  is_available: boolean;
-  message: string;
-  status: string;
+  login_id: string | undefined;
+  is_available: boolean | undefined;
+  message: string | undefined;
+  status: string | undefined;
 }
 // guesthouse-details types
 
 export interface ReservationRecord {
   // ReservationItem.tsx
-  guesthouse_name: string;
-  guesthouse_address: string;
-  guesthouse_phone: string;
+  guesthouse_name: string | undefined;
+  guesthouse_address: string | undefined;
+  guesthouse_phone: string | undefined;
   checkin_date: string;
   checkout_date: string;
-  nights: number;
+  nights: number | undefined;
 }
 
 export interface GuestInfo {
-  nickname: string;
-  name: string;
-  mbti: string;
+  nickname: string | undefined;
+  name: string | undefined;
+  mbti: string | undefined;
+}
+
+// RecommendationScreen types
+export interface BasicReservationRecord {
+  reservation_id: number;
+  user_id: number;
+  guesthouse_id: number;
+  guesthouse_name: string;
+  checkin_date: string;
+  checkout_date: string;
 }

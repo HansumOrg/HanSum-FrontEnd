@@ -136,20 +136,29 @@ export default function SearchResultScreen({
           </View>
         </View>
         <FlatList
+          keyboardShouldPersistTaps="handled"
           className="w-11/12"
           data={guesthousSampleData.flatMap(data => data.guesthouses)}
           renderItem={({ item }) => (
-            <SearchResultList
-              guesthouse_id={item.guesthouse_id}
-              guesthouse_name={item.guesthouse_name}
-              address={item.address}
-              location={item.location}
-              price={item.price}
-              phone={item.phone}
-              rating={item.rating}
-              imageUrl={item.imageUrl}
-              mood={item.mood}
-            />
+            <Pressable
+              onPress={() =>
+                navigation.navigate('GuesthouseDetailsNavigator', {
+                  screen: 'GuesthouseDetails',
+                })
+              }
+            >
+              <SearchResultList
+                guesthouse_id={item.guesthouse_id}
+                guesthouse_name={item.guesthouse_name}
+                address={item.address}
+                location={item.location}
+                price={item.price}
+                phone={item.phone}
+                rating={item.rating}
+                imageUrl={item.imageUrl}
+                mood={item.mood}
+              />
+            </Pressable>
           )}
           keyExtractor={item => item.guesthouse_id.toString()}
         />

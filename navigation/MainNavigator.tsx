@@ -10,6 +10,7 @@ import IconHeart from '../assets/images/icon_heartnavigator.svg';
 import IconProfile from '../assets/images/icon_profilenavigator.svg';
 import IconHome from '../assets/images/icon_homenavigator.svg';
 import IconSearch from '../assets/images/icon_serachnavigator.svg';
+import GuesthouseDetailsNavigator from './GuesthouseDetailsNavigator';
 
 const BottomIconHeart = ({ focused }: { focused: boolean }) => (
   <IconHome width={24} height={24} fill={focused ? '#000000' : '#C2C2C2'} />
@@ -47,6 +48,7 @@ export default function MainNavigator() {
         name="Recommendations"
         component={RecommendationsScreen}
         options={{
+          headerShown: false,
           title: '홈',
           tabBarIcon: focused => BottomIconHeart(focused),
         }}
@@ -72,6 +74,12 @@ export default function MainNavigator() {
         name="Favorites"
         component={FavoritesScreen}
         options={{
+          headerTitle: '위시리스트',
+          headerTitleStyle: {
+            fontSize: 24, // xl2를 24로 가정했습니다. 필요시 조정 가능합니다.
+            fontFamily: 'Inter-bold',
+            color: '#000000',
+          },
           title: '찜',
           tabBarIcon: ({ focused }) => BottomIconFavorites({ focused }),
         }}
@@ -83,6 +91,14 @@ export default function MainNavigator() {
           headerShown: false,
           title: '내 정보',
           tabBarIcon: ({ focused }) => BottomIconProfile({ focused }),
+        }}
+      />
+      <MainTab.Screen
+        name="GuesthouseDetailsNavigator"
+        component={GuesthouseDetailsNavigator}
+        options={{
+          headerShown: false,
+          tabBarButton: () => null,
         }}
       />
     </MainTab.Navigator>

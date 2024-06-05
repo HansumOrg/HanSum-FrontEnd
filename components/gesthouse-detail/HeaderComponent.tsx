@@ -1,5 +1,6 @@
 import { View, Pressable } from 'react-native';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import PhExport from '../../assets/icon/ph_export.svg';
 import BackIcon from '../../assets/icon/detail_back.svg';
 import UnfilledHeartIcon from '../../assets/icon/unfilled_heart_.svg';
@@ -13,14 +14,18 @@ export default function Header(
   { isFavorite }: HeaderProps = { isFavorite: true },
 ) {
   const [favorite, setFavorite] = useState(isFavorite);
-
+  const navigation = useNavigation();
   const toggleFavorite = () => {
     setFavorite(!favorite);
   };
-
   return (
     <View className="h-full w-full justify-between items-center flex-row">
-      <BackIcon height="80%" width="15%" />
+      <Pressable
+        className="h-full w-2/3 p-1 justify-center items-start "
+        onPress={() => navigation.goBack()}
+      >
+        <BackIcon height="80%" width="20%" />
+      </Pressable>
       <View className="h-full w-2/6 flex-row items-center justify-center gap-4">
         <PhExport width="30%" height="70%" preserveAspectRatio="none" />
         <Pressable

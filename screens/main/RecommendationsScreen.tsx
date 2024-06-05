@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { MainTabScreenProps } from '../../navigation/types';
 import ReservationItem from '../../components/common/ReservationItem';
 import GuesthouseRecommList from '../../components/common/GuesthouseRecommList';
@@ -49,16 +50,33 @@ export default function RecommendationsScreen({
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator'); // 'ReservationList'는 다른 페이지의 이름입니다.
   };
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content'); // 상태 바 스타일을 설정
+      return () => {
+        StatusBar.setBarStyle('dark-content'); // 화면을 벗어날 때 기본 상태로 되돌림
+        StatusBar.setTranslucent(false);
+      };
+    }, []),
+  );
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" />
       <View className="relative h-screen w-screen flex justify-center items-center bg-white">
         <View className="w-full h-full">
+          <View className="flex-row mt-4 w-full justify-start items-center">
+            <View className=" ml-4 justify-center items-center w-[20%] px-4 border rounded-full">
+              <Text className=" text-black ">INFP</Text>
+            </View>
+            <Text className="ml-2 text-md text-left font-inter-m text-black">
+              Username을 위한 게스트하우스 추천
+            </Text>
+          </View>
           <View className="mt-4 h-2/6 ">
             <GuesthouseRecommList navigation={navigation} route={route} />
           </View>
-          <View className="pt-1overflow-y-auto h-3/5">
+          <View className="pt-4 overflow-y-auto h-3/5">
             <View className="h-1/2 w-full">
               <View className="flex-row justify-between px-2 pt-2 border-t border-gray-2 mx-2">
                 <Text className="text-sm font-inter-b text-black mb-5">
@@ -70,12 +88,21 @@ export default function RecommendationsScreen({
                   </Text>
                 </Pressable>
               </View>
-              <View className=" h-4/5">
-                {reservationRecords.slice(0, 2).map(item => (
-                  <ReservationItem key={item.reservation_id} item={item} />
-                ))}
+              <View className=" h-4/5 w-[100%] items-center px-4">
+                {reservationRecords.length > 0 ? (
+                  reservationRecords
+                    .slice(0, 2)
+                    .map(item => (
+                      <ReservationItem key={item.reservation_id} item={item} />
+                    ))
+                ) : (
+                  <Text className="text-center text-gray-500">
+                    현재 예약중인 숙소가 없습니다.
+                  </Text>
+                )}
               </View>
-              <View className="h-1/2 w-full justify-center items-center">
+              {/* 만약 예약내역이 없으면 "현재 예약중인 숙소가 없습니다 출력" */}
+              <View className="h-3/5 w-full justify-center items-center">
                 <AdBanner />
               </View>
             </View>

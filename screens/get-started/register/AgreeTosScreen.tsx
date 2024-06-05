@@ -6,11 +6,10 @@ import UiCheckbox from '../../../components/common/Checkbox';
 import CheckboxItem from '../../../components/common/CheckboxItem';
 
 export default function AgreeTosScreen({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'AgreeTos'>) {
-  const { userName, userId, password, gender, brithday, nickName, mbti } =
-    route.params;
   const [userAgreement, setUserAgreement] = useState(false);
   const [agreements, setAgreements] = useState({
     terms: false,
@@ -42,16 +41,7 @@ export default function AgreeTosScreen({
   };
 
   const handleSubmit = () => {
-    console.log(
-      `username :${userId}`,
-      `password :${password}`,
-      `name :${userName}`,
-      `sex :${gender}`,
-      `birthday :${brithday}`,
-      `nickname :${nickName}`,
-      `mbti :${mbti}`,
-      `userAgreement :${userAgreement}`,
-    );
+    console.log(`userAgreement :${userAgreement}`);
     navigation.navigate('Start');
   };
 

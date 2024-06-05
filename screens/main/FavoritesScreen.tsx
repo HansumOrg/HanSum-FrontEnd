@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
   View,
   FlatList,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { MainTabScreenProps } from '../../navigation/types';
 import GuesthouseItem from '../../components/common/GuesthouseItem';
 
@@ -66,7 +68,7 @@ const dummyGuesthouses: Guesthouse[] = [
 const FavoritesScreen: React.FC<MainTabScreenProps<'Favorites'>> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   navigation,
 }) => {
   const [loading, setLoading] = useState(true);
@@ -85,10 +87,18 @@ const FavoritesScreen: React.FC<MainTabScreenProps<'Favorites'>> = ({
 
     fetchGuesthouses();
   }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content'); // 상태 바 스타일을 설정
+      return () => {
+        StatusBar.setBarStyle('dark-content'); // 화면을 벗어날 때 기본 상태로 되돌림
+        StatusBar.setTranslucent(false);
+      };
+    }, []),
+  );
   return (
     <SafeAreaView>
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle="dark-content" />
       <View className="bg-white flex w-full justify-center items-center">
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
@@ -96,7 +106,17 @@ const FavoritesScreen: React.FC<MainTabScreenProps<'Favorites'>> = ({
           <FlatList
             className="w-full"
             data={guesthouses}
-            renderItem={({ item }) => <GuesthouseItem item={item} />}
+            renderItem={({ item }) => (
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('GuesthouseDetailsNavigator', {
+                    screen: 'GuesthouseDetails',
+                  })
+                }
+              >
+                <GuesthouseItem item={item} />
+              </Pressable>
+            )}
             keyExtractor={item => item.guesthouse_id.toString()}
           />
         )}

@@ -13,10 +13,10 @@ import Title from '../../../components/common/Title';
 import WheelPicker from '../../../components/get-started/WheelPicker'; // Assuming the file location
 
 const EnterPersonalInformationScreen = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'EnterPersonalInformation'>) => {
-  const { userName, userId, password } = route.params;
   const [gender, setGender] = useState('');
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
@@ -95,13 +95,7 @@ const EnterPersonalInformationScreen = ({
               isActivate
               onPress={() => {
                 submitPersonalInformation();
-                navigation.navigate('EnterNickname', {
-                  userName,
-                  userId,
-                  password,
-                  gender,
-                  brithday,
-                });
+                navigation.navigate('EnterNickname');
               }}
               text="선택완료"
             />
