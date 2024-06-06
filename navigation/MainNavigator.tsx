@@ -59,7 +59,6 @@ export default function MainNavigator() {
         options={({ route }) => ({
           tabBarStyle: {
             display:
-              getFocusedRouteNameFromRoute(route) === 'SearchResult' ||
               getFocusedRouteNameFromRoute(route) === 'Calendar' ||
               getFocusedRouteNameFromRoute(route) === 'Filter'
                 ? 'none'

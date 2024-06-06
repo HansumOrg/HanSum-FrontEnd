@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -6,6 +6,9 @@ import {
   Text,
   Pressable,
   ScrollView,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { MyPageStackScreenProps } from '../../../navigation/types';
@@ -16,6 +19,50 @@ import { Reservation, Guesthouse } from '../../../types';
 import ReservationBox from '../../../components/my-page/ReservationBox';
 import { useMyPageContext } from '../../../components/my-page/MyPageContext';
 
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 15,
+  },
+  button: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+    backgroundColor: '#2196F3',
+    marginHorizontal: 10,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+});
+
 export default function MyPageScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
 
@@ -24,6 +71,7 @@ export default function MyPageScreen({
 }: MyPageStackScreenProps<'MyPage'>) {
   const context = useMyPageContext();
   const userId = context.myPageState.user_id;
+  const [modalVisible, setModalVisible] = useState(false);
   const reservationData: Reservation[] = data.reservation;
   const guesthouseData: Guesthouse[] = data.guesthouse;
   useFocusEffect(
@@ -95,13 +143,44 @@ export default function MyPageScreen({
             <View className="flex border-b" />
             <View className="flex flex-row w-full h-1/6 justify-between items-end">
               <Text className="font-inter-m text-md text-black">로그아웃</Text>
-              <Pressable
-                className="px-1"
-                onPress={() => navigation.navigate('Logout')}
-              >
+              <Pressable className="px-1" onPress={() => setModalVisible(true)}>
                 <MoreIcon width={29} height={29} />
               </Pressable>
             </View>
+            <Modal
+              animationType="slide"
+              transparent
+              visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>로그아웃 할까요?</Text>
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => {
+                        setModalVisible(false);
+                      }}
+                    >
+                      <Text style={styles.textStyle}>로그아웃</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => {
+                        setModalVisible(false);
+                      }}
+                    >
+                      <Text style={styles.textStyle}>
+                        {'    '}취소{'    '}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
             <View className="flex border-b" />
           </View>
         </View>
