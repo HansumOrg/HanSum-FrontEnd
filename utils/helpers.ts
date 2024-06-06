@@ -55,3 +55,18 @@ export function isFailedResponse(
     'errorMessage' in response
   );
 }
+
+/**
+ * 주어진 응답이 Access 토큰을 재발급해야 하는지 여부를 나타내는지 확인합니다
+ * @param response - 확인할 응답입니다.
+ * @returns Access 토큰을 재발급해야 하는지 여부를 나타내는 부울 값입니다.
+ */
+export function isAccessTokenExpired(response: unknown): boolean {
+  return (
+    typeof response === 'object' &&
+    response !== null &&
+    'errorMessage' in response &&
+    (response.errorMessage === 'access token expired' ||
+      response.errorMessage === 'invalid access token')
+  );
+}

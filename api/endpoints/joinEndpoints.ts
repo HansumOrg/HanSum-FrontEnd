@@ -10,26 +10,8 @@ export const joinApi = createApi({
     baseUrl: 'http://localhost:8080/',
   }),
   endpoints: builder => ({
-    checkUsername: builder.query<
-      { message: string; isUsernameAvailable: number },
-      string
-    >({
-      query: username => ({
-        url: 'check-username',
-        params: { username },
-      }),
-    }),
-    checkNickname: builder.query<
-      { message: string; isNicknameAvailable: number },
-      string
-    >({
-      query: nickname => ({
-        url: 'check-nickname',
-        params: { nickname },
-      }),
-    }),
     join: builder.mutation<
-      { name: string; message: string; userId: number },
+      { userName: string; message: string; userId: number },
       {
         username: string;
         password: string;
@@ -52,8 +34,4 @@ export const joinApi = createApi({
   }),
 });
 
-export const {
-  useLazyCheckUsernameQuery,
-  useLazyCheckNicknameQuery,
-  useJoinMutation,
-} = joinApi;
+export const { useJoinMutation } = joinApi;

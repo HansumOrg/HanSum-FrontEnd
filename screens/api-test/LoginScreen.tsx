@@ -28,7 +28,6 @@ export default function LoginScreen() {
   const { handleRefresh, isRefreshLoading, refreshError } = useRefresh();
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
   const access = useAppSelector(state => state.auth.access);
-  const error = useAppSelector(state => state.auth.error);
 
   const [loginData, setLoginData] = useState(initialData);
 
@@ -69,11 +68,6 @@ export default function LoginScreen() {
     <SafeAreaView>
       <ScrollView>
         <StatusBar barStyle="default" />
-        {error && (
-          <View>
-            <Text>{error}</Text>
-          </View>
-        )}
         {isAuthenticated ? (
           <View>
             <View>

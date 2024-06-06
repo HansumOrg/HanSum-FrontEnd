@@ -9,14 +9,18 @@ import {
   ScrollView,
 } from 'react-native';
 import { useState } from 'react';
+import { shallowEqual } from 'react-redux';
 import {
   useCheckUsername,
   useCheckNickname,
   useJoin,
   useAppSelector,
+  useAppDispatch,
 } from '../../api/hooks';
 import { JoinSuccessResponse } from '../../api/types';
 import { isFailedResponse, isSuccessResponse } from '../../utils/helpers';
+import { setJoinState } from '../../api/slices/joinSlice';
+import { selectValidateState } from '../../api/selectors';
 
 export default function JoinScreen() {
   const initialData = {
@@ -32,19 +36,15 @@ export default function JoinScreen() {
   };
 
   const [joinData, setJoinData] = useState(initialData);
+  const dispatch = useAppDispatch();
 
   const { handleJoin, isJoinLoading, joinError } = useJoin();
   const { handleCheckUsername, isUsernameLoading, usernameError } =
     useCheckUsername();
   const { handleCheckNickname, isNicknameLoading, nicknameError } =
     useCheckNickname();
-  const isUsernameAvailable = useAppSelector(
-    state => state.join.isUsernameAvailable,
-  );
-  const isNicknameAvailable = useAppSelector(
-    state => state.join.isNicknameAvailable,
-  );
-
+  const { isUsernameAvailable, isNicknameAvailable } =
+    useAppSelector(selectValidateState);
   const createUsernamAvailableText = () => {
     if (isUsernameAvailable === 0) return '사용불가';
     if (isUsernameAvailable === 1) return '사용가능';
@@ -57,7 +57,8 @@ export default function JoinScreen() {
   };
 
   const handleJoinPress = async () => {
-    const res = await handleJoin(joinData);
+    dispatch(setJoinState(joinData));
+    const res = await handleJoin();
     if (isSuccessResponse(res)) {
       // 요청 성공시 발생하는 응답
       const successRes = res as JoinSuccessResponse;

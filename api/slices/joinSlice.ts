@@ -1,35 +1,46 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface JoinState {
-  isUsernameAvailable: number | null;
-  isNicknameAvailable: number | null;
-  error: string | null;
-}
+import type { JoinState } from '../types';
 
 const initialState: JoinState = {
-  isUsernameAvailable: null,
-  isNicknameAvailable: null,
-  error: null,
+  username: null,
+  password: null,
+  name: null,
+  phone: null,
+  sex: null,
+  birthday: null,
+  nickname: null,
+  mbti: null,
+  userAgreement: null,
 };
 
-const joinSlice = createSlice({
-  name: 'join',
+const JoinSlice = createSlice({
+  name: 'Join',
   initialState,
   reducers: {
-    setIsUsernameAvailable(state, action: PayloadAction<number>) {
-      state.isUsernameAvailable = action.payload;
-      state.error = null;
+    setJoinState(state, action: PayloadAction<JoinState>) {
+      state.username = action.payload.username;
+      state.password = action.payload.password;
+      state.name = action.payload.name;
+      state.phone = action.payload.phone;
+      state.sex = action.payload.sex;
+      state.birthday = action.payload.birthday;
+      state.nickname = action.payload.nickname;
+      state.mbti = action.payload.mbti;
+      state.userAgreement = action.payload.userAgreement;
     },
-    setIsNicknameAvailable(state, action: PayloadAction<number>) {
-      state.isNicknameAvailable = action.payload;
-      state.error = null;
-    },
-    setError(state, action: PayloadAction<string>) {
-      state.error = action.payload;
+    clearJoinState(state) {
+      state.username = null;
+      state.password = null;
+      state.name = null;
+      state.phone = null;
+      state.sex = null;
+      state.birthday = null;
+      state.nickname = null;
+      state.mbti = null;
+      state.userAgreement = null;
     },
   },
 });
 
-export const { setIsUsernameAvailable, setIsNicknameAvailable, setError } =
-  joinSlice.actions;
-export default joinSlice.reducer;
+export const { setJoinState, clearJoinState } = JoinSlice.actions;
+export default JoinSlice.reducer;
