@@ -34,7 +34,7 @@ function MbtiCheck({ mbti }: { mbti: string }) {
     <View
       className={`flex border-2 border-mbti-${color}/100 w-2/5 h-auto rounded-2xl items-center`}
     >
-      <Text className="font-inter-sb text-lg text-black">{mbti}</Text>
+      <Text className="font-inter-sb text-sm text-black">{mbti}</Text>
     </View>
   );
 }

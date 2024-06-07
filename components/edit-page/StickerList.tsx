@@ -11,20 +11,20 @@ function StickerList(props: ViewReceivedStickerProps) {
       <View className="flex flex-row w-full justify-between">
         {index <= 4 ? (
           <View className="flex border-2 mr-1 border-primary-2/100 w-auto h-auto rounded-2xl items-center">
-            <Text className="font-inter-r px-2 py-1 text-md text-primary-2">
+            <Text className="font-inter-r px-2 py-1 text-s text-primary-2">
               {mentList[index]}
             </Text>
           </View>
         ) : (
           <View className="flex border-2 mr-1 border-point/100 w-auto h-auto rounded-2xl items-center">
-            <Text className="font-inter-r px-2 py-1 text-md text-point">
+            <Text className="font-inter-r px-2 py-1 text-s text-point">
               ⚠ {mentList[index]}
             </Text>
           </View>
         )}
         <View className="flex flex-row items-center">
           <PersonIcon width={18} height={24} />
-          <Text className="font-inter-sb mx-1 text-md text-black">{count}</Text>
+          <Text className="font-inter-sb mx-1 text-s text-black">{count}</Text>
         </View>
       </View>
     </View>

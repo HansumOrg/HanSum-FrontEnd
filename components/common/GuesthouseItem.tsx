@@ -29,6 +29,7 @@ const GuesthouseItem: React.FC<{ item: Guesthouse }> = ({ item }) => (
         <FavoriteSelect width="8%" height="10%" />
       </View>
     </View>
+    {/* 원래는 엑스틀라 볼드 */}
     <Text className="w-[90%] text-sm font-inter-b text-black mt-2">
       {item.guesthouse_name}
     </Text>

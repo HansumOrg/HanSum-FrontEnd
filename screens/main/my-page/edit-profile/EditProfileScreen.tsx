@@ -63,24 +63,24 @@ export default function EditProfileScreen({
               </Pressable>
             </View>
             <View className="flex w-full h-1/4 justify-end my-1 px-2">
-              <Text className="font-inter-m text-lg py-1 text-black/[.5]">
+              <Text className="font-inter-m text-sm py-1 text-black/[.5]">
                 닉네임
               </Text>
               <View className="flex flex-row w-1/2 justify-between items-cente">
-                <Text className="font-inter-sb text-xl text-black">
+                <Text className="font-inter-sb text-md text-black">
                   {context.myPageState.username}
                 </Text>
                 <Pressable
                   onPress={() => navigation.navigate('ChangeNickname')}
                 >
-                  <Text className="font-inter-m text-sm text-black underline">
+                  <Text className="font-inter-m text-ss text-black underline">
                     수정
                   </Text>
                 </Pressable>
               </View>
             </View>
             <View className="flex w-full h-1/4 justify-end px-2">
-              <Text className="font-inter-m text-lg py-1 text-black/[.5]">
+              <Text className="font-inter-m text-sm py-1 text-black/[.5]">
                 MBTI
               </Text>
               <View className="flex flex-row w-1/2 justify-between items-center">
@@ -91,14 +91,14 @@ export default function EditProfileScreen({
           </View>
           <View className="flex flex-col h-2/5 w-full px-2">
             <View className="flex w-full h-1/3 py-1">
-              <Text className="font-inter-m text-md text-black/[.5]">
+              <Text className="font-inter-m text-s text-black/[.5]">
                 관심사 (최대 3개)
               </Text>
-              <Text className="font-inter-sb text-lg py-1 text-black">
+              <Text className="font-inter-sb text-sm py-1 text-black">
                 제주 여행지
               </Text>
               {travleInterestCount ? (
-                <Text className="font-inter-sb text-sm text-black/[.5]">
+                <Text className="font-inter-sb text-ss text-black/[.5]">
                   주황색 수정 버튼을 눌러 관심사를 추가해주세요!
                 </Text>
               ) : null}
@@ -115,11 +115,11 @@ export default function EditProfileScreen({
               </View>
             </View>
             <View className="flex w-full h-1/3">
-              <Text className="font-inter-sb text-lg py-1 text-black">
+              <Text className="font-inter-sb text-sm py-1 text-black">
                 취미
               </Text>
               {hobbyInterestCount ? (
-                <Text className="font-inter-sb text-sm text-black/[.5]">
+                <Text className="font-inter-sb text-ss text-black/[.5]">
                   주황색 수정 버튼을 눌러 관심사를 추가해주세요!
                 </Text>
               ) : null}
@@ -136,11 +136,11 @@ export default function EditProfileScreen({
               </View>
             </View>
             <View className="flex w-full h-1/3">
-              <Text className="font-inter-sb text-lg py-1 text-black">
+              <Text className="font-inter-sb text-sm py-1 text-black">
                 좋아하는 음식
               </Text>
               {foodInterestCount ? (
-                <Text className="font-inter-sb text-sm text-black/[.5]">
+                <Text className="font-inter-sb text-ss text-black/[.5]">
                   주황색 수정 버튼을 눌러 관심사를 추가해주세요!
                 </Text>
               ) : null}
@@ -159,7 +159,7 @@ export default function EditProfileScreen({
           </View>
           <View className="flex flex-col px-2 w-full h-full">
             <View className="flex flex-row w-2/5 justify-between">
-              <Text className="font-inter-sb text-lg text-black">
+              <Text className="font-inter-sb text-sm text-black">
                 받은 스티커
               </Text>
               <Pressable
@@ -169,7 +169,7 @@ export default function EditProfileScreen({
               </Pressable>
             </View>
             {stickerCount ? (
-              <Text className="font-inter-sb py-1 text-sm text-black/[.5]">
+              <Text className="font-inter-sb py-1 text-ss text-black/[.5]">
                 아직 스티커를 받지 못했어요!
               </Text>
             ) : null}

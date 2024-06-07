@@ -45,10 +45,10 @@ export default function AddInterestScreen({
         <View className="flex w-11/12 h-full ">
           <ScrollView className="flex w-10/12 h-full">
             <View className="flex flex-row py-2 w-full h-auto">
-              <Text className="font-inter-b px-2 text-xl text-black">
+              <Text className="font-inter-b px-2 text-md text-black">
                 제주 여행지
               </Text>
-              <Text className="font-inter-b px-2 text-xl text-black">
+              <Text className="font-inter-b px-2 text-md text-black">
                 ({travleInterest.length}/3)
               </Text>
             </View>
@@ -64,8 +64,8 @@ export default function AddInterestScreen({
               )}
             </View>
             <View className="flex flex-row w-full h-auto py-2 items-cen">
-              <Text className="font-inter-b px-2 text-xl text-black">취미</Text>
-              <Text className="font-inter-b px-2 text-xl text-black">
+              <Text className="font-inter-b px-2 text-md text-black">취미</Text>
+              <Text className="font-inter-b px-2 text-md text-black">
                 ({hobbyInterest.length}/3)
               </Text>
             </View>
@@ -81,10 +81,10 @@ export default function AddInterestScreen({
               )}
             </View>
             <View className="flex flex-row w-full h-auto py-2">
-              <Text className="font-inter-b px-2 text-xl text-black">
+              <Text className="font-inter-b px-2 text-md text-black">
                 좋아하는 음식
               </Text>
-              <Text className="font-inter-b px-2 text-xl text-black">
+              <Text className="font-inter-b px-2 text-md text-black">
                 ({foodInterest.length}/3)
               </Text>
             </View>

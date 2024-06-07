@@ -70,7 +70,7 @@ const AdBanner: React.FC = () => {
         style={{ width: (screenWidth * 2) / 3 }}
       >
         <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center">
-          <Text className="text-lg font-bold">광고 3 카피</Text>
+          <Text className="text-2xl2 font-bold">광고 3 카피</Text>
         </View>
       </View>
       <View
@@ -78,7 +78,7 @@ const AdBanner: React.FC = () => {
         style={{ width: (screenWidth * 2) / 3 }}
       >
         <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center">
-          <Text className="text-lg font-bold">광고 1</Text>
+          <Text className="text-2xl2 font-bold">광고 1</Text>
         </View>
       </View>
       <View
@@ -86,7 +86,7 @@ const AdBanner: React.FC = () => {
         style={{ width: (screenWidth * 2) / 3 }}
       >
         <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center">
-          <Text className="text-lg font-bold">광고 2</Text>
+          <Text className="text-2xl2 font-bold">광고 2</Text>
         </View>
       </View>
       <View
@@ -94,7 +94,7 @@ const AdBanner: React.FC = () => {
         style={{ width: (screenWidth * 2) / 3 }}
       >
         <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center">
-          <Text className="text-lg font-bold">광고 3</Text>
+          <Text className="text-2xl2 font-bold">광고 3</Text>
         </View>
       </View>
       <View
@@ -102,7 +102,7 @@ const AdBanner: React.FC = () => {
         style={{ width: (screenWidth * 2) / 3 }}
       >
         <View className="rounded-md h-full w-[90%] bg-gray-2 flex-row justify-center items-center">
-          <Text className="text-lg font-bold">광고 1 카피</Text>
+          <Text className="text-2xl2 font-bold">광고 1 카피</Text>
         </View>
       </View>
       <View

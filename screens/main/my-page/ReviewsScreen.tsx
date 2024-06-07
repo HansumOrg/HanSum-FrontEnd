@@ -61,11 +61,17 @@ export default function ReviewsScreen({
             </Text>
           </View>
           {guests.map(guest => (
-            <GuestReviewCard
-              key={guest.name}
-              name={guest.name}
-              mbti={guest.mbti}
-            />
+            <>
+              <GuestReviewCard
+                key={guest.name}
+                name={guest.name}
+                mbti={guest.mbti}
+              />
+              <View
+                className="bg-white h-[2%] w-full"
+                style={{ height: (screenHeight * 1) / 14 }}
+              />
+            </>
           ))}
           <Pressable
             className="bg-primary-2 items-center justify-center w-full"

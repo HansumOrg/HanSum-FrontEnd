@@ -63,13 +63,13 @@ export default function CalendarScreen({
       <StatusBar barStyle="default" />
       <View className="h-screen bg-white flex items-center">
         <View className="flex flex-row h-auto w-10/12 justify-between">
-          <Text className="font-inter-sm text-sm text-black">일</Text>
-          <Text className="font-inter-sm text-sm text-black">월</Text>
-          <Text className="font-inter-sm text-sm text-black">화</Text>
-          <Text className="font-inter-sm text-sm text-black">수</Text>
-          <Text className="font-inter-sm text-sm text-black">목</Text>
-          <Text className="font-inter-sm text-sm text-black">금</Text>
-          <Text className="font-inter-sm text-sm text-black">토</Text>
+          <Text className="font-inter-sm text-ss text-black">일</Text>
+          <Text className="font-inter-sm text-ss text-black">월</Text>
+          <Text className="font-inter-sm text-ss text-black">화</Text>
+          <Text className="font-inter-sm text-ss text-black">수</Text>
+          <Text className="font-inter-sm text-ss text-black">목</Text>
+          <Text className="font-inter-sm text-ss text-black">금</Text>
+          <Text className="font-inter-sm text-ss text-black">토</Text>
         </View>
         <View className="flex w-11/12 py-1 border-b border-gray-1/100" />
         <View className="flex w-11/12 h-full bg-white">
@@ -110,7 +110,7 @@ export default function CalendarScreen({
           <View
             className={`flex w-full h-auto mt-4 ${footerColor} items-center shadow-2xl shadow-black/100`}
           >
-            <Text className="font-inter-sb text-md text-black p-6">
+            <Text className="font-inter-sb text-s text-black p-6">
               {isReservationable ? reservationString : '날짜를 선택해주세요'}
             </Text>
           </View>

@@ -28,7 +28,7 @@ export default function ViewReceivedStickerScreen({
       <View className="h-screen w-screen bg-white flex items-center">
         <View className="flex w-11/12 h-full items-center">
           <View className="flex flex-col w-full h-auto py-4">
-            <Text className="font-inter-b px-2 text-xl text-black">
+            <Text className="font-inter-b px-2 text-md text-black">
               받은 스티커
             </Text>
           </View>

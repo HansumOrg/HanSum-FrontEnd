@@ -39,7 +39,7 @@ const GuestReview: React.FC = () => {
         const isSelected = selectedReviews.includes(review);
 
         let buttonClassName = 'flex flex-row items-center px-2 py-1 border';
-        let textClassName = 'text-s  font-inter-r';
+        let textClassName = 'text-sm  font-inter-r';
         if (isSelected) {
           buttonClassName += isNegative
             ? ' border-orange-400 rounded-md'

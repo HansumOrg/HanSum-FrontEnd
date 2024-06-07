@@ -18,7 +18,10 @@ import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
 import RatingStarsDisplay from '../../../components/gesthouse-detail/RatingStarsDisplay';
 import GoFront from '../../../assets/images/icon_goback.svg';
 import dummyImage from '../../../assets/images/dummy_img';
-import { useSearchContext } from '../../../components/search-page/SearchContext';
+import {
+  SearchContextType,
+  useSearchContext,
+} from '../../../components/search-page/SearchContext';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -70,20 +73,20 @@ export default function GuesthouseDetailsScreen({
 }: GuesthouseDetailsStackScreenProps<'GuesthouseDetails'>) {
   const guesthouse = guesthouseData;
   const { members } = membersData;
-  const searchContext = useSearchContext();
-  const today = new Date();
-  const tomorrow = new Date(today);
+  const searchContext: SearchContextType = useSearchContext();
+  const today: Date = new Date();
+  const tomorrow: Date = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  const checkinDate = searchContext.searchState.checkin_date
+  const checkinDate: string = searchContext.searchState.checkin_date
     ? searchContext.searchState.checkin_date.split(' ')[0]
     : today.toISOString().split('T')[0];
-  const checkoutDate = searchContext.searchState.checkout_date
+  const checkoutDate: string = searchContext.searchState.checkout_date
     ? searchContext.searchState.checkout_date.split(' ')[0]
     : tomorrow.toISOString().split('T')[0];
-  const checkinDayOfWeek = getDayOfWeek(checkinDate);
-  const checkoutDayOfWeek = getDayOfWeek(checkoutDate);
-  const nights = Math.floor(
+  const checkinDayOfWeek: string = getDayOfWeek(checkinDate);
+  const checkoutDayOfWeek: string = getDayOfWeek(checkoutDate);
+  const nights: number = Math.floor(
     (new Date(checkoutDate).getTime() - new Date(checkinDate).getTime()) /
       (1000 * 60 * 60 * 24),
   );

@@ -16,7 +16,7 @@ export default function CheckboxItem(props: CheckboxItemProps) {
     <View className="flex-row h-1/6 w-full items-center justify-between">
       <View className="flex-col">
         <View className="flex-row">
-          <Text className="text-black text-sm underline">{label}</Text>
+          <Text className="text-black text-md underline">{label}</Text>
           <Text className="text-gray-400 text-s">
             {isRequired ? '필수' : '선택'}
           </Text>

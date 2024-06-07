@@ -103,7 +103,7 @@ function interestList(props: InterestProps) {
       <View
         className={`flex border-2 mr-2 mb-1 ${borderColor} w-auto h-auto rounded-2xl items-center`}
       >
-        <Text className={`font-inter-r px-2 py-1 text-md ${textColor}`}>
+        <Text className={`font-inter-r px-2 py-1 text-s ${textColor}`}>
           {interests[index]}
         </Text>
       </View>

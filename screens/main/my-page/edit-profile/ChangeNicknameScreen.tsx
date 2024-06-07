@@ -48,21 +48,21 @@ export default function ChangeNicknameScreen({
         <View className="flex w-11/12 h-full items-center">
           <View className="flex flex-col w-full h-1/5 justify-center">
             <View className="flex w-wrap h-auto justify-center my-1 px-2 ">
-              <Text className="font-inter-b text-2xl py-1 text-black ">
+              <Text className="font-inter-b text-xl py-1 text-black ">
                 수정하실 닉네임을 입력해주세요.
               </Text>
             </View>
             <View className="flex w-full h-1/3 justify-center items-center">
               <View className="flex px-3 w-full h-5/6">
                 <TextInput
-                  className="font-inter-r text-md"
+                  className="font-inter-r text-s"
                   placeholder="닉네임"
                   onChangeText={text => handleInputUpdate(text)}
                 />
                 {changeState === 2 ? (
                   <View className="flex flex-col">
                     <View className="border-b border-failed/100" />
-                    <Text className="font-inter-r text-sm text-failed">
+                    <Text className="font-inter-r text-ss text-failed">
                       이미 존재하거나 유효하지 않는 닉네임입니다.
                     </Text>
                   </View>
@@ -70,7 +70,7 @@ export default function ChangeNicknameScreen({
                   <View className="flex flex-col">
                     <View className="border-b" />
                     {changeState === 1 ? (
-                      <Text className="font-inter-r text-sm text-black">
+                      <Text className="font-inter-r text-ss text-black">
                         닉네임을 성공적으로 변경했습니다.
                       </Text>
                     ) : null}
@@ -93,7 +93,7 @@ export default function ChangeNicknameScreen({
                     )
                   }
                 >
-                  <Text className="font-inter-sb text-xl text-white">
+                  <Text className="font-inter-sb text-md text-white">
                     중복 확인
                   </Text>
                 </Pressable>
@@ -111,7 +111,7 @@ export default function ChangeNicknameScreen({
                     )
                   }
                 >
-                  <Text className="font-inter-sb text-xl text-black">
+                  <Text className="font-inter-sb text-md text-black">
                     중복 확인
                   </Text>
                 </Pressable>

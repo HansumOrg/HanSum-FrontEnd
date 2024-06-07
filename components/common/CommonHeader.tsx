@@ -22,7 +22,7 @@ export default function CommonHeader({ title }: CommonHeaderProps) {
         />
       </Pressable>
       <View className="h-full w-full flex-row items-center justify-center gap-4">
-        <Text className="font-inter-b full text-left text-2xl text-black">
+        <Text className="font-inter-b full text-left text-md text-black">
           {title}
         </Text>
       </View>

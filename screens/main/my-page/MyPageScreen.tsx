@@ -88,7 +88,7 @@ export default function MyPageScreen({
       <StatusBar barStyle="dark-content" />
       <View className="h-screen w-screen flex items-center bg-white">
         <View className="flex flex-row w-11/12 h-auto justify-between items-center py-2">
-          <Text className="font-inter-b w-5/6 text-2xl text-black">
+          <Text className="font-inter-b w-5/6 text-xl text-black">
             마이페이지
           </Text>
           <Pressable onPress={() => navigation.navigate('Notifications')}>
@@ -98,12 +98,12 @@ export default function MyPageScreen({
         <View className="flex flex-col w-11/12 h-1/4">
           <View className="flex flex-row w-auto h-1/5 justify-between items-end">
             <View className="flex flex-col h-full justify-end">
-              <Text className="font-inter-b text-md text-black">
+              <Text className="font-inter-b text-s text-black">
                 {userId
                   ? context.myPageState.username
                   : '사용자를 찾을 수 없습니다.'}
               </Text>
-              <Text className="font-inter-m text-sm text-black/[.5]">
+              <Text className="font-inter-m text-ss text-black/[.5]">
                 Show profile
               </Text>
             </View>
@@ -121,28 +121,28 @@ export default function MyPageScreen({
           <View className="flex border-b" />
           <View className="flex flex-col w-full h-full">
             <View className="flex flex-row w-full h-1/4 justify-between items-end">
-              <Text className="font-inter-m text-md text-black">고객센터</Text>
+              <Text className="font-inter-m text-s text-black">고객센터</Text>
               <Pressable className="px-1">
                 <MoreIcon width={29} height={29} />
               </Pressable>
             </View>
             <View className="flex border-b" />
             <View className="flex flex-row w-full h-1/6 justify-between items-end">
-              <Text className="font-inter-m text-md text-black">문의사항</Text>
+              <Text className="font-inter-m text-s text-black">문의사항</Text>
               <Pressable className="px-1">
                 <MoreIcon width={29} height={29} />
               </Pressable>
             </View>
             <View className="flex border-b" />
             <View className="flex flex-row w-full h-1/6 justify-between items-end">
-              <Text className="font-inter-m text-md text-black">공지사항</Text>
+              <Text className="font-inter-m text-s text-black">공지사항</Text>
               <Pressable className="px-1">
                 <MoreIcon width={29} height={29} />
               </Pressable>
             </View>
             <View className="flex border-b" />
             <View className="flex flex-row w-full h-1/6 justify-between items-end">
-              <Text className="font-inter-m text-md text-black">로그아웃</Text>
+              <Text className="font-inter-m text-s text-black">로그아웃</Text>
               <Pressable className="px-1" onPress={() => setModalVisible(true)}>
                 <MoreIcon width={29} height={29} />
               </Pressable>
@@ -185,7 +185,7 @@ export default function MyPageScreen({
           </View>
         </View>
         <View className="flex flex-col w-11/12 h-auto">
-          <Text className="font-inter-b mt-10 text-lg text-black">내 예약</Text>
+          <Text className="font-inter-b mt-10 text-sm text-black">내 예약</Text>
         </View>
         <View className="flex flex-grow w-full h-1/3">
           <ScrollView showsVerticalScrollIndicator={false}>

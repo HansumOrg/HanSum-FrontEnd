@@ -77,7 +77,7 @@ export default function SearchResultScreen({
               <View className="flex w-3/4 h-full justify-center">
                 {guesthouseName ? (
                   <TextInput
-                    className="font-inter-m text-md text-black"
+                    className="font-inter-m text-s text-black"
                     placeholder={`${guesthouseName}`}
                     placeholderTextColor="black"
                     onSubmitEditing={event => {
@@ -92,7 +92,7 @@ export default function SearchResultScreen({
                   />
                 ) : (
                   <TextInput
-                    className="font-inter-m text-md text-black"
+                    className="font-inter-m text-s text-black"
                     placeholder="지역, 게스트하우스 이름"
                     placeholderTextColor="#BDBDBD"
                   />
@@ -115,7 +115,7 @@ export default function SearchResultScreen({
                 </View>
                 <View className="flex w-3/4 h-full justify-center">
                   {checkinDate && checkoutDate ? (
-                    <Text className="font-inter-m text-md text-black">
+                    <Text className="font-inter-m text-s text-black">
                       {`${new Date(checkinDate).getMonth() + 1}월 ${new Date(
                         checkinDate,
                       ).getDate()}일 ~ ${
@@ -123,7 +123,7 @@ export default function SearchResultScreen({
                       }월 ${new Date(checkoutDate).getDate()}일`}
                     </Text>
                   ) : (
-                    <Text className="font-inter-m text-md text-gray-2">
+                    <Text className="font-inter-m text-s text-gray-2">
                       날짜 선택
                     </Text>
                   )}
@@ -132,7 +132,7 @@ export default function SearchResultScreen({
             </Pressable>
           </View>
           <View className="flex w-full h-1/4 justify-end">
-            <Text className="font-inter-m text-lg text-gray-2">{location}</Text>
+            <Text className="font-inter-m text-sm text-gray-2">{location}</Text>
           </View>
         </View>
         <FlatList

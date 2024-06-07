@@ -8,7 +8,7 @@ function InterestBorder(interest: string, index: number) {
       key={index}
       className="flex border-2 mr-1 border-primary-2/100 w-auto h-auto rounded-2xl items-center"
     >
-      <Text className="font-inter-r px-2 py-1 text-md text-primary-2">
+      <Text className="font-inter-r px-2 py-1 text-s text-primary-2">
         {interest}
       </Text>
     </View>
