@@ -6,8 +6,8 @@ import {
   Text,
   Pressable,
   Modal,
-  StyleSheet,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import LocalSvg from '../../../assets/images/icon_local.svg';
 import PhoneSVG from '../../../assets/images/icon_phone.svg';
@@ -16,6 +16,8 @@ import UnChecked from '../../../components/reservation/unchecked_rectangle.svg';
 import Checked from '../../../components/reservation/checked_rectangle.svg';
 import { ReservationRecord, GuestInfo } from '../../../types';
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
+
+const screenHeight = Dimensions.get('window').height;
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -64,49 +66,6 @@ export default function ReservationScreen({
     navigation.navigate('ReservationComplete');
     console.log('예약 완료');
   };
-  const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 22,
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: 'white',
-      borderRadius: 20,
-      padding: 35,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-    },
-    buttonContainer: {
-      flexDirection: 'row',
-      marginTop: 15,
-    },
-    button: {
-      borderRadius: 10,
-      padding: 10,
-      elevation: 2,
-      backgroundColor: '#2196F3',
-      marginHorizontal: 10,
-    },
-    textStyle: {
-      color: 'white',
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: 'center',
-    },
-  });
 
   return (
     <SafeAreaView>
@@ -232,7 +191,8 @@ export default function ReservationScreen({
           </View>
           {agreeMbti ? (
             <Pressable
-              className="mt-4 bg-primary-2 items-center justify-center w-screen h-[18%] shadow-black drop-shadow-xl"
+              className="mt-4 bg-primary-2 items-center justify-center w-screen shadow-black drop-shadow-xl"
+              style={{ height: (screenHeight * 1) / 14 }}
               onPress={
                 agreeNickname ? handleReservation : () => setModalVisible(true)
               }
@@ -240,12 +200,15 @@ export default function ReservationScreen({
               <Text className="font-inter-b text-lg text-white">예약하기</Text>
             </Pressable>
           ) : (
-            <View className="mt-4 bg-gray-3 items-center justify-center w-screen h-[18%] shadow-black drop-shadow-xl">
+            <View
+              className="mt-4 bg-gray-3 items-center justify-center w-screen  shadow-black drop-shadow-xl"
+              style={{ height: (screenHeight * 1) / 14 }}
+            >
               <Text className="font-inter-b text-lg text-black">예약하기</Text>
             </View>
           )}
         </View>
-        <View className="absolute justify-center h-1/5 w-full bg-white items-center bottom-0 -z-10 " />
+
         <Modal
           animationType="slide"
           transparent
@@ -254,30 +217,34 @@ export default function ReservationScreen({
             setModalVisible(!modalVisible);
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>
+          <View className=" bg-black/75 h-screen w-screen items-center justify-center">
+            <View className="w-4/5 h-1/4 bg-white rounded-lg items-center justify-between px-4 py-8 shadow-lg shadow-black">
+              <Text className="text-left font-inter-r text-sm text-black">
                 닉네임, 관심사 공개를 하지 않으시면 채팅기능을 이용할 수
                 없습니다. 공개를 원하시지 않습니까?
               </Text>
-              <View style={styles.buttonContainer}>
+              <View className="flex-row justify-between w-full ">
                 <TouchableOpacity
-                  style={styles.button}
+                  className="rounded-md bg-primary-2 w-[45%] py-2 justify-center items-center"
                   onPress={() => {
                     handleAgreeNickname(true);
                     handleReservation();
                   }}
                 >
-                  <Text style={styles.textStyle}>예(공개)</Text>
+                  <Text className="text-white font-inter-sb text-s text-center">
+                    예(공개)
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.button}
+                  className="rounded-md bg-gray-2 w-[45%] py-2 justify-center items-center"
                   onPress={() => {
                     handleReservation();
                     setModalVisible(false);
                   }}
                 >
-                  <Text style={styles.textStyle}>아니요(비공개)</Text>
+                  <Text className="text-white font-inter-sb text-s text-center">
+                    아니요(비공개)
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>

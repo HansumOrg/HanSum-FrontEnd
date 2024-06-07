@@ -176,12 +176,12 @@ export default function GuesthouseDetailsScreen({
           </View>
         </View>
         <View
-          className="w-full mt-1 justify-between bg-white py-6 px-4"
+          className="w-full mt-1 justify-between bg-white py-6 "
           style={{
             height: (screenHeight * 2) / 6,
           }}
         >
-          <View className="justify-center items-start">
+          <View className="justify-center items-start mx-4">
             <Text className=" w-full text-left text-xl font-inter-b text-black">
               예약자 MBTI
             </Text>
@@ -197,7 +197,7 @@ export default function GuesthouseDetailsScreen({
             </View>
           </View>
           <Pressable
-            className="my-4 bg-primary-2 items-center justify-center w-full shadow-black drop-shadow-xl"
+            className="bg-primary-2 items-center justify-center w-screen shadow-black drop-shadow-xl"
             style={{ height: (screenHeight * 1) / 14 }}
             onPress={() => navigation.navigate('Reservation')}
           >
