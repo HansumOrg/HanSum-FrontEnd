@@ -10,16 +10,23 @@ import {
 } from 'react-native';
 import { MyPageStackScreenProps } from '../../../navigation/types';
 import RatingStars from '../../../components/common/RatingStars';
-import GuestReview from '../../../components/common/GuestReview';
+import GuestReviewCard from '../../../components/my-page/review-page/GuestReviewCard';
 
 export default function ReviewsScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   navigation,
 }: MyPageStackScreenProps<'Reviews'>) {
   const screenHeight = Dimensions.get('window').height;
+  const guests = [
+    { name: '게스트 이름 1', mbti: 'MBTI1' },
+    { name: '게스트 이름 2', mbti: 'MBTI2' },
+    { name: '게스트 이름 3', mbti: 'MBTI3' },
+    { name: '게스트 이름 4', mbti: 'MBTI4' },
+    { name: '게스트 이름 5', mbti: 'MBTI5' },
+  ];
 
   return (
     <SafeAreaView>
@@ -48,36 +55,22 @@ export default function ReviewsScreen({
             </Text>
             <RatingStars />
           </View>
-          <View
-            className="px-1 w-full justify-start items-center m-2"
-            style={{ height: (screenHeight * 2) / 5 }}
-          >
-            <Text className="mt-2 w-full text-left text-md font-inter-sb text-black">
+          <View className="px-4 w-full my-2">
+            <Text className=" text-left text-md font-inter-sb text-black">
               게스트 리뷰 (선택) - 2개 선택
             </Text>
-            <View className="mt-4 flex-row h-[10%] w-full">
-              <Text className="text-md font-inter-r text-black">게스트-</Text>
-              <Text className="text-md font-inter-r text-black">
-                게스트 mbti
-              </Text>
-            </View>
-            <GuestReview />
           </View>
-          <View
-            className="px-4 w-full my-2 justify-start items-center m-2"
-            style={{ height: (screenHeight * 2) / 5 }}
-          >
-            <View className="mt-2 flex-row h-[10%] w-full">
-              <Text className="text-md font-inter-r text-black">게스트-</Text>
-              <Text className="text-md font-inter-r text-black">
-                게스트 mbti pa
-              </Text>
-            </View>
-            <GuestReview />
-          </View>
+          {guests.map(guest => (
+            <GuestReviewCard
+              key={guest.name}
+              name={guest.name}
+              mbti={guest.mbti}
+            />
+          ))}
           <Pressable
             className="bg-primary-2 items-center justify-center w-full"
             style={{ height: (screenHeight * 1) / 14 }}
+            onPress={() => navigation.navigate('MyPage')}
           >
             <Text className="font-inter-b text-lg text-white">등록하기</Text>
           </Pressable>
