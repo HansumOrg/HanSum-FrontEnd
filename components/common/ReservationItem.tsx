@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { ReservationRecord } from '../../types';
+import { BasicReservationRecord } from '../../types';
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -23,8 +23,10 @@ const calculateDday = (date: string): string => {
   return `D-${diffDays}`;
 };
 
-const ReservationItem: React.FC<{ item: ReservationRecord }> = ({ item }) => (
-  <View className="flex-row justify-between items-center bg-white rounded-lg p m-2 h-[35%] shadow-xl shadow-black">
+const ReservationItem: React.FC<{ item: BasicReservationRecord }> = ({
+  item,
+}) => (
+  <View className="flex-row w-full justify-between items-center bg-white rounded-lg m-2 h-[35%] shadow-xl shadow-black">
     <View className="w-1/2 mx-2">
       <Text className="text-s text-black font-inter-b">
         {item.guesthouse_name}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -7,6 +7,7 @@ import {
   Pressable,
   TextInput,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { SearchStackScreenProps } from '../../../navigation/types';
 import SearchIcon from '../../../assets/images/icon_search.svg';
 import CalendarIcon from '../../../assets/images/icon_calendar.svg';
@@ -21,10 +22,19 @@ export default function SearchScreen({
   route,
   navigation,
 }: SearchStackScreenProps<'Search'>) {
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content'); // 상태 바 스타일을 설정
+      return () => {
+        StatusBar.setBarStyle('dark-content'); // 화면을 벗어날 때 기본 상태로 되돌림
+        StatusBar.setTranslucent(false);
+      };
+    }, []),
+  );
   const searchContext = useSearchContext();
   return (
     <SafeAreaView>
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle="dark-content" />
       <View className="h-screen bg-white flex justify-center items-center">
         <View className="flex w-11/12 h-full">
           <View className="flex w-full h-1/4 justify-end">

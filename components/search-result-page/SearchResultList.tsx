@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions, Pressable } from 'react-native';
+import { View, Text, Dimensions, Pressable, Image } from 'react-native';
 import FullHeartIcon from '../../assets/images/icon_fullheart.svg';
 import FavoriteSelect from '../../assets/images/icon_Heart.svg';
 import { Guesthouse } from '../../types';
+import dummyImage from '../../assets/images/dummy_img';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -38,6 +39,10 @@ function SearchResultList({
       }}
     >
       <View className="mt-4 items-end rounded-md w-full bg-primary-1 h-[75%]">
+        <Image
+          source={{ uri: dummyImage }}
+          className="w-full h-full absolute"
+        />
         {isFavorite ? (
           <Pressable
             className="w-[20%] pt-2 pr-2 aspect-square justify-start items-end"

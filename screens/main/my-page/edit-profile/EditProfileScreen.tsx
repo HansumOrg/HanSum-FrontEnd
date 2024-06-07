@@ -86,11 +86,6 @@ export default function EditProfileScreen({
               <View className="flex flex-row w-1/2 justify-between items-center">
                 {/* mbti에 따른 border 테두리 색 변화 */}
                 <MbtiCheck mbti={context.myPageState.mbti} />
-                <Pressable>
-                  <Text className="font-inter-m text-sm text-black underline">
-                    수정
-                  </Text>
-                </Pressable>
               </View>
             </View>
           </View>

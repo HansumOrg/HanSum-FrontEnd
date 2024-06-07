@@ -16,8 +16,9 @@ function DateCheck({ checkin_date }: Reservation): number {
   return status;
 }
 function ReservationBox(props: ReservationBoxProps) {
-  const { reservation, guesthouse } = props;
+  const { reservation, guesthouse, navigation } = props;
   const [dateState, setDateState] = useState(0); // 0: 예약확정, 1:이용완료
+
   useEffect(() => {
     setDateState(DateCheck(reservation));
   }, [reservation]);
@@ -61,7 +62,12 @@ function ReservationBox(props: ReservationBoxProps) {
                 </View>
               </View>
             ) : (
-              <Pressable className="flex flex-col w-full h-auto justify-center items-center">
+              <Pressable
+                onPress={() => {
+                  navigation.navigate('Reviews');
+                }}
+                className="flex flex-col w-full h-auto justify-center items-center"
+              >
                 <View className="flex bg-gray-3 w-11/12 h-auto items-center m-2 rounded-lg">
                   <Text className="font-inter-m text-lg m-2 text-black">
                     후기 작성

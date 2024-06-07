@@ -5,12 +5,10 @@ import RadioButtons from '../../../components/common/RadioButtonItem';
 import RectButton from '../../../components/common/RectButton';
 
 export default function SelectMbtiScreen({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'SelectMbti'>) {
-  const { userName, userId, password, gender, brithday, nickName } =
-    route.params;
-
   const [selectedIE, setSelectedIE] = useState('');
   const [selectedNS, setSelectedNS] = useState('');
   const [selectedFT, setSelectedFT] = useState('');
@@ -27,15 +25,7 @@ export default function SelectMbtiScreen({
       selectedPJ !== ''
     ) {
       console.log('mbti', selectedIE, selectedNS, selectedFT, selectedPJ);
-      navigation.navigate('AgreeTos', {
-        userName,
-        userId,
-        password,
-        brithday,
-        gender,
-        nickName,
-        mbti,
-      });
+      navigation.navigate('AgreeTos');
     }
   };
   const options = (a: string, b: string) => [

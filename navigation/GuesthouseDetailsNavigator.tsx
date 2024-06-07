@@ -6,7 +6,10 @@ import ReservationScreen from '../screens/main/guesthouse-details/ReservationScr
 import ReservationCompleteScreen from '../screens/main/guesthouse-details/ReservationCompleteScreen';
 import { GuesthouseDetailsStackParamList } from './types';
 import Header from '../components/gesthouse-detail/HeaderComponent';
+import CalendarScreen from '../screens/main/search/CalendarScreen';
+import CommonHeader from '../components/common/CommonHeader';
 
+const ReservationHeader = () => <CommonHeader title="예약" />;
 const GuesthouseDetailHeader = () => <Header />;
 
 export default function GuesthouseDetailsNavigator() {
@@ -24,12 +27,17 @@ export default function GuesthouseDetailsNavigator() {
         }}
       />
       <GuesthouseDetailsStack.Screen
+        name="Calendar"
+        component={CalendarScreen}
+      />
+      <GuesthouseDetailsStack.Screen
         name="ChatGuide"
         component={ChatGuideScreen}
       />
       <GuesthouseDetailsStack.Screen
         name="Reservation"
         component={ReservationScreen}
+        options={{ headerLeft: ReservationHeader }}
       />
       <GuesthouseDetailsStack.Screen
         name="ReservationComplete"

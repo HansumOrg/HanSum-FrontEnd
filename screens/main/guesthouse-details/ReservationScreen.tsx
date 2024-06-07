@@ -31,13 +31,13 @@ const formatDate = (dateString: string) => {
 };
 
 export default function ReservationScreen({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: GuesthouseDetailsStackScreenProps<'Reservation'>) {
   const [agreeMbti, setAgreeMbti] = useState(false);
   const [agreeNickname, setAgreeNickname] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const { guesthouseId } = route.params;
 
   const reservation: ReservationRecord = {
     guesthouse_name: '서점 숙소',
@@ -60,13 +60,9 @@ export default function ReservationScreen({
   };
 
   const handleReservation = () => {
-    if (!agreeNickname) {
-      setModalVisible(true);
-    } else {
-      // 예약하기 로직을 추가하세요.
-      navigation.navigate('ReservationComplete', { guesthouseId });
-      console.log('예약 완료', guesthouseId);
-    }
+    // 예약하기 로직을 추가하세요.
+    navigation.navigate('ReservationComplete');
+    console.log('예약 완료');
   };
   const styles = StyleSheet.create({
     centeredView: {
@@ -234,12 +230,20 @@ export default function ReservationScreen({
               </Pressable>
             </View>
           </View>
-          <Pressable
-            className="my-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
-            onPress={handleReservation}
-          >
-            <Text className="font-inter-b text-lg text-white">예약하기</Text>
-          </Pressable>
+          {agreeMbti ? (
+            <Pressable
+              className="my-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
+              onPress={
+                agreeNickname ? handleReservation : () => setModalVisible(true)
+              }
+            >
+              <Text className="font-inter-b text-lg text-white">예약하기</Text>
+            </Pressable>
+          ) : (
+            <View className="my-4 bg-gray-3 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl">
+              <Text className="font-inter-b text-lg text-black">예약하기</Text>
+            </View>
+          )}
         </View>
         <Modal
           animationType="slide"
@@ -258,13 +262,19 @@ export default function ReservationScreen({
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => handleAgreeNickname(true)}
+                  onPress={() => {
+                    handleAgreeNickname(true);
+                    handleReservation();
+                  }}
                 >
                   <Text style={styles.textStyle}>예(공개)</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => handleAgreeNickname(false)}
+                  onPress={() => {
+                    handleReservation();
+                    setModalVisible(false);
+                  }}
                 >
                   <Text style={styles.textStyle}>아니요(비공개)</Text>
                 </TouchableOpacity>
