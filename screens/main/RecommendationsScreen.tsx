@@ -48,7 +48,9 @@ export default function RecommendationsScreen({
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
   const handleSeeMore = () => {
-    navigation.navigate('MyPageNavigator'); // 'ReservationList'는 다른 페이지의 이름입니다.
+    navigation.navigate('MyPageNavigator', {
+      screen: 'MyPage',
+    }); // 'ReservationList'는 다른 페이지의 이름입니다.
   };
   useFocusEffect(
     useCallback(() => {
