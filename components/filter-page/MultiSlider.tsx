@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Dimensions, Text, View } from 'react-native';
-import { PanGestureHandler } from 'react-native-gesture-handler';
+import {
+  PanGestureHandler,
+  State,
+  GestureHandlerGestureEventNativeEvent,
+} from 'react-native-gesture-handler';
 import { MultiSliderProps } from '../../types';
 
 const WIDTH = Dimensions.get('window').width * 0.75;
@@ -16,35 +20,47 @@ function MultiSlider({
   const sliderWidth = 40;
   const [translateX1, setTranslateX1] = useState(0);
   const [translateX2, setTranslateX2] = useState(WIDTH - sliderWidth);
+  const [gestureX1, setGestureX1] = useState(0);
+  const [gestureX2, setGestureX2] = useState(WIDTH - sliderWidth);
 
-  const handleGestureEvent1 = ({
-    nativeEvent,
-  }: {
-    nativeEvent: { translationX: number };
-  }) => {
-    let newTranslateX = nativeEvent.translationX;
+  interface GestureEvent {
+    nativeEvent: GestureHandlerGestureEventNativeEvent & {
+      translationX: number;
+    };
+  }
+
+  const handleGestureEvent1 = ({ nativeEvent }: GestureEvent) => {
+    let newTranslateX = gestureX1 + nativeEvent.translationX;
     if (newTranslateX < 0) {
       newTranslateX = 0;
     } else if (newTranslateX > WIDTH - sliderWidth) {
       newTranslateX = WIDTH - sliderWidth;
-    } else if (newTranslateX > translateX2) {
-      newTranslateX = translateX2;
+    } else if (newTranslateX >= translateX2 - sliderWidth) {
+      newTranslateX = translateX2 - sliderWidth;
     }
-    setTranslateX1(newTranslateX);
 
     const newValue =
       Math.round((newTranslateX / (WIDTH - sliderWidth)) * (max - min)) + min;
-    setMinStep(newValue);
+    if (newValue > 9) {
+      newTranslateX = ((9 - min) * (WIDTH - sliderWidth)) / (max - min);
+      setTranslateX1(newTranslateX);
+      setMinStep(9);
+    } else {
+      setTranslateX1(newTranslateX);
+      setMinStep(newValue);
+    }
   };
 
-  const handleGestureEvent2 = ({
-    nativeEvent,
-  }: {
-    nativeEvent: { translationX: number };
-  }) => {
-    let newTranslateX = nativeEvent.translationX;
-    if (newTranslateX < translateX1) {
-      newTranslateX = translateX1;
+  const handleStateChange1 = ({ nativeEvent }: GestureEvent) => {
+    if (nativeEvent.state === State.END) {
+      setGestureX1(translateX1);
+    }
+  };
+
+  const handleGestureEvent2 = ({ nativeEvent }: GestureEvent) => {
+    let newTranslateX = gestureX2 + nativeEvent.translationX;
+    if (newTranslateX < translateX1 + sliderWidth) {
+      newTranslateX = translateX1 + sliderWidth;
     } else if (newTranslateX > WIDTH - sliderWidth) {
       newTranslateX = WIDTH - sliderWidth;
     }
@@ -53,6 +69,12 @@ function MultiSlider({
     const newValue =
       Math.round((newTranslateX / (WIDTH - sliderWidth)) * (max - min)) + min;
     setMaxStep(newValue);
+  };
+
+  const handleStateChange2 = ({ nativeEvent }: GestureEvent) => {
+    if (nativeEvent.state === State.END) {
+      setGestureX2(translateX2);
+    }
   };
 
   return (
@@ -64,13 +86,19 @@ function MultiSlider({
             className="h-full bg-primary-2"
           />
         </View>
-        <PanGestureHandler onGestureEvent={handleGestureEvent1}>
+        <PanGestureHandler
+          onGestureEvent={handleGestureEvent1}
+          onHandlerStateChange={handleStateChange1}
+        >
           <View
             className="absolute w-10 h-10 z-10 bg-white border border-gray-2/100 shadow-lg shadow-black/60 rounded-full"
             style={{ transform: [{ translateX: translateX1 }] }}
           />
         </PanGestureHandler>
-        <PanGestureHandler onGestureEvent={handleGestureEvent2}>
+        <PanGestureHandler
+          onGestureEvent={handleGestureEvent2}
+          onHandlerStateChange={handleStateChange2}
+        >
           <View
             className="absolute w-10 h-10 z-20 bg-white border shadow-lg shadow-black/60 border-gray-2/100 rounded-full"
             style={{ transform: [{ translateX: translateX2 }] }}

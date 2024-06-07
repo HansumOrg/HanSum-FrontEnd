@@ -16,7 +16,7 @@ export default function FilterScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   navigation,
 }: SearchStackScreenProps<'Filter'>) {
   const context = useSearchContext();
@@ -52,11 +52,11 @@ export default function FilterScreen({
           <View className="flex w-full h-1/6  items-center justify-end">
             <View className="flex flex-col w-full h-4/5">
               <View className="flex flex-row w-full h-1/3 justify-between items-center ">
-                <Text className="font-inter-sb text-xl text-black">분위기</Text>
+                <Text className="font-inter-sb text-lg text-black">분위기</Text>
               </View>
               <View className="flex flex-row w-full h-1/3 justify-between">
-                <View className="flex flex-row w-1/2 h-full items-center justify-between">
-                  <Text className="font-inter-m text-md text-black ">
+                <View className="flex flex-row w-[45%] h-full items-center justify-between">
+                  <Text className="font-inter-m text-s text-black ">
                     액티비티가 다양한
                   </Text>
                   <Pressable
@@ -80,8 +80,8 @@ export default function FilterScreen({
                     />
                   </Pressable>
                 </View>
-                <View className="flex flex-row w-1/2 h-full items-center justify-between">
-                  <Text className="font-inter-m text-md text-black ">
+                <View className="flex flex-row w-[45%] h-full items-center justify-between">
+                  <Text className="font-inter-m text-s text-black ">
                     힐링하기 좋은
                   </Text>
                   <Pressable
@@ -107,8 +107,8 @@ export default function FilterScreen({
                 </View>
               </View>
               <View className="flex flex-row w-full h-1/3 justify-between">
-                <View className="flex flex-row w-1/2 h-full items-center justify-between">
-                  <Text className="font-inter-m text-md text-black">
+                <View className="flex flex-row w-[45%] h-full items-center justify-between">
+                  <Text className="font-inter-m text-s text-black">
                     활기 넘치는
                   </Text>
                   <Pressable
@@ -132,8 +132,8 @@ export default function FilterScreen({
                     />
                   </Pressable>
                 </View>
-                <View className="flex flex-row w-1/2 h-full items-center justify-between">
-                  <Text className="font-inter-m text-md text-black">
+                <View className="flex flex-row w-[45%] h-full items-center justify-between">
+                  <Text className="font-inter-m text-s text-black">
                     여유로운
                   </Text>
                   <Pressable
@@ -162,11 +162,11 @@ export default function FilterScreen({
           </View>
           <View className="flex w-full h-2/5">
             <View className="flex flex-row w-full h-1/5 justify-between items-end">
-              <Text className="font-inter-sb text-xl text-black">
+              <Text className="font-inter-sb text-lg text-black">
                 시설 서비스
               </Text>
               <View className="flex flex-row w-auto h-auto items-center">
-                <Text className="font-inter-b text-md text-primary-2">
+                <Text className="font-inter-b text-s text-primary-2">
                   {count}
                 </Text>
                 <Text className="font-inter-b text-sm text-black/[.50]">
@@ -365,22 +365,22 @@ export default function FilterScreen({
             </View>
           </View>
         </View>
+        <Pressable
+          className="absolute z-10 bottom-0 mb-[4%] items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
+          onPress={() => {
+            context.setSearchState((prevState: SearchResultProps) => ({
+              ...prevState,
+              min_price: minStep,
+              max_price: maxStep,
+            }));
+            navigation.goBack();
+          }}
+        >
+          <View className="flex w-full h-1/3 bg-primary-2  justify-center items-center shadow-2xl shadow-black/100">
+            <Text className="font-inter-sb text-md text-white ">적용하기</Text>
+          </View>
+        </Pressable>
       </View>
-      <Pressable
-        className="absolute z-5 w-full h-1/6 bottom-1 justify-center items-center"
-        onPress={() => {
-          context.setSearchState((prevState: SearchResultProps) => ({
-            ...prevState,
-            min_price: minStep,
-            max_price: maxStep,
-          }));
-          navigation.goBack();
-        }}
-      >
-        <View className="flex w-full h-full bg-primary-2 items-center shadow-2xl shadow-black/100">
-          <Text className="font-inter-sb text-md text-white p-6">적용하기</Text>
-        </View>
-      </Pressable>
     </SafeAreaView>
   );
 }
