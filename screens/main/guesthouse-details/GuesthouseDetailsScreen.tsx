@@ -142,7 +142,7 @@ export default function GuesthouseDetailsScreen({
             </View>
             <Pressable
               onPress={() => {
-                navigation.navigate('Calendar');
+                navigation.navigate('SearchNavigator', { screen: 'Calendar' });
               }}
               className="w-full h-1/5 mt-4 flex-row justify-between items-center"
             >
