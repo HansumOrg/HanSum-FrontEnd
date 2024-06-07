@@ -69,36 +69,24 @@ export default function ReservationCompleteScreen({
           <View className="flex-row justify-center items-center w-full h-1/6 bg-white rounded-lg">
             <View className="flex-row justify-center items-center w-[86%] h-full bg-gray-1 rounded-lg ">
               <View className="flex-row absolute h-[78.38%] w-[0.58%] bg-gray-3" />
-              <View className="fflex w-[50%] h-full justify-nomal items-start p-2  rounded-l-lg">
-                <Text
-                  className=" font-inter-m text-sss text-black flex-shrink"
-                  numberOfLines={1}
-                >
-                  Check In
+              <View className="flex w-[50%] h-full justify-nomal items-start p-2  rounded-l-lg">
+                <Text className=" font-inter-m text-sss text-black flex-shrink">
+                  Check In{'\n'}
                 </Text>
-                <Text
-                  className="font-inter-m text-ss text-black flex-shrink"
-                  numberOfLines={2}
-                >
+                <Text className="font-inter-m text-ss text-black ">
                   {formatDate(reservation.checkin_date)}
                 </Text>
               </View>
               <View className="flex w-[50%] h-full justify-nomal items-start p-2 ">
-                <Text
-                  className=" font-inter-m text-sss text-black flex-shrink"
-                  numberOfLines={1}
-                >
-                  Check Out
+                <Text className=" font-inter-m text-sss text-black ">
+                  Check Out{'\n'}
                 </Text>
-                <Text
-                  className="mr-1 font-inter-m text-ss text-black flex-shrink"
-                  numberOfLines={2}
-                >
+                <Text className="mr-1 font-inter-m text-ss text-black ">
                   {formatDate(reservation.checkout_date)}
                 </Text>
               </View>
             </View>
-            <View className="flex justify-center items-center w-[14%] h-full bg-primary-2 rounded-r-lg">
+            <View className="flex justify-center items-center h-full bg-primary-2 rounded-r-lg">
               <Text className=" font-inter-sb text-lg text-white">
                 {reservation.nights}박
               </Text>
