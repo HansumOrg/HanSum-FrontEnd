@@ -39,7 +39,7 @@ const RatingStars: React.FC = () => {
 
   return (
     <View className="justify-center items-center w-full ">
-      <View className="flex-row justify-center items-center w-full">
+      <View className="flex-row justify-center items-center w-full mb-2">
         {stars.map(star => (
           <Pressable key={star.id} onPress={() => handlePress(star.value)}>
             {renderStar(star.value)}

@@ -230,7 +230,6 @@ export interface InterestProps {
   userinterest: string[];
   index: number;
   type: number; // 0: 여행지, 1: 취미, 2: 음식
-  setUserData: React.Dispatch<React.SetStateAction<User[]>>;
 }
 
 // components/api types 이건 제가 만든 임시라 삭제 하시면 됩니다.
