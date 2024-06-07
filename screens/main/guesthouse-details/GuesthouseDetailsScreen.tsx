@@ -144,18 +144,18 @@ export default function GuesthouseDetailsScreen({
               onPress={() => {
                 navigation.navigate('SearchNavigator', { screen: 'Calendar' });
               }}
-              className="w-full h-1/5 mt-4 flex-row justify-between items-center"
+              className="w-full mt-4 flex-row justify-between items-center"
             >
-              <View className="flex-row border border-gray-3 p-2 h-full justify-start items-center">
+              <View className="flex-row border border-gray-3 p-2 h-full w-full  justify-start items-center">
                 <CalendarSVG width="12.5%" />
-                <Text className="text-sm font-inter-r text-black ml-4">
-                  {`${checkinDate} (${checkinDayOfWeek}) ~ ${checkoutDate} (${checkoutDayOfWeek}) - ${nights}박`}
+                <Text
+                  className="m-1 text-sm font-inter-r text-black ml-4 flex-shrink"
+                  numberOfLines={3}
+                >
+                  {`${checkinDate} (${checkinDayOfWeek}) ~  ${checkoutDate} (${checkoutDayOfWeek}) - ${nights}박`}
                 </Text>
               </View>
             </Pressable>
-            <Text className="mt-4 w-full text-left text-sm font-inter-r text-black-50%">
-              예약취소가능
-            </Text>
           </View>
         </View>
         <View

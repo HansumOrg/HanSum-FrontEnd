@@ -200,7 +200,7 @@ export default function ReservationScreen({
             </Text>
             <View className="flex-row w-full h-2/6 justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-between items-end">
-                <Text className="font-inter-m w-full  text-sm  text-black">
+                <Text className="font-inter-m w-full text-sm text-black">
                   MBTI를 공개하는 것을 동의합니다. (필수)
                 </Text>
                 <GoFront width="10%" height="100%" />
@@ -213,11 +213,11 @@ export default function ReservationScreen({
                 )}
               </Pressable>
             </View>
-            <View className="flex-row w-full h-2/6 justify-between items-center mt-2">
-              <View className="flex-row w-4/5 h-full justify-between items-center">
+            <View className="flex-row w-full h-[35%] justify-between items-center mt-2">
+              <View className="flex-row w-4/5 h-full justify-between items-end">
                 <Text className="font-inter-m w-full text-sm text-black">
                   예약자들과 소통을 하기 위해 닉네임, 관심사 공개에
-                  동의하시겠습니까? (선택)
+                  동의하시겠습니까? {'\n'}(선택)
                 </Text>
                 <GoFront width="10%" height="100%" />
               </View>
