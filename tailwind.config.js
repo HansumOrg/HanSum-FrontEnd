@@ -11,7 +11,7 @@ module.exports = {
       xxs: [
         '8px',
         {
-          lineHeight: '1.5',
+          lineHeight: '1.2',
           letterSpacing: '-0.24px',
           fontWeight: '300',
         },
@@ -19,7 +19,7 @@ module.exports = {
       xss: [
         '10px',
         {
-          lineHeight: '1.5',
+          lineHeight: '1.2',
           letterSpacing: '-0.24px',
           fontWeight: '300',
         },
@@ -27,7 +27,7 @@ module.exports = {
       sss: [
         '12px',
         {
-          lineHeight: '1.5',
+          lineHeight: '1.2',
           letterSpacing: '-0.24px',
           fontWeight: '300',
         },
@@ -35,7 +35,7 @@ module.exports = {
       ss: [
         '14px',
         {
-          lineHeight: '1.5',
+          lineHeight: '1.2',
           letterSpacing: '-0.24px',
           fontWeight: '500',
         },
@@ -43,7 +43,7 @@ module.exports = {
       s: [
         '16px',
         {
-          lineHeight: '1.5',
+          lineHeight: '1.2',
           letterSpacing: '-0.24px',
           fontWeight: '500',
         },
@@ -51,7 +51,7 @@ module.exports = {
       sm: [
         '18px',
         {
-          lineHeight: '1.5',
+          lineHeight: '1.2',
           letterSpacing: '-0.24px',
           fontWeight: '500',
         },
@@ -67,7 +67,7 @@ module.exports = {
       lg: [
         '21px',
         {
-          lineHeight: '1.5',
+          lineHeight: '1.2',
           letterSpacing: '-0.24px',
           fontWeight: '500',
         },
@@ -75,7 +75,7 @@ module.exports = {
       xl: [
         '24px',
         {
-          lineHeight: '1.5',
+          lineHeight: '1.2',
           letterSpacing: '-0.24px',
           fontWeight: '700',
         },

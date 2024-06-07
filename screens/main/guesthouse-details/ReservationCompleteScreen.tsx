@@ -38,7 +38,7 @@ export default function ReservationCompleteScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   navigation,
 }: GuesthouseDetailsStackScreenProps<'ReservationComplete'>) {
   const [imageError, setImageError] = useState(false);
@@ -70,8 +70,8 @@ export default function ReservationCompleteScreen({
             <View className="flex-row justify-center items-center w-[86%] h-full bg-gray-1 rounded-lg ">
               <View className="flex-row absolute h-[78.38%] w-[0.58%] bg-gray-3" />
               <View className="flex w-[50%] h-full justify-nomal items-start p-2  rounded-l-lg">
-                <Text className=" font-inter-m text-sss text-black flex-shrink">
-                  Check In{'\n'}
+                <Text className=" font-inter-m text-sss text-black ">
+                  Check In
                 </Text>
                 <Text className="font-inter-m text-ss text-black ">
                   {formatDate(reservation.checkin_date)}
@@ -79,7 +79,7 @@ export default function ReservationCompleteScreen({
               </View>
               <View className="flex w-[50%] h-full justify-nomal items-start p-2 ">
                 <Text className=" font-inter-m text-sss text-black ">
-                  Check Out{'\n'}
+                  Check Out
                 </Text>
                 <Text className="mr-1 font-inter-m text-ss text-black ">
                   {formatDate(reservation.checkout_date)}
@@ -87,7 +87,7 @@ export default function ReservationCompleteScreen({
               </View>
             </View>
             <View className="flex justify-center items-center h-full bg-primary-2 rounded-r-lg">
-              <Text className=" font-inter-sb text-lg text-white">
+              <Text className=" font-inter-sb text-lg text-white m-2">
                 {reservation.nights}박
               </Text>
             </View>
@@ -112,7 +112,12 @@ export default function ReservationCompleteScreen({
               </Text>
             </View>
           </View>
-          <Pressable className="my-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl">
+          <Pressable
+            className="my-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
+            onPress={() =>
+              navigation.navigate('MyPageNavigator', { screen: 'MyPage' })
+            }
+          >
             <Text className="font-inter-b text-lg text-white">예약하기</Text>
           </Pressable>
         </View>

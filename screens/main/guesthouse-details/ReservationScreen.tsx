@@ -131,27 +131,27 @@ export default function ReservationScreen({
                 </Text>
               </View>
               <View className="flex-row w-full h-2/6 justify-between items-center mt-2 bg-gray-1 rounded-xl">
-                <View className="flex-row w-[45%] h-full justify-start items-center bg-gray-3 rounded-xl">
+                <View className="flex-row w-[48%] h-full justify-start items-center bg-gray-3 rounded-xl">
                   <View className="flex-row w-1/4 h-full justify-center items-center bg-gray-2 rounded-l-xl">
                     <Text className="mx-1 font-inter-m text-xss text-center text-black">
                       Check {'\n'}In
                     </Text>
                   </View>
                   <Text
-                    className="ml-1 font-inter-m text-sss text-black flex-shrink"
+                    className="mx-1 font-inter-m text-sss text-black flex-shrink"
                     numberOfLines={2}
                   >
                     {formatDate(reservation.checkin_date)}
                   </Text>
                 </View>
-                <View className="flex-row w-[45%] h-full justify-start items-center bg-gray-3 rounded-xl">
+                <View className="flex-row w-[48%] h-full justify-start items-center bg-gray-3 rounded-xl">
                   <View className="flex-row w-1/4 h-full justify-center items-center bg-gray-2 rounded-l-xl">
                     <Text className="mx-1 font-inter-m text-xss text-center text-black">
                       Check {'\n'}Out
                     </Text>
                   </View>
                   <Text
-                    className="ml-1 font-inter-m text-sss text-black flex-shrink"
+                    className="mx-1 font-inter-m text-sss text-black flex-shrink"
                     numberOfLines={2}
                   >
                     {formatDate(reservation.checkout_date)}
