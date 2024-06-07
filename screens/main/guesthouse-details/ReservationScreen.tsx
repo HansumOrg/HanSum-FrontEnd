@@ -112,7 +112,7 @@ export default function ReservationScreen({
     <SafeAreaView>
       <StatusBar barStyle="default" />
       <View className="h-screen bg-gray-1 gap-1 flex justify-start items-center">
-        <View className="flex justify-center h-[25%] w-full bg-white items-center py-4 px-2">
+        <View className="flex justify-center h-[25%] w-full bg-white items-center py-4 px-6">
           <View className="flex-row justify-center items-center w-full h-full bg-white shadow-lg shadow-black rounded-lg">
             <View className="flex justify-start items-start w-[86%] h-full px-4 py-2 bg-white rounded-lg">
               <Text className="font-inter-r text-lg text-black ">
@@ -133,8 +133,8 @@ export default function ReservationScreen({
               <View className="flex-row w-full h-2/6 justify-between items-center mt-2 bg-gray-1 rounded-xl">
                 <View className="flex-row w-[45%] h-full justify-start items-center bg-gray-3 rounded-xl">
                   <View className="flex-row w-1/4 h-full justify-center items-center bg-gray-2 rounded-l-xl">
-                    <Text className="mx-1 font-inter-m text-xxs text-black">
-                      Check In
+                    <Text className="mx-1 font-inter-m text-xss text-center text-black">
+                      Check {'\n'}In
                     </Text>
                   </View>
                   <Text
@@ -146,8 +146,8 @@ export default function ReservationScreen({
                 </View>
                 <View className="flex-row w-[45%] h-full justify-start items-center bg-gray-3 rounded-xl">
                   <View className="flex-row w-1/4 h-full justify-center items-center bg-gray-2 rounded-l-xl">
-                    <Text className="mx-1 font-inter-m text-xxs text-black">
-                      Check Out
+                    <Text className="mx-1 font-inter-m text-xss text-center text-black">
+                      Check {'\n'}Out
                     </Text>
                   </View>
                   <Text
@@ -166,7 +166,7 @@ export default function ReservationScreen({
             </View>
           </View>
         </View>
-        <View className="flex justify-center h-1/5 w-full bg-white items-center px-2 py-4">
+        <View className="flex justify-center h-1/5 w-full bg-white items-center px-6 py-4">
           <View className="flex justify-between items-start h-full w-full">
             <Text className=" mt-4 font-inter-sb text-md text-black">
               예약자 정보
@@ -193,14 +193,14 @@ export default function ReservationScreen({
             </View>
           </View>
         </View>
-        <View className="flex justify-center h-2/5 w-full bg-white items-center">
+        <View className="flex justify-center h-[45%] w-full bg-white items-center px-4">
           <View className="flex justify-start items-center h-3/5 w-full px-2 py-4">
             <Text className="w-full text-left font-inter-sb text-md text-black">
               이용약관 동의
             </Text>
             <View className="flex-row w-full h-2/6 justify-between items-center mt-2">
-              <View className="flex-row w-4/5 h-full justify-between items-center">
-                <Text className="font-inter-m text-sm text-black">
+              <View className="flex-row w-4/5 h-full justify-between items-end">
+                <Text className="font-inter-m w-full  text-sm  text-black">
                   MBTI를 공개하는 것을 동의합니다. (필수)
                 </Text>
                 <GoFront width="10%" height="100%" />
@@ -215,7 +215,7 @@ export default function ReservationScreen({
             </View>
             <View className="flex-row w-full h-2/6 justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-between items-center">
-                <Text className="font-inter-m text-sm text-black">
+                <Text className="font-inter-m w-full text-sm text-black">
                   예약자들과 소통을 하기 위해 닉네임, 관심사 공개에
                   동의하시겠습니까? (선택)
                 </Text>
@@ -232,7 +232,7 @@ export default function ReservationScreen({
           </View>
           {agreeMbti ? (
             <Pressable
-              className="my-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
+              className="mt-4 bg-primary-2 items-center justify-center w-screen h-[18%] shadow-black drop-shadow-xl"
               onPress={
                 agreeNickname ? handleReservation : () => setModalVisible(true)
               }
@@ -240,11 +240,12 @@ export default function ReservationScreen({
               <Text className="font-inter-b text-lg text-white">예약하기</Text>
             </Pressable>
           ) : (
-            <View className="my-4 bg-gray-3 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl">
+            <View className="mt-4 bg-gray-3 items-center justify-center w-screen h-[18%] shadow-black drop-shadow-xl">
               <Text className="font-inter-b text-lg text-black">예약하기</Text>
             </View>
           )}
         </View>
+        <View className="absolute justify-center h-1/5 w-full bg-white items-center bottom-0 -z-10 " />
         <Modal
           animationType="slide"
           transparent
