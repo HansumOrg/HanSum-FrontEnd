@@ -6,13 +6,15 @@ import {
   Text,
   Pressable,
   Image,
+  Dimensions,
 } from 'react-native';
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
 import LocalSvg from '../../../assets/images/icon_local.svg';
 import PhoneSVG from '../../../assets/images/icon_phone.svg';
 import { ReservationRecord } from '../../../types';
-
 import dummyImage from '../../../assets/images/dummy_img';
+
+const screenHeight = Dimensions.get('window').height;
 
 const reservation: ReservationRecord = {
   guesthouse_name: '서점 숙소',
@@ -94,7 +96,7 @@ export default function ReservationCompleteScreen({
           </View>
         </View>
 
-        <View className="flex justify-start h-2/5 w-full bg-white items-center py-4">
+        <View className="flex justify-start h-2/5 w-full bg-white items-center pt-4">
           <View className="flex justify-start items-center h-3/5 w-full px-4 py-4">
             <Text className="w-full text-left font-inter-b text-md text-black mb-4">
               숙소 정보
@@ -112,15 +114,16 @@ export default function ReservationCompleteScreen({
               </Text>
             </View>
           </View>
-          <Pressable
-            className="my-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
-            onPress={() =>
-              navigation.navigate('MyPageNavigator', { screen: 'MyPage' })
-            }
-          >
-            <Text className="font-inter-b text-lg text-white">예약하기</Text>
-          </Pressable>
         </View>
+        <Pressable
+          className=" absolute z-10 bottom-0 mb-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
+          style={{ height: (screenHeight * 1) / 14 }}
+          onPress={() =>
+            navigation.navigate('MyPageNavigator', { screen: 'MyPage' })
+          }
+        >
+          <Text className="font-inter-b text-lg text-white">예약하기</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

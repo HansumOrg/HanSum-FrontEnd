@@ -144,18 +144,18 @@ export default function GuesthouseDetailsScreen({
               onPress={() => {
                 navigation.navigate('SearchNavigator', { screen: 'Calendar' });
               }}
-              className="w-full h-1/5 mt-4 flex-row justify-between items-center"
+              className="w-full mt-4 flex-row justify-between items-center"
             >
-              <View className="flex-row border border-gray-3 p-2 h-full justify-start items-center">
+              <View className="flex-row border border-gray-3 p-2 h-full w-full  justify-start items-center">
                 <CalendarSVG width="12.5%" />
-                <Text className="text-sm font-inter-r text-black ml-4">
-                  {`${checkinDate} (${checkinDayOfWeek}) ~ ${checkoutDate} (${checkoutDayOfWeek}) - ${nights}박`}
+                <Text
+                  className="m-1 text-sm font-inter-r text-black ml-4 flex-shrink"
+                  numberOfLines={3}
+                >
+                  {`${checkinDate} (${checkinDayOfWeek}) ~  ${checkoutDate} (${checkoutDayOfWeek}) - ${nights}박`}
                 </Text>
               </View>
             </Pressable>
-            <Text className="mt-4 w-full text-left text-sm font-inter-r text-black-50%">
-              예약취소가능
-            </Text>
           </View>
         </View>
         <View
@@ -176,12 +176,12 @@ export default function GuesthouseDetailsScreen({
           </View>
         </View>
         <View
-          className="w-full mt-1 justify-between bg-white py-6 px-4"
+          className="w-full mt-1 justify-between bg-white py-6 "
           style={{
             height: (screenHeight * 2) / 6,
           }}
         >
-          <View className="justify-center items-start">
+          <View className="justify-center items-start mx-4">
             <Text className=" w-full text-left text-xl font-inter-b text-black">
               예약자 MBTI
             </Text>
@@ -197,7 +197,7 @@ export default function GuesthouseDetailsScreen({
             </View>
           </View>
           <Pressable
-            className="my-4 bg-primary-2 items-center justify-center w-full shadow-black drop-shadow-xl"
+            className="bg-primary-2 items-center justify-center w-screen shadow-black drop-shadow-xl"
             style={{ height: (screenHeight * 1) / 14 }}
             onPress={() => navigation.navigate('Reservation')}
           >
