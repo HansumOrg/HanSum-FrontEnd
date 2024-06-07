@@ -70,7 +70,7 @@ export default function ReservationScreen({
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
-      <View className="h-screen bg-gray-1 gap-1 flex justify-start items-center">
+      <View className="h-screen bg-white flex justify-start items-center">
         <View className="flex justify-center h-[25%] w-full bg-white items-center py-4 px-6">
           <View className="flex-row justify-center items-center w-full h-full bg-white shadow-lg shadow-black rounded-lg">
             <View className="flex justify-start items-start w-[86%] h-full px-4 py-2 bg-white rounded-lg">
@@ -125,6 +125,7 @@ export default function ReservationScreen({
             </View>
           </View>
         </View>
+        <View className="bg-gray-1 h-1 w-screen" />
         <View className="flex justify-center h-1/5 w-full bg-white items-center px-6 py-4">
           <View className="flex justify-between items-start h-full w-full">
             <Text className=" mt-4 font-inter-sb text-md text-black">
@@ -152,6 +153,7 @@ export default function ReservationScreen({
             </View>
           </View>
         </View>
+        <View className="bg-gray-1 h-1 w-screen" />
         <View className="flex justify-center h-[45%] w-full bg-white items-center px-4">
           <View className="flex justify-start items-center h-3/5 w-full px-2 py-4">
             <Text className="w-full text-left font-inter-sb text-md text-black">
@@ -191,7 +193,7 @@ export default function ReservationScreen({
           </View>
           {agreeMbti ? (
             <Pressable
-              className="mt-4 bg-primary-2 items-center justify-center w-screen shadow-black drop-shadow-xl"
+              className="mt-[20%]  bg-primary-2 items-center justify-center w-screen shadow-black drop-shadow-xl"
               style={{ height: (screenHeight * 1) / 14 }}
               onPress={
                 agreeNickname ? handleReservation : () => setModalVisible(true)
@@ -201,7 +203,7 @@ export default function ReservationScreen({
             </Pressable>
           ) : (
             <View
-              className="mt-4 bg-gray-3 items-center justify-center w-screen  shadow-black drop-shadow-xl"
+              className="mt-[20%] bg-gray-3 items-center justify-center w-screen  shadow-black drop-shadow-xl"
               style={{ height: (screenHeight * 1) / 14 }}
             >
               <Text className="font-inter-b text-lg text-black">예약하기</Text>

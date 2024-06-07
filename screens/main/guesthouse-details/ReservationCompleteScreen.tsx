@@ -47,7 +47,7 @@ export default function ReservationCompleteScreen({
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />
-      <View className=" h-screen bg-gray-1 gap-2 flex justify-start items-center">
+      <View className=" h-screen bg-gray-1 gap-1 flex justify-start items-center">
         <View className="flex justify-start h-3/5 w-full bg-white items-center  py-4 px-4">
           <Text className="font-inter-b w-full text-left text-xl2 mt-4 text-black">
             {reservation.guesthouse_name}
@@ -116,7 +116,7 @@ export default function ReservationCompleteScreen({
           </View>
         </View>
         <Pressable
-          className=" absolute z-10 bottom-0 mb-4 bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
+          className=" absolute z-10 bottom-0 mb-[2%] bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
           style={{ height: (screenHeight * 1) / 14 }}
           onPress={() =>
             navigation.navigate('MyPageNavigator', { screen: 'MyPage' })
