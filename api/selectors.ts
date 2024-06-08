@@ -5,6 +5,8 @@ export const createAppSelector = createSelector.withTypes<RootState>();
 
 // selectors for auth
 export const selectAccess = (state: RootState) => state.auth.access;
+export const selectIsAuthenticated = (state: RootState) =>
+  state.auth.isAuthenticated;
 
 // Selectors for join
 export const selectJoinState = (state: RootState) => state.join;
