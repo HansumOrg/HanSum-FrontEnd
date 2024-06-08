@@ -40,12 +40,20 @@ export default function GetStartedScreen({
             <RectButton
               className="bg-gray-400"
               isActivate
-              onPress={() => navigation.navigate('RegisterNavigator')}
+              onPress={() =>
+                navigation.navigate('RegisterNavigator', {
+                  screen: 'Register',
+                })
+              }
               text="시작하기"
             />
             <View className="h-1/2 flex justify-center items-start  flex-row mt-2">
               <Text className="text-black text-xs">이미 계정이 있나요?</Text>
-              <Pressable onPress={() => navigation.navigate('LoginNavigator')}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('LoginNavigator', { screen: 'Login' })
+                }
+              >
                 <Text className=" text-gray-2 ml-1">로그인</Text>
               </Pressable>
             </View>
