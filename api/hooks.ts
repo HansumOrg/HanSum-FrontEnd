@@ -25,12 +25,15 @@ import {
   useRegisterStickerMutation,
 } from './endpoints/userEndpoints';
 import { clearUserState, setUserInfo, setInterests } from './slices/userSlice';
+import { clearGuesthouseState } from './slices/guesthouseSlice';
+import { clearSearchState } from './slices/searchSlice';
 import { useLazySearchQuery } from './endpoints/searchEndpoints';
-import { useReservateMutation } from './endpoints/reservationEndpoints';
+import { clearDibState } from './slices/dibsSlice';
 import {
   useRegisterDibsMutation,
   useDeleteDibsMutation,
 } from './endpoints/dibsEndpoints';
+import { useReservateMutation } from './endpoints/reservationEndpoints';
 import { isErrorWithMessage, isFetchBaseQueryError } from '../utils/helpers';
 import {
   selectAccess,
@@ -52,6 +55,9 @@ export const clearData = (dispatch: AppDispatch) => {
   dispatch(clearValidateState());
   dispatch(clearJoinState());
   dispatch(clearUserState());
+  dispatch(clearDibState());
+  dispatch(clearGuesthouseState());
+  dispatch(clearSearchState());
 };
 
 // Hooks for validate
