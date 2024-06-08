@@ -15,3 +15,143 @@ export interface SuccessResponse {
 export interface FailedResponse {
   errorMessage: string;
 }
+
+// Auth
+export interface AuthState {
+  access: string | null;
+  isAuthenticated: boolean;
+}
+
+// Join
+export interface JoinState {
+  username: string | null;
+  password: string | null;
+  name: string | null;
+  phone: string | null;
+  sex: string | null;
+  birthday: string | null;
+  nickname: string | null;
+  mbti: string | null;
+  userAgreement: number | null;
+}
+
+// Validate
+export interface ValidateState {
+  isUsernameAvailable: number | null;
+  isNicknameAvailable: number | null;
+}
+
+// User
+export interface UserState {
+  user: User | null;
+  interests: Interests | null;
+}
+
+export interface User {
+  username: string | null;
+  name: string | null;
+  phone: string | null;
+  sex: string | null;
+  birthday: string | null;
+  nickname: string | null;
+  mbti: string | null;
+  userAgreement: number | null;
+}
+export interface Interests {
+  interestedLocation: string[] | null;
+  interestedFood: string[] | null;
+  interestedHobby: string[] | null;
+}
+
+export interface Sticker {
+  stickerId: number;
+  stickerText: string;
+  stickerCount: number;
+}
+
+export interface StickerToSend {
+  userId: number | null;
+  stickerTexts: string[] | null;
+}
+
+// Guesthouse
+export interface GuesthouseState {
+  guesthouseDetails: GuesthouseDetails | null;
+  guesthouseMembers: GuesthouseMember[] | null;
+}
+export interface GuesthouseDetails {
+  guesthouseId: number | null;
+  guesthouseName: string | null;
+  address: string | null;
+  price: number | null;
+  location: string | null;
+  phone: string | null;
+  rating: number | null;
+  imageBase64: string | null;
+  mood: string | null;
+}
+
+export interface GuesthouseInSearch extends GuesthouseDetails {
+  dibs: boolean;
+}
+
+export interface GuesthouseMember {
+  userId: number;
+  useranme: string;
+  nickname: string;
+  mbti: string;
+}
+
+// Search
+
+export interface SearchState {
+  checkinDate: string | null;
+  checkoutDate: string | null;
+  location: string | null;
+  searchName: string | null;
+  mood: string | null;
+  facility: string[] | null;
+  searchResult: GuesthouseInSearch[] | null;
+}
+
+// Reservation
+
+export interface ReservationRecord {
+  reservationId: number;
+  userId: number;
+  guesthouseId: number;
+  checkinDate: string;
+  checkoutDate: string;
+}
+
+// Dibs
+
+export interface DibsState {
+  dibs: Dibs[] | null;
+}
+
+export interface Dibs {
+  dibsId: number;
+  guesthouseId: number;
+  guesthouseName: string;
+  address: string;
+  imageBase64: string;
+}
+
+// Guest
+export interface Guest {
+  userId: number;
+  username: string;
+  nickname: string;
+  mbti: string;
+}
+
+// Recommendation
+
+export interface Recommendation {
+  imageBase64: string;
+  guesthouseName: string;
+  probability: number;
+  guesthouseId: number;
+  rank: number;
+}

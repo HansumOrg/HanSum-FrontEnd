@@ -9,9 +9,18 @@ import {
   ScrollView,
 } from 'react-native';
 import { useState } from 'react';
-import { useJoin } from '../../api/hooks';
+import { shallowEqual } from 'react-redux';
+import {
+  useCheckUsername,
+  useCheckNickname,
+  useJoin,
+  useAppSelector,
+  useAppDispatch,
+} from '../../api/hooks';
 import { JoinSuccessResponse } from '../../api/types';
 import { isFailedResponse, isSuccessResponse } from '../../utils/helpers';
+import { setJoinState } from '../../api/slices/joinSlice';
+import { selectValidateState } from '../../api/selectors';
 
 export default function JoinScreen() {
   const initialData = {
@@ -26,19 +35,60 @@ export default function JoinScreen() {
     userAgreement: 0,
   };
 
-  const { handleJoin, isLoading, error } = useJoin();
-
   const [joinData, setJoinData] = useState(initialData);
+  const dispatch = useAppDispatch();
+
+  const { handleJoin, isJoinLoading, joinError } = useJoin();
+  const { handleCheckUsername, isUsernameLoading, usernameError } =
+    useCheckUsername();
+  const { handleCheckNickname, isNicknameLoading, nicknameError } =
+    useCheckNickname();
+  const { isUsernameAvailable, isNicknameAvailable } =
+    useAppSelector(selectValidateState);
+  const createUsernamAvailableText = () => {
+    if (isUsernameAvailable === 0) return '사용불가';
+    if (isUsernameAvailable === 1) return '사용가능';
+    return '';
+  };
+  const createNicknameAvailableText = () => {
+    if (isNicknameAvailable === 0) return '사용불가';
+    if (isNicknameAvailable === 1) return '사용가능';
+    return '';
+  };
 
   const handleJoinPress = async () => {
-    const res = await handleJoin(joinData);
+    dispatch(setJoinState(joinData));
+    const res = await handleJoin();
     if (isSuccessResponse(res)) {
+      // 요청 성공시 발생하는 응답
       const successRes = res as JoinSuccessResponse;
       console.log(successRes.name);
       console.log(successRes.userId);
       console.log('success');
     } else if (isFailedResponse(res)) {
-      // 에러문
+      // 요청 실패시 발생하는 응답
+      console.log(res);
+    } else console.log('잘못된 응답입니다.');
+  };
+
+  const handleCheckUsernamePress = async () => {
+    const res = await handleCheckUsername(joinData.username);
+    if (isSuccessResponse(res)) {
+      // 요청 성공시 발생하는 응답
+      console.log('check username success');
+    } else if (isFailedResponse(res)) {
+      // 요청 실패시 발생하는 응답
+      console.log(res);
+    } else console.log('잘못된 응답입니다.');
+  };
+
+  const handleCheckNicknamePress = async () => {
+    const res = await handleCheckNickname(joinData.nickname);
+    if (isSuccessResponse(res)) {
+      // 요청 성공시 발생하는 응답
+      console.log('check nickname success');
+    } else if (isFailedResponse(res)) {
+      // 요청 실패시 발생하는 응답
       console.log(res);
     } else console.log('잘못된 응답입니다.');
   };
@@ -47,14 +97,27 @@ export default function JoinScreen() {
     <SafeAreaView>
       <ScrollView>
         <StatusBar barStyle="default" />
+        <View className="flex flex-row justify-between bg-white">
+          <TextInput
+            className="h-10 flex-1"
+            onChangeText={text => setJoinData({ ...joinData, username: text })}
+            placeholder="username"
+            value={joinData.username}
+          />
+          <Pressable
+            className="h-10 w-36 bg-blue-300 flex justify-center items-center rounded-2xl"
+            onPress={handleCheckUsernamePress}
+          >
+            <Text>username 중복검사</Text>
+          </Pressable>
+        </View>
+        {isUsernameAvailable !== null && (
+          <View className="h-10 bg-white">
+            <Text>{createUsernamAvailableText()}</Text>
+          </View>
+        )}
         <TextInput
-          className="h-10 bg-white"
-          onChangeText={text => setJoinData({ ...joinData, username: text })}
-          placeholder="username"
-          value={joinData.username}
-        />
-        <TextInput
-          className="h-10 bg-white"
+          className="h-10 flex-1 bg-white"
           onChangeText={text => setJoinData({ ...joinData, password: text })}
           placeholder="password"
           value={joinData.password}
@@ -83,12 +146,25 @@ export default function JoinScreen() {
           placeholder="birthday"
           value={joinData.birthday}
         />
-        <TextInput
-          className="h-10 bg-white"
-          onChangeText={text => setJoinData({ ...joinData, nickname: text })}
-          placeholder="nickname"
-          value={joinData.nickname}
-        />
+        <View className="flex flex-row justify-between bg-white">
+          <TextInput
+            className="h-10 bg-white flex-1"
+            onChangeText={text => setJoinData({ ...joinData, nickname: text })}
+            placeholder="nickname"
+            value={joinData.nickname}
+          />
+          <Pressable
+            className="h-10 w-36 bg-blue-300 flex justify-center items-center rounded-2xl"
+            onPress={handleCheckNicknamePress}
+          >
+            <Text>nickname 중복검사</Text>
+          </Pressable>
+        </View>
+        {isNicknameAvailable !== null && (
+          <View className="h-10 bg-white">
+            <Text>{createNicknameAvailableText()}</Text>
+          </View>
+        )}
         <TextInput
           className="h-10 bg-white"
           onChangeText={text => setJoinData({ ...joinData, mbti: text })}
