@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, Text, View } from 'react-native';
 import type { RegisterStackScreenProps } from '../../../navigation/types';
 import InputText from '../../../components/common/InputText';
 import RectButton from '../../../components/common/RectButton';
 import Title from '../../../components/common/Title';
-import { useRegisterContext } from '../../../components/get-started/StartContext';
-import { RegisterProps } from '../../../types';
-import { useCheckNickname } from '../../../api/hooks';
+import { setJoinState } from '../../../api/slices/joinSlice';
+import {
+  useCheckNickname,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../api/hooks';
 import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
 
 export default function EnterNicknameScreen({
@@ -14,13 +17,27 @@ export default function EnterNicknameScreen({
   route,
   navigation,
 }: RegisterStackScreenProps<'EnterNickname'>) {
-  const context = useRegisterContext();
-  const [isDuplicate, setIsDuplicate] = React.useState(true);
-  const [isChecked, setIsChecked] = React.useState(false);
+  const curruentState = useAppSelector(state => state.join);
+  const initialData = {
+    username: curruentState.username,
+    password: curruentState.password,
+    name: curruentState.name,
+    phone: curruentState.phone,
+    sex: curruentState.sex,
+    birthday: curruentState.birthday,
+    nickname: '',
+    mbti: null,
+    userAgreement: null,
+  };
+  const [joinData, setJoinData] = useState(initialData);
+  const [isDuplicate, setIsDuplicate] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
   const { handleCheckNickname } = useCheckNickname();
 
+  const dispatch = useAppDispatch();
+
   const handleCheckNicknamePress = async () => {
-    const res = await handleCheckNickname(context.registerState.nickname);
+    const res = await handleCheckNickname(joinData.nickname);
     if (isSuccessResponse(res)) {
       // 요청 성공시 발생하는 응답
       console.log('check nickname success');
@@ -33,9 +50,14 @@ export default function EnterNicknameScreen({
       setIsChecked(true);
     } else {
       console.log('잘못된 응답입니다.');
-      setIsDuplicate(true);
-      setIsChecked(true);
+      setIsDuplicate(false);
+      setIsChecked(false);
     }
+  };
+
+  const submitNickname = () => {
+    dispatch(setJoinState(joinData));
+    navigation.navigate('SelectMbti');
   };
   return (
     <SafeAreaView>
@@ -48,12 +70,9 @@ export default function EnterNicknameScreen({
           <View className="flex bg-white h-1/3 ">
             <InputText
               name="닉네임"
-              value={context.registerState.nickname}
+              value={joinData.nickname}
               onChangeText={text => {
-                context.setRegisterState((prevState: RegisterProps) => ({
-                  ...prevState,
-                  nickname: text,
-                }));
+                setJoinData({ ...joinData, nickname: text });
               }}
               isWrong={isDuplicate}
             />
@@ -69,14 +88,10 @@ export default function EnterNicknameScreen({
               <RectButton
                 onPress={handleCheckNicknamePress}
                 text="중복확인"
-                isActivate={context.registerState.nickname !== ''}
+                isActivate={joinData.nickname !== ''}
               />
             ) : (
-              <RectButton
-                isActivate
-                onPress={() => navigation.navigate('SelectMbti')}
-                text="선택완료"
-              />
+              <RectButton isActivate onPress={submitNickname} text="선택완료" />
             )}
           </View>
         </View>

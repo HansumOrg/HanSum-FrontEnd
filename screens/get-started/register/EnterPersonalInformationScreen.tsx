@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -11,34 +11,47 @@ import RectButton from '../../../components/common/RectButton';
 import GenderButton from '../../../components/common/GenderRectButton';
 import Title from '../../../components/common/Title';
 import WheelPicker from '../../../components/get-started/WheelPicker'; // Assuming the file location
-import { useRegisterContext } from '../../../components/get-started/StartContext';
-import { RegisterProps } from '../../../types';
+import { useAppDispatch, useAppSelector } from '../../../api/hooks';
+import { setJoinState } from '../../../api/slices/joinSlice';
 
 const EnterPersonalInformationScreen = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'EnterPersonalInformation'>) => {
-  const context = useRegisterContext();
+  const curruentState = useAppSelector(state => state.join);
+  const initialData = {
+    username: curruentState.username,
+    password: curruentState.password,
+    name: curruentState.name,
+    phone: curruentState.phone,
+    sex: '',
+    birthday: '',
+    nickname: null,
+    mbti: null,
+    userAgreement: null,
+  };
+  const [joinData, setJoinData] = useState(initialData);
   const [gender, setGender] = useState('');
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
+  const dispatch = useAppDispatch();
 
   const handleGenderSelect = (selectedGender: string) => {
     setGender(selectedGender);
-    context.setRegisterState((prevState: RegisterProps) => ({
-      ...prevState,
-      sex: selectedGender,
-    }));
+    setJoinData({ ...joinData, sex: selectedGender });
   };
 
-  const submitPersonalInformation = () => {
-    const birthday = `${year}-${month}-${day}`;
-    context.setRegisterState((prevState: RegisterProps) => ({
-      ...prevState,
-      birthday,
+  useEffect(() => {
+    setJoinData(prev => ({
+      ...prev,
+      birthday: `${year}-${month}-${day}`,
     }));
+  }, [year, month, day]);
+
+  const submitPersonalInformation = () => {
+    dispatch(setJoinState(joinData));
     navigation.navigate('EnterNickname');
   };
 
@@ -103,9 +116,7 @@ const EnterPersonalInformationScreen = ({
           <View className="bg-white h-1/3 mt-2">
             <RectButton
               isActivate
-              onPress={() => {
-                submitPersonalInformation();
-              }}
+              onPress={submitPersonalInformation}
               text="선택완료"
             />
           </View>

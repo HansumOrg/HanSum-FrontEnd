@@ -1,25 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StatusBar, View, Text } from 'react-native';
 import { RegisterStackScreenProps } from '../../../navigation/types';
 import RadioButtons from '../../../components/common/RadioButtonItem';
 import RectButton from '../../../components/common/RectButton';
-import { useRegisterContext } from '../../../components/get-started/StartContext';
-import { RegisterProps } from '../../../types';
+import { setJoinState } from '../../../api/slices/joinSlice';
+import { useAppDispatch, useAppSelector } from '../../../api/hooks';
 
 export default function SelectMbtiScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'SelectMbti'>) {
-  const context = useRegisterContext();
+  const curruentState = useAppSelector(state => state.join);
+  const initialData = {
+    username: curruentState.username,
+    password: curruentState.password,
+    name: curruentState.name,
+    phone: curruentState.phone,
+    sex: curruentState.sex,
+    birthday: curruentState.birthday,
+    nickname: curruentState.nickname,
+    mbti: '',
+    userAgreement: null,
+  };
+  const [joinData, setJoinData] = useState(initialData);
   const [selectedIE, setSelectedIE] = useState('');
   const [selectedNS, setSelectedNS] = useState('');
   const [selectedFT, setSelectedFT] = useState('');
   const [selectedPJ, setSelectedPJ] = useState('');
+  const dispatch = useAppDispatch();
   const mbti = `${selectedIE}${selectedNS}${selectedFT}${selectedPJ}`
     .replace(/More /g, '')
     .replace(/Less /g, '')
     .replace(/Some /g, '');
+  useEffect(() => {
+    setJoinData(prev => ({
+      ...prev,
+      mbti: `${selectedIE}${selectedNS}${selectedFT}${selectedPJ}`
+        .replace(/More /g, '')
+        .replace(/Less /g, '')
+        .replace(/Some /g, ''),
+    }));
+  }, [selectedIE, selectedNS, selectedFT, selectedPJ]);
   const MbtiSubmit = () => {
     if (
       selectedIE !== '' &&
@@ -27,10 +49,7 @@ export default function SelectMbtiScreen({
       selectedFT !== '' &&
       selectedPJ !== ''
     ) {
-      context.setRegisterState((prevState: RegisterProps) => ({
-        ...prevState,
-        mbti,
-      }));
+      dispatch(setJoinState(joinData));
       navigation.navigate('AgreeTos');
     }
   };

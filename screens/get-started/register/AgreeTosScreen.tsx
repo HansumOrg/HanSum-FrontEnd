@@ -4,18 +4,15 @@ import { RegisterStackScreenProps } from '../../../navigation/types';
 import RectButton from '../../../components/common/RectButton';
 import UiCheckbox from '../../../components/common/Checkbox';
 import CheckboxItem from '../../../components/common/CheckboxItem';
-import { useRegisterContext } from '../../../components/get-started/StartContext';
-import { useAppDispatch, useJoin } from '../../../api/hooks';
+import { useAppDispatch, useAppSelector } from '../../../api/hooks';
 import { setJoinState } from '../../../api/slices/joinSlice';
-import { JoinSuccessResponse } from '../../../api/types';
-import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
 
 export default function AgreeTosScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'AgreeTos'>) {
-  const context = useRegisterContext();
+  const curruentState = useAppSelector(state => state.join);
   const [userAgreement, setUserAgreement] = useState(false);
   const [agreements, setAgreements] = useState({
     terms: false,
@@ -24,38 +21,19 @@ export default function AgreeTosScreen({
     sensitive: false,
     marketing: false,
   });
-  // Redux API 적용
   const initialData = {
-    username: context.registerState.username,
-    password: context.registerState.password,
-    name: context.registerState.name,
-    phone: context.registerState.phone,
-    sex: context.registerState.sex,
-    birthday: context.registerState.birthday,
-    nickname: context.registerState.nickname,
-    mbti: context.registerState.mbti,
+    username: curruentState.username,
+    password: curruentState.password,
+    name: curruentState.name,
+    phone: curruentState.phone,
+    sex: curruentState.sex,
+    birthday: curruentState.birthday,
+    nickname: curruentState.nickname,
+    mbti: curruentState.mbti,
     userAgreement: 0,
   };
   const [joinData, setJoinData] = useState(initialData);
-  const { handleJoin } = useJoin();
   const dispatch = useAppDispatch();
-
-  const handleJoinPress = async () => {
-    setJoinData(prev => ({ ...prev, userAgreement: 1 }));
-    dispatch(setJoinState(joinData));
-    const res = await handleJoin();
-    if (isSuccessResponse(res)) {
-      // 요청 성공시 발생하는 응답
-      const successRes = res as JoinSuccessResponse;
-      console.log(successRes.name);
-      console.log(successRes.userId);
-      console.log('success');
-      navigation.navigate('Start');
-    } else if (isFailedResponse(res)) {
-      // 요청 실패시 발생하는 응답
-      console.log(res);
-    } else console.log('잘못된 응답입니다.');
-  };
 
   useEffect(() => {
     const { terms, privacy, location, sensitive } = agreements;
@@ -78,6 +56,16 @@ export default function AgreeTosScreen({
   ) => {
     setAgreements(prev => ({ ...prev, [key]: value }));
   };
+
+  useEffect(() => {
+    setJoinData({ ...joinData, userAgreement: userAgreement ? 1 : 0 });
+  }, [userAgreement]);
+
+  const handleSubmit = () => {
+    dispatch(setJoinState(joinData));
+    navigation.navigate('Start');
+  };
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -138,8 +126,8 @@ export default function AgreeTosScreen({
           <View className="h-2/3 mt-2">
             <RectButton
               isActivate={userAgreement}
-              onPress={handleJoinPress}
-              text="시작하기"
+              onPress={handleSubmit}
+              text="동의하기"
             />
           </View>
         </View>

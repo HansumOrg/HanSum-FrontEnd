@@ -4,22 +4,39 @@ import { RegisterStackScreenProps } from '../../../navigation/types';
 import InputText from '../../../components/common/InputText';
 import RectButton from '../../../components/common/RectButton';
 import Title from '../../../components/common/Title';
+import { setJoinState } from '../../../api/slices/joinSlice';
 import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
-import { useCheckUsername } from '../../../api/hooks';
-import { useRegisterContext } from '../../../components/get-started/StartContext';
-import { RegisterProps } from '../../../types';
+import { useCheckUsername, useAppDispatch } from '../../../api/hooks';
 
 export default function RegisterScreen({
   navigation,
 }: RegisterStackScreenProps<'Register'>) {
-  const context = useRegisterContext();
+  const initialData = {
+    username: '',
+    password: '',
+    name: '',
+    phone: '',
+    sex: null,
+    birthday: null,
+    nickname: null,
+    mbti: null,
+    userAgreement: null,
+  };
+  const [joinData, setJoinData] = useState(initialData);
   const [passwordTest, setPasswordTest] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const { handleCheckUsername } = useCheckUsername();
 
+  const dispatch = useAppDispatch();
+
+  const signupSubmit = async () => {
+    dispatch(setJoinState(joinData));
+    navigation.navigate('EnterPersonalInformation');
+  };
+
   const handleCheckUsernamePress = async () => {
-    const res = await handleCheckUsername(context.registerState.username);
+    const res = await handleCheckUsername(joinData.username);
     if (isSuccessResponse(res)) {
       // 요청 성공시 발생하는 응답
       console.log('check username success');
@@ -36,7 +53,6 @@ export default function RegisterScreen({
       setIsDuplicate(true);
     }
   };
-
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -46,26 +62,23 @@ export default function RegisterScreen({
             <Title text="안녕하세요!" />
             <Title text="사용하실 정보를 입력해주세요." />
           </View>
-          <View className=" bg-white h-1/3 ">
+          <View className=" bg-white h-3/5 ">
             <InputText
               name="이름"
-              value={context.registerState.name}
-              onChangeText={text => {
-                context.setRegisterState((prevState: RegisterProps) => ({
-                  ...prevState,
-                  name: text,
-                }));
-              }}
+              value={joinData.name}
+              onChangeText={text => setJoinData({ ...joinData, name: text })}
+            />
+            <InputText
+              name="전화번호(-제외)"
+              value={joinData.phone}
+              onChangeText={text => setJoinData({ ...joinData, phone: text })}
             />
             <InputText
               name="아이디"
-              value={context.registerState.username}
-              onChangeText={text => {
-                context.setRegisterState((prevState: RegisterProps) => ({
-                  ...prevState,
-                  username: text,
-                }));
-              }}
+              value={joinData.username}
+              onChangeText={text =>
+                setJoinData({ ...joinData, username: text })
+              }
               isWrong={isDuplicate}
             />
           </View>
@@ -74,25 +87,27 @@ export default function RegisterScreen({
               이미 존재하는 아이디입니다. 다시 입력해주세요.
             </Text>
           ) : null}
+          {!isDuplicate && isChecked ? (
+            <Text className=" font-inter-r text-sss text-black">
+              사용가능한 아이디입니다.
+            </Text>
+          ) : null}
           <View className="bg-white h-1/3 mt-2">
             <RectButton
-              isActivate={context.registerState.username !== ''}
+              isActivate={joinData.username !== ''}
               onPress={handleCheckUsernamePress}
               text="중복확인"
             />
           </View>
-          <View className=" bg-white h-1/3 ">
+          <View className=" bg-white h-2/5 ">
             <InputText
               name="비밀번호"
-              value={context.registerState.password}
+              value={joinData.password}
               textContentType="password"
               secureTextEntry
-              onChangeText={text => {
-                context.setRegisterState((prevState: RegisterProps) => ({
-                  ...prevState,
-                  password: text,
-                }));
-              }}
+              onChangeText={text =>
+                setJoinData({ ...joinData, password: text })
+              }
             />
             <InputText
               name="비밀번호 확인"
@@ -100,25 +115,23 @@ export default function RegisterScreen({
               secureTextEntry
               value={passwordTest}
               onChangeText={text => setPasswordTest(text)}
-              isWrong={context.registerState.password !== passwordTest}
+              isWrong={joinData.password !== passwordTest}
             />
           </View>
-          {context.registerState.password !== passwordTest ? (
+          {joinData.password !== passwordTest ? (
             <Text className=" font-inter-r text-sss text-red-1">
               비밀번호가 일치하지 않습니다. 다시 입력해주세요.
             </Text>
           ) : null}
-          <View className="bg-white h-1/3 mt-2">
+          <View className="bg- h-1/3 mt-2">
             <RectButton
               isActivate={
-                context.registerState.password !== '' &&
-                context.registerState.password === passwordTest &&
+                joinData.password !== '' &&
+                joinData.password === passwordTest &&
                 !isDuplicate &&
                 isChecked
               }
-              onPress={() => {
-                navigation.navigate('EnterPersonalInformation');
-              }}
+              onPress={signupSubmit}
               text="다음"
             />
           </View>

@@ -10,11 +10,31 @@ import {
 import { RegisterStackScreenProps } from '../../../navigation/types';
 import RectButton from '../../../components/common/RectButton';
 import logo from '../../../assets/images/logo.png';
+import { useJoin, useAppSelector } from '../../../api/hooks';
+import { JoinSuccessResponse } from '../../../api/types';
+import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
 
 export default function StartScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: RegisterStackScreenProps<'Start'>) {
+  const { handleJoin, isJoinLoading, joinError } = useJoin();
+  const curruentState = useAppSelector(state => state.join);
+  const handleJoinPress = async () => {
+    const res = await handleJoin();
+    if (isSuccessResponse(res)) {
+      // 요청 성공시 발생하는 응답
+      const successRes = res as JoinSuccessResponse;
+      console.log(successRes.name);
+      console.log(successRes.userId);
+      console.log('success');
+    } else if (isFailedResponse(res)) {
+      // 요청 실패시 발생하는 응답
+      console.log(res);
+    } else console.log('잘못된 응답입니다.');
+  };
+
+  console.log(curruentState);
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -37,7 +57,7 @@ export default function StartScreen({
             <RectButton
               className="bg-gray-400"
               isActivate
-              onPress={() => {}}
+              onPress={handleJoinPress}
               text="시작하기"
             />
           </View>
