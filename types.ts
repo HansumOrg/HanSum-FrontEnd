@@ -3,6 +3,19 @@
 import { PressableProps, TextInputProps } from 'react-native';
 import { MainTabScreenProps, MyPageStackScreenProps } from './navigation/types';
 
+// GetStarted types
+export interface RegisterProps {
+  username: string;
+  password: string;
+  name: string;
+  phone: string;
+  sex: string;
+  birthday: string;
+  nickname: string;
+  mbti: string;
+  userAgreement: number;
+}
+
 // SearchResultScreen.tsx
 export interface SearchResultScreenProps {
   location: string;

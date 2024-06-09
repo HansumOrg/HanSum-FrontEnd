@@ -4,37 +4,22 @@ import { RegisterStackScreenProps } from '../../../navigation/types';
 import InputText from '../../../components/common/InputText';
 import RectButton from '../../../components/common/RectButton';
 import Title from '../../../components/common/Title';
-import { setJoinState } from '../../../api/slices/joinSlice';
-import { JoinSuccessResponse } from '../../../api/types';
 import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
-import { useCheckUsername, useAppDispatch, useJoin } from '../../../api/hooks';
+import { useCheckUsername } from '../../../api/hooks';
+import { useRegisterContext } from '../../../components/get-started/StartContext';
+import { RegisterProps } from '../../../types';
 
 export default function RegisterScreen({
   navigation,
 }: RegisterStackScreenProps<'Register'>) {
-  const initialData = {
-    username: '',
-    password: '',
-    name: '',
-    phone: '',
-    sex: '',
-    birthday: '',
-    nickname: '',
-    mbti: '',
-    userAgreement: 0,
-  };
-  const [joinData, setJoinData] = useState(initialData);
+  const context = useRegisterContext();
   const [passwordTest, setPasswordTest] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const { handleJoin, isJoinLoading, joinError } = useJoin();
-  const { handleCheckUsername, isUsernameLoading, usernameError } =
-    useCheckUsername();
-
-  const dispatch = useAppDispatch();
+  const { handleCheckUsername } = useCheckUsername();
 
   const handleCheckUsernamePress = async () => {
-    const res = await handleCheckUsername(joinData.username);
+    const res = await handleCheckUsername(context.registerState.username);
     if (isSuccessResponse(res)) {
       // 요청 성공시 발생하는 응답
       console.log('check username success');
@@ -52,21 +37,6 @@ export default function RegisterScreen({
     }
   };
 
-  const signupSubmit = async () => {
-    dispatch(setJoinState(joinData));
-    const res = await handleJoin();
-    if (isSuccessResponse(res)) {
-      // 요청 성공시 발생하는 응답
-      const successRes = res as JoinSuccessResponse;
-      console.log(successRes.name);
-      console.log(successRes.userId);
-      console.log('success');
-      navigation.navigate('EnterPersonalInformation');
-    } else if (isFailedResponse(res)) {
-      // 요청 실패시 발생하는 응답
-      console.log(res);
-    } else console.log('잘못된 응답입니다.');
-  };
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -79,17 +49,23 @@ export default function RegisterScreen({
           <View className=" bg-white h-1/3 ">
             <InputText
               name="이름"
-              value={joinData.nickname}
-              onChangeText={text =>
-                setJoinData({ ...joinData, nickname: text })
-              }
+              value={context.registerState.name}
+              onChangeText={text => {
+                context.setRegisterState((prevState: RegisterProps) => ({
+                  ...prevState,
+                  name: text,
+                }));
+              }}
             />
             <InputText
               name="아이디"
-              value={joinData.username}
-              onChangeText={text =>
-                setJoinData({ ...joinData, username: text })
-              }
+              value={context.registerState.username}
+              onChangeText={text => {
+                context.setRegisterState((prevState: RegisterProps) => ({
+                  ...prevState,
+                  username: text,
+                }));
+              }}
               isWrong={isDuplicate}
             />
           </View>
@@ -100,7 +76,7 @@ export default function RegisterScreen({
           ) : null}
           <View className="bg-white h-1/3 mt-2">
             <RectButton
-              isActivate={joinData.username !== ''}
+              isActivate={context.registerState.username !== ''}
               onPress={handleCheckUsernamePress}
               text="중복확인"
             />
@@ -108,12 +84,15 @@ export default function RegisterScreen({
           <View className=" bg-white h-1/3 ">
             <InputText
               name="비밀번호"
-              value={joinData.password}
+              value={context.registerState.password}
               textContentType="password"
               secureTextEntry
-              onChangeText={text =>
-                setJoinData({ ...joinData, password: text })
-              }
+              onChangeText={text => {
+                context.setRegisterState((prevState: RegisterProps) => ({
+                  ...prevState,
+                  password: text,
+                }));
+              }}
             />
             <InputText
               name="비밀번호 확인"
@@ -121,10 +100,10 @@ export default function RegisterScreen({
               secureTextEntry
               value={passwordTest}
               onChangeText={text => setPasswordTest(text)}
-              isWrong={joinData.password !== passwordTest}
+              isWrong={context.registerState.password !== passwordTest}
             />
           </View>
-          {joinData.password !== passwordTest ? (
+          {context.registerState.password !== passwordTest ? (
             <Text className=" font-inter-r text-sss text-red-1">
               비밀번호가 일치하지 않습니다. 다시 입력해주세요.
             </Text>
@@ -132,12 +111,14 @@ export default function RegisterScreen({
           <View className="bg-white h-1/3 mt-2">
             <RectButton
               isActivate={
-                joinData.password !== '' &&
-                joinData.password === passwordTest &&
+                context.registerState.password !== '' &&
+                context.registerState.password === passwordTest &&
                 !isDuplicate &&
                 isChecked
               }
-              onPress={signupSubmit}
+              onPress={() => {
+                navigation.navigate('EnterPersonalInformation');
+              }}
               text="다음"
             />
           </View>
