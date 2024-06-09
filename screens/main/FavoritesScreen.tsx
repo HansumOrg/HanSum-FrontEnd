@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   Pressable,
+  BackHandler,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { MainTabScreenProps } from '../../navigation/types';
@@ -75,7 +76,11 @@ const FavoritesScreen: React.FC<MainTabScreenProps<'Favorites'>> = ({
   const [guesthouses, setGuesthouses] = useState<Guesthouse[]>([]);
 
   useEffect(() => {
-    // 더미 데이터를 사용하여 찜 목록과 게스트하우스 정보 설정
+    const handleBackPress = () =>
+      // 백 버튼 누름을 처리하는 사용자 정의 로직
+      // 기본 동작(예: 앱 종료)을 방지하려면 true를 반환
+      // 기본 동작을 허용하려면 false를 반환
+      true;
     const fetchGuesthouses = () => {
       const guesthouseIds = dummyDibs.map(dib => dib.guesthouse_id);
       const filteredGuesthouses = dummyGuesthouses.filter(guesthouse =>
@@ -84,7 +89,10 @@ const FavoritesScreen: React.FC<MainTabScreenProps<'Favorites'>> = ({
       setGuesthouses(filteredGuesthouses);
       setLoading(false);
     };
-
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
     fetchGuesthouses();
   }, []);
   useFocusEffect(
@@ -96,6 +104,7 @@ const FavoritesScreen: React.FC<MainTabScreenProps<'Favorites'>> = ({
       };
     }, []),
   );
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />

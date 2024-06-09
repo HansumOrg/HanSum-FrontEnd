@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -7,6 +7,7 @@ import {
   Pressable,
   Image,
   Dimensions,
+  BackHandler,
 } from 'react-native';
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
 import LocalSvg from '../../../assets/images/icon_local.svg';
@@ -43,6 +44,19 @@ export default function ReservationCompleteScreen({
 
   navigation,
 }: GuesthouseDetailsStackScreenProps<'ReservationComplete'>) {
+  useEffect(() => {
+    const handleBackPress = () =>
+      // 백 버튼 누름을 처리하는 사용자 정의 로직
+      // 기본 동작(예: 앱 종료)을 방지하려면 true를 반환
+      // 기본 동작을 허용하려면 false를 반환
+      true;
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => {
+      // 이벤트 리스너 제거됨
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, []);
   const [imageError, setImageError] = useState(false);
   return (
     <SafeAreaView>

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -6,6 +6,7 @@ import {
   Text,
   Pressable,
   TextInput,
+  BackHandler,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { SearchStackScreenProps } from '../../../navigation/types';
@@ -22,6 +23,19 @@ export default function SearchScreen({
   route,
   navigation,
 }: SearchStackScreenProps<'Search'>) {
+  useEffect(() => {
+    const handleBackPress = () =>
+      // 백 버튼 누름을 처리하는 사용자 정의 로직
+      // 기본 동작(예: 앱 종료)을 방지하려면 true를 반환
+      // 기본 동작을 허용하려면 false를 반환
+      true;
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => {
+      // 이벤트 리스너 제거됨
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, []);
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle('dark-content'); // 상태 바 스타일을 설정
@@ -79,7 +93,7 @@ export default function SearchScreen({
                   {searchContext.searchState.checkin_date &&
                   searchContext.searchState.checkout_date ? (
                     <View className="flex w-3/4 h-full justify-center">
-                      <Text className="font-inter-m text-md text-black">
+                      <Text className="font-inter-m text-sm text-black">
                         {`${searchContext.searchState.checkin_date} ~ ${searchContext.searchState.checkout_date}`}
                       </Text>
                     </View>

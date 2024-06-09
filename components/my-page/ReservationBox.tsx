@@ -32,13 +32,13 @@ function ReservationBox(props: ReservationBoxProps) {
             </Text>
             <View className="flex flex-row mx-1 px-1 w-full h-auto">
               <LocalIcon width={12.8} height={16} />
-              <Text className="font-inter-r mx-1 text-sm  text-black">
+              <Text className="font-inter-r mx-1 text-s  text-black">
                 {guesthouse.address}
               </Text>
             </View>
             <View className="flex flex-row m-1 px-1 w-full h-auto">
               <PhoneIcon width={16} height={16} />
-              <Text className="font-inter-r mx-1 text-sm  text-black">
+              <Text className="font-inter-r mx-1 text-s  text-black">
                 {guesthouse.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')}
               </Text>
             </View>
