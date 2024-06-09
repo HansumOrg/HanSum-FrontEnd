@@ -1,52 +1,51 @@
-import React, { useState } from 'react';
-import { SafeAreaView, StatusBar, View, Text, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, StatusBar, View, Text } from 'react-native';
 import { LoginStackScreenProps } from '../../../navigation/types';
 import RectButton from '../../../components/common/RectButton';
 import FindButton from '../../../components/common/FindButton';
 import InputText from '../../../components/common/InputText';
 import Title from '../../../components/common/Title';
+import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
+import { useLogin, useAppSelector } from '../../../api/hooks';
 
 export default function LoginScreen({
-  // route와 navigation 사용 안할 시 제거해주세요.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: LoginStackScreenProps<'Login'>) {
+  const initialData = {
+    username: '',
+    password: '',
+  };
+
+  const { handleLogin, isLoginLoading, loginError } = useLogin();
+
+  const [loginData, setLoginData] = useState(initialData);
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  let isWrong = false;
+  const [isWrong, setIsWrong] = useState(false);
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+  const access = useAppSelector(state => state.auth.access);
+
+  useEffect(() => {
+    setLoginData({ username: userId, password });
+  }, [userId, password]);
+
   const loginSubmit = async () => {
-    try {
-      const response = await fetch(' /login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: userId,
-          password,
-        }),
-      });
-      const statusCode = response.status;
-      // const accessToken = response.headers.get('access');
-      // const refreshToken = response.headers.get('refresh');
-      if (statusCode === 200) {
-        // localStorage.setItem('accessToken', accessToken);
-        // localStorage.setItem('refreshToken', refreshToken);
-        // 로그인 성공 처리 로직
-      } else if (response.status === 401) {
-        isWrong = true;
-      } else {
-        // 기타 오류 처리
-        Alert.alert('오류 발생', '다시 시도해주세요.');
-      }
-    } catch (error) {
-      console.error(error);
+    const res = await handleLogin(loginData);
+    if (isSuccessResponse(res)) {
+      console.log('login success');
+      setIsWrong(false);
+    } else if (isFailedResponse(res)) {
+      console.log(res);
+      setIsWrong(true);
+    } else {
+      console.log('잘못된 응답입니다.');
+      setIsWrong(true);
     }
   };
+
   const onPress = () => {
-    console.log('fuck');
+    console.log('none');
   };
 
   return (
@@ -82,12 +81,7 @@ export default function LoginScreen({
           <View className="bg-white h-1/3 mt-2">
             <RectButton
               isActivate={password !== '' && userId !== ''}
-              onPress={() => {
-                loginSubmit().catch(error => {
-                  console.error(error);
-                  // 필요한 경우 여기에 추가적인 오류 처리 로직을 추가할 수 있습니다.
-                });
-              }}
+              onPress={loginSubmit}
               text="로그인 하기"
             />
             <FindButton
