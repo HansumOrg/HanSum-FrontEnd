@@ -3,12 +3,15 @@ import { SafeAreaView, StatusBar, View, Text } from 'react-native';
 import { RegisterStackScreenProps } from '../../../navigation/types';
 import RadioButtons from '../../../components/common/RadioButtonItem';
 import RectButton from '../../../components/common/RectButton';
+import { useRegisterContext } from '../../../components/get-started/StartContext';
+import { RegisterProps } from '../../../types';
 
 export default function SelectMbtiScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'SelectMbti'>) {
+  const context = useRegisterContext();
   const [selectedIE, setSelectedIE] = useState('');
   const [selectedNS, setSelectedNS] = useState('');
   const [selectedFT, setSelectedFT] = useState('');
@@ -24,7 +27,10 @@ export default function SelectMbtiScreen({
       selectedFT !== '' &&
       selectedPJ !== ''
     ) {
-      console.log('mbti', selectedIE, selectedNS, selectedFT, selectedPJ);
+      context.setRegisterState((prevState: RegisterProps) => ({
+        ...prevState,
+        mbti,
+      }));
       navigation.navigate('AgreeTos');
     }
   };
