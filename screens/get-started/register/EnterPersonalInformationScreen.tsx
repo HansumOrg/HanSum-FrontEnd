@@ -11,25 +11,35 @@ import RectButton from '../../../components/common/RectButton';
 import GenderButton from '../../../components/common/GenderRectButton';
 import Title from '../../../components/common/Title';
 import WheelPicker from '../../../components/get-started/WheelPicker'; // Assuming the file location
+import { useRegisterContext } from '../../../components/get-started/StartContext';
+import { RegisterProps } from '../../../types';
 
 const EnterPersonalInformationScreen = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'EnterPersonalInformation'>) => {
+  const context = useRegisterContext();
   const [gender, setGender] = useState('');
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
-  const brithday = `${year}-${month}-${day}`;
 
   const handleGenderSelect = (selectedGender: string) => {
     setGender(selectedGender);
+    context.setRegisterState((prevState: RegisterProps) => ({
+      ...prevState,
+      sex: selectedGender,
+    }));
   };
 
   const submitPersonalInformation = () => {
-    console.log('submitPersonalInformation');
-    console.log(gender, brithday);
+    const birthday = `${year}-${month}-${day}`;
+    context.setRegisterState((prevState: RegisterProps) => ({
+      ...prevState,
+      birthday,
+    }));
+    navigation.navigate('EnterNickname');
   };
 
   const years = Array.from({ length: 50 }, (_, i) => (1970 + i).toString());
@@ -95,7 +105,6 @@ const EnterPersonalInformationScreen = ({
               isActivate
               onPress={() => {
                 submitPersonalInformation();
-                navigation.navigate('EnterNickname');
               }}
               text="선택완료"
             />
