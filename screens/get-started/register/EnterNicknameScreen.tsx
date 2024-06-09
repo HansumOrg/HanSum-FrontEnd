@@ -4,39 +4,38 @@ import type { RegisterStackScreenProps } from '../../../navigation/types';
 import InputText from '../../../components/common/InputText';
 import RectButton from '../../../components/common/RectButton';
 import Title from '../../../components/common/Title';
-import DuplicateNicName from '../../../components/api/DuplicateNicName';
+import { useRegisterContext } from '../../../components/get-started/StartContext';
+import { RegisterProps } from '../../../types';
+import { useCheckNickname } from '../../../api/hooks';
+import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
 
 export default function EnterNicknameScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
   navigation,
 }: RegisterStackScreenProps<'EnterNickname'>) {
-  const [nickName, setNickName] = React.useState('');
+  const context = useRegisterContext();
   const [isDuplicate, setIsDuplicate] = React.useState(true);
   const [isChecked, setIsChecked] = React.useState(false);
+  const { handleCheckNickname } = useCheckNickname();
 
-  const nickNameSubmit = async () => {
-    try {
-      console.log('checkDuplicate');
-      await DuplicateNicName({
-        nickName,
-        onCheck: isAvailable => {
-          setIsDuplicate(!isAvailable);
-          console.log(
-            isAvailable ? '사용 가능한 ID입니다.' : '이미 사용 중인 ID입니다.',
-          );
-        },
-      });
+  const handleCheckNicknamePress = async () => {
+    const res = await handleCheckNickname(context.registerState.nickname);
+    if (isSuccessResponse(res)) {
+      // 요청 성공시 발생하는 응답
+      console.log('check nickname success');
+      setIsDuplicate(false);
+      setIsChecked(false);
+    } else if (isFailedResponse(res)) {
+      // 요청 실패시 발생하는 응답
+      console.log(res);
+      setIsDuplicate(true);
       setIsChecked(true);
-    } catch (error) {
-      console.error('중복 확인 중 에러 발생:', error);
-      setIsDuplicate(true); // 오류가 발생한 경우 중복으로 간주
+    } else {
+      console.log('잘못된 응답입니다.');
+      setIsDuplicate(true);
+      setIsChecked(true);
     }
-  };
-  const handleNickNameTest = () => {
-    nickNameSubmit().catch(error =>
-      console.error('중복 확인 중 에러 발생:', error),
-    );
   };
   return (
     <SafeAreaView>
@@ -49,8 +48,13 @@ export default function EnterNicknameScreen({
           <View className="flex bg-white h-1/3 ">
             <InputText
               name="닉네임"
-              value={nickName}
-              onChangeText={text => setNickName(text)}
+              value={context.registerState.nickname}
+              onChangeText={text => {
+                context.setRegisterState((prevState: RegisterProps) => ({
+                  ...prevState,
+                  nickname: text,
+                }));
+              }}
               isWrong={isDuplicate}
             />
             {isDuplicate && isChecked ? (
@@ -63,9 +67,9 @@ export default function EnterNicknameScreen({
           <View className="bg-white h-1/3">
             {isDuplicate ? (
               <RectButton
-                onPress={handleNickNameTest}
+                onPress={handleCheckNicknamePress}
                 text="중복확인"
-                isActivate={nickName !== ''}
+                isActivate={context.registerState.nickname !== ''}
               />
             ) : (
               <RectButton
