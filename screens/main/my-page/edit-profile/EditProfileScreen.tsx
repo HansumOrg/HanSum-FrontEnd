@@ -14,6 +14,7 @@ import EditPageStickerList from '../../../../components/edit-page/EditPageSticke
 import MbtiCheck from '../../../../components/edit-page/MbtiCheck';
 import InterestBorder from '../../../../components/edit-page/InterestBorder';
 import { useMyPageContext } from '../../../../components/my-page/MyPageContext';
+import { useGetUserInfoQuery } from '../../../../api/endpoints/userEndpoints';
 
 function countCheck(count: number): boolean {
   // 관심사 개수 체크(추가 유도 글 노출 여부) true : 노출, false : 미노출
@@ -30,23 +31,20 @@ export default function EditProfileScreen({
   navigation,
 }: EditProfileStackScreenProps<'EditProfile'>) {
   const context = useMyPageContext();
+  const { data: userData } = useGetUserInfoQuery();
   const [travleInterestCount, setTravelInterestCount] = useState(false);
   const [hobbyInterestCount, setHobbyInterestCount] = useState(false);
   const [foodInterestCount, setFoodInterestCount] = useState(false);
   const [stickerCount, setStickerCount] = useState(true);
   useEffect(() => {
     // 관심사 개수 체크(추가 유도 글 노출 여부)
-    setTravelInterestCount(
-      countCheck(context.myPageState.interested_location.length),
-    );
-    setHobbyInterestCount(
-      countCheck(context.myPageState.interested_hobby.length),
-    );
-    setFoodInterestCount(
-      countCheck(context.myPageState.interested_food.length),
-    );
-    setStickerCount(context.myPageState.sticker.length === 0);
-  }, [context]);
+    if (userData?.interestedLocation)
+      setTravelInterestCount(countCheck(userData?.interestedLocation.length));
+    if (userData?.interestedHobby)
+      setHobbyInterestCount(countCheck(userData?.interestedHobby.length));
+    if (userData?.interestedFood)
+      setFoodInterestCount(countCheck(userData?.interestedFood.length));
+  }, [userData]);
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -68,7 +66,7 @@ export default function EditProfileScreen({
               </Text>
               <View className="flex flex-row w-1/2 justify-between items-cente">
                 <Text className="font-inter-sb text-md text-black">
-                  {context.myPageState.username}
+                  {userData ? userData.nickname : '사용자를 찾을 수 없습니다.'}
                 </Text>
                 <Pressable
                   onPress={() => navigation.navigate('ChangeNickname')}
@@ -85,7 +83,7 @@ export default function EditProfileScreen({
               </Text>
               <View className="flex flex-row w-1/2 justify-between items-center">
                 {/* mbti에 따른 border 테두리 색 변화 */}
-                <MbtiCheck mbti={context.myPageState.mbti} />
+                <MbtiCheck mbti={userData ? userData.mbti : 'INFP'} />
               </View>
             </View>
           </View>
@@ -103,9 +101,11 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {context.myPageState.interested_location.map(
-                  (interest, index) => InterestBorder(interest, index),
-                )}
+                {travleInterestCount
+                  ? userData?.interestedLocation.map((interest, index) =>
+                      InterestBorder(interest, index),
+                    )
+                  : null}
                 <Pressable
                   className="py-1 mr-1"
                   onPress={() => navigation.navigate('AddInterest')}
@@ -124,9 +124,11 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {context.myPageState.interested_hobby.map((interest, index) =>
-                  InterestBorder(interest, index),
-                )}
+                {hobbyInterestCount
+                  ? userData?.interestedHobby.map((interest, index) =>
+                      InterestBorder(interest, index),
+                    )
+                  : null}
                 <Pressable
                   className="py-1 mr-1"
                   onPress={() => navigation.navigate('AddInterest')}
@@ -145,9 +147,11 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {context.myPageState.interested_food.map((interest, index) =>
-                  InterestBorder(interest, index),
-                )}
+                {foodInterestCount
+                  ? userData?.interestedFood.map((interest, index) =>
+                      InterestBorder(interest, index),
+                    )
+                  : null}
                 <Pressable
                   className="py-1 mr-1"
                   onPress={() => navigation.navigate('AddInterest')}
