@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -10,7 +10,7 @@ import {
 import { RegisterStackScreenProps } from '../../../navigation/types';
 import RectButton from '../../../components/common/RectButton';
 import logo from '../../../assets/images/logo.png';
-import { useJoin, useAppSelector } from '../../../api/hooks';
+import { useJoin, useAppSelector, useLogin } from '../../../api/hooks';
 import { JoinSuccessResponse } from '../../../api/types';
 import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
 
@@ -19,6 +19,7 @@ export default function StartScreen({
   navigation,
 }: RegisterStackScreenProps<'Start'>) {
   const { handleJoin, isJoinLoading, joinError } = useJoin();
+  const { handleLogin, isLoginLoading, loginError } = useLogin();
   const curruentState = useAppSelector(state => state.join);
   const handleJoinPress = async () => {
     const res = await handleJoin();
@@ -28,6 +29,17 @@ export default function StartScreen({
       console.log(successRes.name);
       console.log(successRes.userId);
       console.log('success');
+      if (curruentState.username && curruentState.password) {
+        const loginRes = await handleLogin({
+          username: curruentState.username,
+          password: curruentState.password,
+        });
+        if (isSuccessResponse(loginRes)) {
+          console.log('login success');
+        } else if (isFailedResponse(loginRes)) {
+          console.log(loginRes);
+        } else console.log('잘못된 응답입니다.');
+      }
     } else if (isFailedResponse(res)) {
       // 요청 실패시 발생하는 응답
       console.log(res);
