@@ -53,7 +53,7 @@ export default function RecommendationsScreen({
               <Text className=" text-black ">{userData?.mbti}</Text>
             </View>
             <Text className="ml-2 text-md text-left font-inter-m text-black">
-              {userData?.username}님을 위한 게스트하우스 추천
+              {userData?.nickname}님을 위한 게스트하우스 추천
             </Text>
           </View>
           <View className="mt-4 h-2/6 ">
@@ -69,7 +69,7 @@ export default function RecommendationsScreen({
             <View className="h-1/2 w-full">
               <View className="flex-row justify-between px-2 pt-2 border-t border-gray-2 mx-2">
                 <Text className="text-sm font-inter-b text-black mb-5">
-                  {userData?.username}님의 예약 현황
+                  {userData?.nickname}님의 예약 현황
                 </Text>
                 <Pressable onPress={handleSeeMore}>
                   <Text className="text-sss font-inter-r text-black mb-5">
