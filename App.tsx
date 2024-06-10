@@ -87,10 +87,10 @@ const App = () => {
 //   );
 // };
 
-// const App = () => {
+// const App = () => (
 //   <Provider store={store}>
 //     <Main />
-//   </Provider>;
-// };
+//   </Provider>
+// );
 
 export default App;
