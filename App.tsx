@@ -14,7 +14,6 @@ import store from './api/store';
 const App = () => {
   type Mode = 'getStarted' | 'main' | 'apiTest' | undefined;
   const [mode, setMode] = useState<Mode>(undefined);
-  // const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   const handleMode = (newMode: Mode) => () => {
     setMode(newMode);
