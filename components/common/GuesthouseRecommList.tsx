@@ -8,54 +8,17 @@ import {
   Pressable,
 } from 'react-native';
 import {
-  GuesthouseRecommListProps,
+  Recommendation,
   GuesthouseRecommListPropsWithNavigation,
 } from '../../types';
 import dummyImage from '../../assets/images/dummy_img';
 
-const DATA: GuesthouseRecommListProps[] = [
-  {
-    guesthouse_name: 'Jeju Beach Guesthouse',
-    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA',
-    probability: 0.7854,
-    guesthouseId: 123,
-    rank: 1,
-  },
-  {
-    guesthouse_name: 'Book Hotel',
-    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA',
-    probability: 0.6721,
-    guesthouseId: 11415,
-    rank: 2,
-  },
-  {
-    guesthouse_name: 'Ocean View',
-    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA',
-    probability: 0.8456,
-    guesthouseId: 456,
-    rank: 3,
-  },
-  {
-    guesthouse_name: 'Mountain Retreat',
-    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA',
-    probability: 0.789,
-    guesthouseId: 789,
-    rank: 4,
-  },
-  {
-    guesthouse_name: 'City Lights',
-    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA',
-    probability: 0.6543,
-    guesthouseId: 101112,
-    rank: 5,
-  },
-];
-
 const GuesthouseRecommList: React.FC<
   GuesthouseRecommListPropsWithNavigation
-> = ({ navigation }) => {
+> = ({ navigation, recommendation }) => {
+  const DATA = recommendation;
   const screenWidth = Dimensions.get('window').width;
-  const renderItem = ({ item }: { item: GuesthouseRecommListProps }) => (
+  const renderItem = ({ item }: { item: Recommendation }) => (
     <Pressable
       onPress={() =>
         navigation.navigate('GuesthouseDetailsNavigator', {
@@ -68,21 +31,18 @@ const GuesthouseRecommList: React.FC<
         style={{ width: screenWidth / 3 }}
       >
         <Image
-          source={{ uri: dummyImage }}
+          source={{ uri: dummyImage }} // item.imageBase64 사용시 어플리케이션이 멈춤
           className="w-full h-full rounded-lg bg-blue-300"
         />
         <Text className="absolute text-left left-0 px-2 text-s text-white font-inter-b bottom-2">
-          {item.guesthouse_name}
+          {item.guesthouseName}
         </Text>
       </View>
     </Pressable>
   );
-
   return (
     <FlatList
-      data={DATA.sort((a, b) =>
-        a.guesthouse_name.localeCompare(b.guesthouse_name),
-      )}
+      data={DATA}
       renderItem={renderItem}
       keyExtractor={item => item.rank.toString()}
       horizontal

@@ -1,45 +1,15 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { MainTabScreenProps } from '../../navigation/types';
 import ReservationItem from '../../components/common/ReservationItem';
 import GuesthouseRecommList from '../../components/common/GuesthouseRecommList';
 import AdBanner from '../../components/common/AdBanner';
-
-const reservationRecords = [
-  {
-    reservation_id: 1,
-    user_id: 1,
-    guesthouse_id: 2,
-    guesthouse_name: '서점 숙소',
-    checkin_date: '2024-06-10 15:00:00',
-    checkout_date: '2024-06-15 10:00:00',
-  },
-  {
-    reservation_id: 2,
-    user_id: 1,
-    guesthouse_id: 3,
-    guesthouse_name: '송당 온도',
-    checkin_date: '2024-06-11 15:00:00',
-    checkout_date: '2024-06-16 10:00:00',
-  },
-  {
-    reservation_id: 3,
-    user_id: 1,
-    guesthouse_id: 4,
-    guesthouse_name: '송당 온',
-    checkin_date: '2024-06-01 15:00:00',
-    checkout_date: '2024-06-16 10:00:00',
-  },
-  {
-    reservation_id: 4,
-    user_id: 1,
-    guesthouse_id: 5,
-    guesthouse_name: '송당 도',
-    checkin_date: '2024-06-01 15:00:00',
-    checkout_date: '2024-06-03 10:00:00',
-  },
-];
+import { useGetUserInfoQuery } from '../../api/endpoints/userEndpoints';
+import { useGetReservationStatusQuery } from '../../api/endpoints/reservationEndpoints';
+import { useGetRecommendationQuery } from '../../api/endpoints/recommendationEndpoints';
+import { useAppSelector, useRefresh } from '../../api/hooks';
+import { isFailedResponse, isSuccessResponse } from '../../utils/helpers';
 
 export default function RecommendationsScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -47,6 +17,18 @@ export default function RecommendationsScreen({
   route,
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
+  const { data: userData } = useGetUserInfoQuery();
+  const {
+    data: reservationData,
+    error: reservationError,
+    isLoading,
+  } = useGetReservationStatusQuery();
+  const userMbti = userData?.mbti ? userData.mbti : '';
+  const { data: recommendationData, error: recommendationError } =
+    useGetRecommendationQuery(userMbti);
+  const access = useAppSelector(state => state.auth.access);
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+  const { handleRefresh } = useRefresh();
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator', {
       screen: 'MyPage',
@@ -61,7 +43,6 @@ export default function RecommendationsScreen({
       };
     }, []),
   );
-
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor="transparent" />
@@ -69,20 +50,26 @@ export default function RecommendationsScreen({
         <View className="w-full h-full">
           <View className="flex-row mt-4 w-full justify-start items-center">
             <View className=" ml-4 justify-center items-center w-[20%] px-4 border rounded-full">
-              <Text className=" text-black ">INFP</Text>
+              <Text className=" text-black ">{userData?.mbti}</Text>
             </View>
             <Text className="ml-2 text-md text-left font-inter-m text-black">
-              Username을 위한 게스트하우스 추천
+              {userData?.username}님을 위한 게스트하우스 추천
             </Text>
           </View>
           <View className="mt-4 h-2/6 ">
-            <GuesthouseRecommList navigation={navigation} route={route} />
+            {recommendationData ? (
+              <GuesthouseRecommList
+                navigation={navigation}
+                route={route}
+                recommendation={recommendationData?.recommendations}
+              />
+            ) : null}
           </View>
           <View className="pt-4 overflow-y-auto h-3/5">
             <View className="h-1/2 w-full">
               <View className="flex-row justify-between px-2 pt-2 border-t border-gray-2 mx-2">
                 <Text className="text-sm font-inter-b text-black mb-5">
-                  이한님의 예약 현황
+                  {userData?.username}님의 예약 현황
                 </Text>
                 <Pressable onPress={handleSeeMore}>
                   <Text className="text-sss font-inter-r text-black mb-5">
@@ -91,11 +78,11 @@ export default function RecommendationsScreen({
                 </Pressable>
               </View>
               <View className=" h-4/5 w-[100%] items-center px-4">
-                {reservationRecords.length > 0 ? (
-                  reservationRecords
+                {reservationData ? (
+                  reservationData.reservationRecords
                     .slice(0, 2)
                     .map(item => (
-                      <ReservationItem key={item.reservation_id} item={item} />
+                      <ReservationItem key={item.reservationId} item={item} />
                     ))
                 ) : (
                   <Text className="text-center text-gray-500">
