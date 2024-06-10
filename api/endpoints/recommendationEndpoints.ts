@@ -16,11 +16,11 @@ export const recommendationApi = createApi({
   }),
   endpoints: builder => ({
     getRecommendation: builder.query<
-      { recommendation: Recommendation[] },
+      { recommendations: Recommendation[] },
       string
     >({
       query: mbti => ({
-        url: 'guesthouse/recommendation',
+        url: 'guesthouses/recommendation',
         method: 'GET',
         params: { mbti },
       }),

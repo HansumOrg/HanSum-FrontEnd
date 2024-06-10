@@ -147,12 +147,12 @@ export interface UiCheckboxProps {
 }
 
 export type GuesthouseRecommListPropsWithNavigation =
-  MainTabScreenProps<'Recommendations'>;
-
-export interface GuesthouseRecommListProps {
-  // GuesthouseRecommList.tsx
-  guesthouse_name: string;
-  image: string;
+  MainTabScreenProps<'Recommendations'> & {
+    recommendation: Recommendation[];
+  };
+export interface Recommendation {
+  imageBase64: string;
+  guesthouseName: string;
   probability: number;
   guesthouseId: number;
   rank: number;
@@ -294,10 +294,9 @@ export interface GuestInfo {
 
 // RecommendationScreen types
 export interface BasicReservationRecord {
-  reservation_id: number;
-  user_id: number;
-  guesthouse_id: number;
-  guesthouse_name: string;
-  checkin_date: string;
-  checkout_date: string;
+  reservationId: number;
+  userId: number;
+  guesthouseId: number;
+  checkinDate: string;
+  checkoutDate: string;
 }
