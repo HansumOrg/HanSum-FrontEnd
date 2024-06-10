@@ -9,10 +9,11 @@ import store from './api/store';
 // import { useAppSelector } from './api/hooks';
 // import { selectIsAuthenticated } from './api/selectors';
 
+// 다음은 테스트용 앱입니다.
+
 const App = () => {
   type Mode = 'getStarted' | 'main' | 'apiTest' | undefined;
   const [mode, setMode] = useState<Mode>(undefined);
-  // const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   const handleMode = (newMode: Mode) => () => {
     setMode(newMode);
@@ -74,14 +75,22 @@ const App = () => {
   );
 };
 
-// const App = () => {
+// 다음은 실제 앱입니다.
 
-//   const [isAutenticated, setIsAutenticated] = useState(false);
-//     // 다음은 논리적인 구조입니다.
-//     // App 코드는 가장 마지막에 수정해주세요.
+// const Main = () => {
+//   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
+//   return (
 //     <NavigationContainer>
-//       {isAutenticated ? <GetStartedNavigator /> : <MainNavigator />}
+//       {isAuthenticated ? <MainNavigator /> : <GetStartedNavigator />}
 //     </NavigationContainer>
-// }
+//   );
+// };
+
+// const App = () => (
+//   <Provider store={store}>
+//     <Main />
+//   </Provider>
+// );
 
 export default App;
