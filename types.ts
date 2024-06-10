@@ -161,28 +161,27 @@ export interface Recommendation {
 // my-page types
 
 export interface Reservation {
-  reservation_id: number;
-  user_id: number;
-  guesthouse_id: number;
-  checkin_date: string;
-  checkout_date: string;
+  reservationId: number;
+  userId: number;
+  guesthouseId: number;
+  checkinDate: string;
+  checkoutDate: string;
 }
 
 export interface Guesthouse {
-  guesthouse_id: number;
-  guesthouse_name: string;
+  guesthouseId: number;
+  guesthouseName: string;
   address: string;
   location: string;
   price: number;
   phone: string;
   rating: number;
-  imageUrl: string;
+  imageBase64: string;
   mood: string;
 }
 
 export interface ReservationBoxProps extends MyPageStackScreenProps<'MyPage'> {
   reservation: Reservation;
-  guesthouse: Guesthouse;
 }
 
 export interface MyPageStateType {

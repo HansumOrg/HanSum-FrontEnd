@@ -3,10 +3,11 @@ import { View, Text, Pressable } from 'react-native';
 import LocalIcon from '../../assets/images/icon_local.svg';
 import PhoneIcon from '../../assets/images/icon_phone.svg';
 import { Reservation, ReservationBoxProps } from '../../types';
+import { useGetGuesthouseDetailsQuery } from '../../api/endpoints/guesthouseEndpoints';
 
-function DateCheck({ checkin_date }: Reservation): number {
+function DateCheck({ checkinDate }: Reservation): number {
   const today = new Date();
-  const checkin = new Date(checkin_date);
+  const checkin = new Date(checkinDate);
   let status = 0;
   if (today < checkin) {
     status = 0;
@@ -16,8 +17,11 @@ function DateCheck({ checkin_date }: Reservation): number {
   return status;
 }
 function ReservationBox(props: ReservationBoxProps) {
-  const { reservation, guesthouse, navigation } = props;
+  const { reservation, navigation } = props;
   const [dateState, setDateState] = useState(0); // 0: 예약확정, 1:이용완료
+  const { data: guesthouseData } = useGetGuesthouseDetailsQuery(
+    reservation.guesthouseId,
+  );
 
   useEffect(() => {
     setDateState(DateCheck(reservation));
@@ -28,18 +32,21 @@ function ReservationBox(props: ReservationBoxProps) {
         <View className="flex flex-row h-auto w-full">
           <View className="flex flex-col w-4/5 h-auto rounded-l-md bg-white">
             <Text className="font-inter-m mt-2 mb-1 ml-2 text-xl text-black">
-              {guesthouse.guesthouse_name}
+              {guesthouseData?.guesthouseName}
             </Text>
             <View className="flex flex-row mx-1 px-1 w-full h-auto">
               <LocalIcon width={12.8} height={16} />
               <Text className="font-inter-r mx-1 text-sm  text-black">
-                {guesthouse.address}
+                {guesthouseData?.address}
               </Text>
             </View>
             <View className="flex flex-row m-1 px-1 w-full h-auto">
               <PhoneIcon width={16} height={16} />
               <Text className="font-inter-r mx-1 text-sm  text-black">
-                {guesthouse.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')}
+                {guesthouseData?.phone.replace(
+                  /(\d{3})(\d{4})(\d{4})/,
+                  '$1-$2-$3',
+                )}
               </Text>
             </View>
             {dateState === 0 ? (
@@ -49,7 +56,7 @@ function ReservationBox(props: ReservationBoxProps) {
                     Check-in
                   </Text>
                   <Text className="font-inter-m text-sm text-black/[.50]">
-                    {reservation.checkin_date.split(' ')[1]}
+                    {reservation.checkinDate.split(' ')[1]}
                   </Text>
                 </View>
                 <View className="flex px-2 mb-2 flex-row w-full justify-between">
@@ -57,7 +64,7 @@ function ReservationBox(props: ReservationBoxProps) {
                     Check-out
                   </Text>
                   <Text className="font-inter-m text-sm text-black/[.50]">
-                    {reservation.checkout_date.split(' ')[1]}
+                    {reservation.checkoutDate.split(' ')[1]}
                   </Text>
                 </View>
               </View>

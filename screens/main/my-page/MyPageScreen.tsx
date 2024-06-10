@@ -7,61 +7,17 @@ import {
   Pressable,
   ScrollView,
   Modal,
-  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { MyPageStackScreenProps } from '../../../navigation/types';
 import NoticeIcon from '../../../assets/images/icon_notice.svg';
 import MoreIcon from '../../../assets/images/icon_more.svg';
-import data from '../../../data.json';
-import { Reservation, Guesthouse } from '../../../types';
 import ReservationBox from '../../../components/my-page/ReservationBox';
-import { useMyPageContext } from '../../../components/my-page/MyPageContext';
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    marginTop: 15,
-  },
-  button: {
-    borderRadius: 10,
-    padding: 10,
-    elevation: 2,
-    backgroundColor: '#2196F3',
-    marginHorizontal: 10,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-});
+import { useGetUserInfoQuery } from '../../../api/endpoints/userEndpoints';
+import { useGetReservationStatusQuery } from '../../../api/endpoints/reservationEndpoints';
+import { useLogout } from '../../../api/hooks';
+import { isSuccessResponse, isFailedResponse } from '../../../utils/helpers';
 
 export default function MyPageScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -69,11 +25,22 @@ export default function MyPageScreen({
   route,
   navigation,
 }: MyPageStackScreenProps<'MyPage'>) {
-  const context = useMyPageContext();
-  const userId = context.myPageState.user_id;
+  const { data: userData } = useGetUserInfoQuery();
   const [modalVisible, setModalVisible] = useState(false);
-  const reservationData: Reservation[] = data.reservation;
-  const guesthouseData: Guesthouse[] = data.guesthouse;
+  const { data: reservationData } = useGetReservationStatusQuery();
+  const { handleLogout } = useLogout();
+
+  const handleLogoutPress = async () => {
+    const res = await handleLogout();
+    if (isSuccessResponse(res)) {
+      // 요청 성공시 발생하는 응답
+      console.log('logout success');
+    } else if (isFailedResponse(res)) {
+      // 요청 실패시 발생하는 응답
+      console.log(res);
+    } else console.log('잘못된 응답입니다.');
+  };
+
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle('dark-content'); // 상태 바 스타일을 설정
@@ -99,9 +66,7 @@ export default function MyPageScreen({
           <View className="flex flex-row w-auto h-1/5 justify-between items-end">
             <View className="flex flex-col h-full justify-end">
               <Text className="font-inter-b text-s text-black">
-                {userId
-                  ? context.myPageState.username
-                  : '사용자를 찾을 수 없습니다.'}
+                {userData ? userData.nickname : '사용자를 찾을 수 없습니다.'}
               </Text>
               <Text className="font-inter-m text-ss text-black/[.5]">
                 Show profile
@@ -155,26 +120,29 @@ export default function MyPageScreen({
                 setModalVisible(!modalVisible);
               }}
             >
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <Text style={styles.modalText}>로그아웃 할까요?</Text>
-                  <View style={styles.buttonContainer}>
+              <View className=" bg-black/75 h-screen w-screen items-center justify-center">
+                <View className="w-4/5 h-1/4 bg-white rounded-lg items-center justify-between px-4 py-8 shadow-lg shadow-black">
+                  <Text className="text-left font-inter-r text-sm text-black">
+                    {'\n'}
+                    로그아웃 하시겠습니까?
+                  </Text>
+                  <View className="flex-row justify-between w-full ">
                     <TouchableOpacity
-                      style={styles.button}
-                      onPress={() => {
-                        setModalVisible(false);
-                      }}
+                      className="rounded-md bg-primary-2 w-[45%] py-2 justify-center items-center"
+                      onPress={handleLogoutPress}
                     >
-                      <Text style={styles.textStyle}>로그아웃</Text>
+                      <Text className="text-white font-inter-sb text-s text-center">
+                        로그아웃
+                      </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={styles.button}
+                      className="rounded-md bg-gray-2 w-[45%] py-2 justify-center items-center"
                       onPress={() => {
-                        setModalVisible(false);
+                        setModalVisible(!modalVisible);
                       }}
                     >
-                      <Text style={styles.textStyle}>
-                        {'    '}취소{'    '}
+                      <Text className="text-white font-inter-sb text-s text-center">
+                        취소
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -190,17 +158,20 @@ export default function MyPageScreen({
         <View className="flex flex-grow w-full h-1/3">
           <ScrollView showsVerticalScrollIndicator={false}>
             <View className="flex w-full h-auto mb-20">
-              {reservationData
-                .filter(reservation => reservation.user_id === userId)
-                .map(reservation => (
+              {reservationData ? (
+                reservationData.reservationRecords.map(reservation => (
                   <ReservationBox
                     route={route}
                     navigation={navigation}
                     reservation={reservation}
-                    guesthouse={guesthouseData[reservation.guesthouse_id - 1]}
-                    key={reservation.reservation_id}
+                    key={reservation.reservationId}
                   />
-                ))}
+                ))
+              ) : (
+                <Text className="text-center text-gray-500">
+                  현재 예약중인 숙소가 없습니다.
+                </Text>
+              )}
             </View>
           </ScrollView>
         </View>
