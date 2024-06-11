@@ -108,6 +108,7 @@ export const userApi = createApi({
 
 export const {
   useGetUserInfoQuery,
+  useGetStickerQuery,
   useRegisterStickerMutation,
   useWriteReviewMutation,
   useUpdateNicknameMutation,

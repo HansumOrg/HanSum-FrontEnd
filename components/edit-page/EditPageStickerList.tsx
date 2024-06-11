@@ -9,12 +9,12 @@ function EditPageStickerList({ sticker, index }: EditPageStickerListProps) {
       <View className="flex flex-row w-1/5 justify-center items-center">
         <PersonIcon width={18} height={24} />
         <Text className="font-inter-sb mx-1 text-s text-black">
-          {sticker.sticker_count}
+          {sticker.stickerCount}
         </Text>
       </View>
       <View className="flex border-2 mr-1 border-primary-2/100 w-auto h-auto rounded-2xl items-center">
         <Text className="font-inter-r px-2 py-1 text-s text-primary-2">
-          {sticker.sticker_text}
+          {sticker.stickerText}
         </Text>
       </View>
     </View>

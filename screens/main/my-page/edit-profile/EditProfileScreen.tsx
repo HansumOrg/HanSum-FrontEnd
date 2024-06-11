@@ -14,15 +14,10 @@ import EditPageStickerList from '../../../../components/edit-page/EditPageSticke
 import MbtiCheck from '../../../../components/edit-page/MbtiCheck';
 import InterestBorder from '../../../../components/edit-page/InterestBorder';
 import { useMyPageContext } from '../../../../components/my-page/MyPageContext';
-import { useGetUserInfoQuery } from '../../../../api/endpoints/userEndpoints';
-
-function countCheck(count: number): boolean {
-  // 관심사 개수 체크(추가 유도 글 노출 여부) true : 노출, false : 미노출
-  if (count > 0) {
-    return false;
-  }
-  return true;
-}
+import {
+  useGetUserInfoQuery,
+  useGetStickerQuery,
+} from '../../../../api/endpoints/userEndpoints';
 
 export default function EditProfileScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -32,18 +27,19 @@ export default function EditProfileScreen({
 }: EditProfileStackScreenProps<'EditProfile'>) {
   const context = useMyPageContext();
   const { data: userData } = useGetUserInfoQuery();
+  const { data: stickerData } = useGetStickerQuery();
   const [travleInterestCount, setTravelInterestCount] = useState(false);
   const [hobbyInterestCount, setHobbyInterestCount] = useState(false);
   const [foodInterestCount, setFoodInterestCount] = useState(false);
   const [stickerCount, setStickerCount] = useState(true);
   useEffect(() => {
     // 관심사 개수 체크(추가 유도 글 노출 여부)
-    if (userData?.interestedLocation)
-      setTravelInterestCount(countCheck(userData?.interestedLocation.length));
-    if (userData?.interestedHobby)
-      setHobbyInterestCount(countCheck(userData?.interestedHobby.length));
-    if (userData?.interestedFood)
-      setFoodInterestCount(countCheck(userData?.interestedFood.length));
+    if (userData?.interestedLocation) setTravelInterestCount(true);
+    else setTravelInterestCount(false);
+    if (userData?.interestedHobby) setHobbyInterestCount(true);
+    else setHobbyInterestCount(false);
+    if (userData?.interestedFood) setFoodInterestCount(true);
+    else setFoodInterestCount(false);
   }, [userData]);
   return (
     <SafeAreaView>
@@ -95,7 +91,7 @@ export default function EditProfileScreen({
               <Text className="font-inter-sb text-sm py-1 text-black">
                 제주 여행지
               </Text>
-              {travleInterestCount ? (
+              {!travleInterestCount ? (
                 <Text className="font-inter-sb text-ss text-black/[.5]">
                   주황색 수정 버튼을 눌러 관심사를 추가해주세요!
                 </Text>
@@ -118,7 +114,7 @@ export default function EditProfileScreen({
               <Text className="font-inter-sb text-sm py-1 text-black">
                 취미
               </Text>
-              {hobbyInterestCount ? (
+              {!hobbyInterestCount ? (
                 <Text className="font-inter-sb text-ss text-black/[.5]">
                   주황색 수정 버튼을 눌러 관심사를 추가해주세요!
                 </Text>
@@ -141,7 +137,7 @@ export default function EditProfileScreen({
               <Text className="font-inter-sb text-sm py-1 text-black">
                 좋아하는 음식
               </Text>
-              {foodInterestCount ? (
+              {!foodInterestCount ? (
                 <Text className="font-inter-sb text-ss text-black/[.5]">
                   주황색 수정 버튼을 눌러 관심사를 추가해주세요!
                 </Text>
@@ -172,16 +168,17 @@ export default function EditProfileScreen({
                 <BackIcon width={23} height={23} />
               </Pressable>
             </View>
-            {stickerCount ? (
-              <Text className="font-inter-sb py-1 text-ss text-black/[.5]">
-                아직 스티커를 받지 못했어요!
-              </Text>
-            ) : null}
             <View className="flex h-1/4 w-full">
               <View className="flex flex-col w-full h-auto">
                 <ScrollView showsVerticalScrollIndicator={false}>
-                  {context.myPageState.sticker.map((sticker, index) =>
-                    EditPageStickerList({ sticker, index }),
+                  {stickerData ? (
+                    stickerData?.stickers.map((sticker, index) =>
+                      EditPageStickerList({ sticker, index }),
+                    )
+                  ) : (
+                    <Text className="font-inter-sb py-1 text-ss text-black/[.5]">
+                      아직 스티커를 받지 못했어요!
+                    </Text>
                   )}
                 </ScrollView>
               </View>

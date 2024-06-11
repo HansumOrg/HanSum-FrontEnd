@@ -207,10 +207,9 @@ export interface NicknameProps {
 }
 
 export interface Sticker {
-  sticker_id: number;
-  user_id: number;
-  sticker_text: string;
-  sticker_count: number;
+  stickerId: number;
+  stickerText: string;
+  stickerCount: number;
 }
 
 export interface EditPageStickerListProps {
