@@ -86,7 +86,7 @@ export const userApi = createApi({
       query: nickname => ({
         url: 'user/nickname',
         method: 'PUT',
-        body: nickname,
+        body: { nickname },
       }),
     }),
     updateInterests: builder.mutation<

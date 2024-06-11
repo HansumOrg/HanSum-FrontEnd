@@ -198,10 +198,6 @@ export interface MyPageStateType {
 
 export interface NicknameProps {
   // ChangeNicknameScreen.tsx
-  context: {
-    myPageState: MyPageStateType;
-    setMyPageState: React.Dispatch<React.SetStateAction<MyPageStateType>>;
-  };
   nickname: string;
   user: User[];
 }
