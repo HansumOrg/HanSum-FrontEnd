@@ -31,7 +31,7 @@ const GuesthouseRecommList: React.FC<
         style={{ width: screenWidth / 3 }}
       >
         <Image
-          source={{ uri: dummyImage }} // item.imageBase64 사용시 어플리케이션이 멈춤
+          source={{ uri: item.imageBase64 }} // item.imageBase64 사용시 어플리케이션이 멈춤
           className="w-full h-full rounded-lg bg-blue-300"
         />
         <Text className="absolute text-left left-0 px-2 text-s text-white font-inter-b bottom-2">

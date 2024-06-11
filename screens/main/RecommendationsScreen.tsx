@@ -9,54 +9,69 @@ import { useGetUserInfoQuery } from '../../api/endpoints/userEndpoints';
 import { useGetReservationStatusQuery } from '../../api/endpoints/reservationEndpoints';
 import { useGetRecommendationQuery } from '../../api/endpoints/recommendationEndpoints';
 import { useAppSelector, useRefresh } from '../../api/hooks';
-import { isFailedResponse, isSuccessResponse } from '../../utils/helpers';
 
 export default function RecommendationsScreen({
-  // route와 navigation 사용 안할 시 제거해주세요.
-
   route,
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
-  const { data: userData } = useGetUserInfoQuery();
+  const access = useAppSelector(state => state.auth.access);
+  const { data: userData, refetch: refetchUserData } = useGetUserInfoQuery();
   const {
     data: reservationData,
     error: reservationError,
     isLoading,
   } = useGetReservationStatusQuery();
-  const userMbti = userData?.mbti ? userData.mbti : '';
+  const userMbti = userData?.mbti ?? '';
   const { data: recommendationData, error: recommendationError } =
     useGetRecommendationQuery(userMbti);
-  const access = useAppSelector(state => state.auth.access);
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+
   const { handleRefresh } = useRefresh();
+
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator', {
       screen: 'MyPage',
-    }); // 'ReservationList'는 다른 페이지의 이름입니다.
+    });
   };
+
+  useEffect(() => {
+    const refetchData = async () => {
+      try {
+        await refetchUserData();
+      } catch (error) {
+        console.error('Failed to refetch user data:', error);
+      }
+    };
+
+    if (access) {
+      void refetchData();
+    }
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBarStyle('dark-content'); // 상태 바 스타일을 설정
+      StatusBar.setBarStyle('dark-content');
       return () => {
-        StatusBar.setBarStyle('dark-content'); // 화면을 벗어날 때 기본 상태로 되돌림
+        StatusBar.setBarStyle('dark-content');
         StatusBar.setTranslucent(false);
       };
     }, []),
   );
+  console.log(access);
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor="transparent" />
       <View className="relative h-screen w-screen flex justify-center items-center bg-white">
         <View className="w-full h-full">
           <View className="flex-row mt-4 w-full justify-start items-center">
-            <View className=" ml-4 justify-center items-center w-[20%] px-4 border rounded-full">
-              <Text className=" text-black ">{userData?.mbti}</Text>
+            <View className="ml-4 justify-center items-center w-[20%] px-4 border rounded-full">
+              <Text className="text-black">{userData?.mbti}</Text>
             </View>
             <Text className="ml-2 text-md text-left font-inter-m text-black">
               {userData?.nickname}님을 위한 게스트하우스 추천
             </Text>
           </View>
-          <View className="mt-4 h-2/6 ">
+          <View className="mt-4 h-2/6">
             {recommendationData ? (
               <GuesthouseRecommList
                 navigation={navigation}
@@ -77,7 +92,7 @@ export default function RecommendationsScreen({
                   </Text>
                 </Pressable>
               </View>
-              <View className=" h-4/5 w-[100%] items-center px-4">
+              <View className="h-4/5 w-[100%] items-center px-4">
                 {reservationData ? (
                   reservationData.reservationRecords
                     .slice(0, 2)
@@ -90,7 +105,6 @@ export default function RecommendationsScreen({
                   </Text>
                 )}
               </View>
-              {/* 만약 예약내역이 없으면 "현재 예약중인 숙소가 없습니다 출력" */}
               <View className="h-3/5 w-full justify-center items-center">
                 <AdBanner />
               </View>
