@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ReservationRecord } from '../types';
+import { API_BASE_URL } from '@env';
+import type { ReservationRecord } from '../types';
 import type { RootState } from '../store';
 
 export const reservationApi = createApi({
   reducerPath: 'reservationApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { access } = (getState() as RootState).auth;
       if (access) {

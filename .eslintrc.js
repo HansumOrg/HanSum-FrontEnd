@@ -37,6 +37,12 @@ module.exports = {
       extends: ['plugin:@typescript-eslint/disable-type-checked'],
     },
     {
+      files: ['env.d.ts'],
+      rules: {
+        'import/prefer-default-export': 'off',
+      },
+    },
+    {
       // feel free to replace with your preferred file pattern - eg. 'src/**/*Slice.ts'
       files: ['api/**/*Slice.ts'],
       // avoid state param assignment

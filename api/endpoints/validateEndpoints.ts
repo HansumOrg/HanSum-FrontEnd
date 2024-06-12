@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_BASE_URL } from '@env';
 
 export const validateApi = createApi({
   reducerPath: 'validateApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
   }),
   tagTypes: ['Validate'],
   endpoints: builder => ({
