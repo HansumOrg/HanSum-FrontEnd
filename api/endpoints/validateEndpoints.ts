@@ -5,6 +5,7 @@ export const validateApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:8080/',
   }),
+  tagTypes: ['Validate'],
   endpoints: builder => ({
     checkUsername: builder.query<
       { message: string; isUsernameAvailable: number },
@@ -14,6 +15,7 @@ export const validateApi = createApi({
         url: 'check-username',
         params: { username },
       }),
+      providesTags: ['Validate'],
     }),
     checkNickname: builder.query<
       { message: string; isNicknameAvailable: number },
@@ -23,6 +25,7 @@ export const validateApi = createApi({
         url: 'check-nickname',
         params: { nickname },
       }),
+      providesTags: ['Validate'],
     }),
   }),
 });

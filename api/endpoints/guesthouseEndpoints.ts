@@ -18,6 +18,7 @@ export const guesthouseApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User'],
   endpoints: builder => ({
     getGuesthouseDetails: builder.query<
       {
@@ -52,6 +53,7 @@ export const guesthouseApi = createApi({
         };
         dispatch(setGuesthouseDetails(guesthouseDetails));
       },
+      providesTags: ['User'],
     }),
     getGuesthouseMembers: builder.query<
       {
@@ -69,6 +71,7 @@ export const guesthouseApi = createApi({
         const { data } = await queryFulfilled;
         dispatch(setGuesthouseMembers(data.members));
       },
+      providesTags: ['User'],
     }),
   }),
 });

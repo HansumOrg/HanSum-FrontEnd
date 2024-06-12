@@ -9,6 +9,7 @@ export const joinApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:8080/',
   }),
+  tagTypes: ['Validate'],
   endpoints: builder => ({
     join: builder.mutation<
       { userName: string; message: string; userId: number },
@@ -30,6 +31,7 @@ export const joinApi = createApi({
         body: credentials,
       }),
       transformErrorResponse: (response: FetchBaseQueryError) => response,
+      invalidatesTags: ['Validate'],
     }),
   }),
 });
