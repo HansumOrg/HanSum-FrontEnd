@@ -14,6 +14,7 @@ export const reservationApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User', 'Reservation'],
   endpoints: builder => ({
     reservate: builder.mutation<
       { message: string },
@@ -28,6 +29,7 @@ export const reservationApi = createApi({
         method: 'POST',
         body: { checkinDate, checkoutDate },
       }),
+      invalidatesTags: ['Reservation'],
     }),
     getReservationStatus: builder.query<
       {
@@ -36,6 +38,7 @@ export const reservationApi = createApi({
       void
     >({
       query: () => 'user/reservation-record',
+      providesTags: ['User', 'Reservation'],
     }),
   }),
 });

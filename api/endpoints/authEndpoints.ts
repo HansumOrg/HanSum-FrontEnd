@@ -18,6 +18,7 @@ export const authApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User'],
   endpoints: builder => ({
     login: builder.mutation<
       { access: string; refresh: string; message: string },
@@ -43,6 +44,7 @@ export const authApi = createApi({
         url: 'logout',
         method: 'POST',
       }),
+      invalidatesTags: ['User'],
     }),
     refresh: builder.mutation<
       { newAccess: string; newRefresh: string; message: string },

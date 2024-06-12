@@ -15,6 +15,7 @@ export const userApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User', 'Validate'],
   endpoints: builder => ({
     getUserInfo: builder.query<
       {
@@ -55,9 +56,11 @@ export const userApi = createApi({
         };
         dispatch(setUserState(userState));
       },
+      providesTags: ['User'],
     }),
     getSticker: builder.query<{ userId: number; stickers: Sticker[] }, void>({
       query: () => 'user/sticker',
+      providesTags: ['User'],
     }),
     writeReview: builder.mutation<
       { message: string },
@@ -88,6 +91,7 @@ export const userApi = createApi({
         method: 'PUT',
         body: { nickname },
       }),
+      invalidatesTags: ['User', 'Validate'],
     }),
     updateInterests: builder.mutation<
       { message: string },
@@ -102,6 +106,7 @@ export const userApi = createApi({
         method: 'PUT',
         body: { interestedLocation, interestedFood, interestedHobby },
       }),
+      invalidatesTags: ['User'],
     }),
   }),
 });

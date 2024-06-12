@@ -15,7 +15,7 @@ export const dibsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Dibs'],
+  tagTypes: ['Dibs', 'User'],
   endpoints: builder => ({
     getDibs: builder.query<{ dibs: Dibs[] }, void>({
       query: () => 'user/dibs',
@@ -26,7 +26,7 @@ export const dibsApi = createApi({
         };
         dispatch(setDibState(dibsState));
       },
-      providesTags: ['Dibs'],
+      providesTags: ['Dibs', 'User'],
     }),
     registerDibs: builder.mutation<{ message: string }, number>({
       query: guesthouseId => ({

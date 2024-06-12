@@ -14,6 +14,7 @@ export const recommendationApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User'],
   endpoints: builder => ({
     getRecommendation: builder.query<
       { recommendations: Recommendation[] },
@@ -24,6 +25,7 @@ export const recommendationApi = createApi({
         method: 'GET',
         params: { mbti },
       }),
+      providesTags: ['User'],
     }),
   }),
 });

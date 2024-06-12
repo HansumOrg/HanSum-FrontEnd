@@ -14,6 +14,7 @@ export const guestApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User'],
   endpoints: builder => ({
     getHangoutUser: builder.query<
       {
@@ -26,6 +27,7 @@ export const guestApi = createApi({
       number
     >({
       query: reservationId => `user/guest/${reservationId}`,
+      providesTags: ['User'],
     }),
   }),
 });
