@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_BASE_URL } from '@env';
+import { API_BASE_URL } from 'react-native-dotenv';
 import type { ReservationRecord } from '../types';
 import type { RootState } from '../store';
 
