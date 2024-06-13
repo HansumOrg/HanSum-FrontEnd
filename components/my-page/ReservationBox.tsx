@@ -23,7 +23,7 @@ function ReservationBox(props: ReservationBoxProps) {
   }, [reservation]);
   return (
     <View className="flex bg-white h-auto mb-1 w-full items-center">
-      <View className="flex flex-row m-2 w-11/12 h-auto rounded-xl shadow-md shadow-black/50 bg-pink-500">
+      <View className="flex flex-row m-2 w-11/12 h-auto rounded-xl shadow-md shadow-black/50">
         <View className="flex flex-row h-auto w-full">
           <View className="flex flex-col w-4/5 h-auto rounded-l-md bg-white">
             <Text className="font-inter-m mt-2 mb-1 ml-2 text-xl text-black">

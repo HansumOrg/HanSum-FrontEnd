@@ -1,5 +1,49 @@
 // this file contains all the types that are used in the application except for navigation types
 
+// SearchScreen.tsx
+export interface CalendarProps {
+  reservationStartDate: Date | null;
+  reservationEndDate: Date | null;
+  setReservationStartDate: (date: Date | null) => void;
+  setReservationEndDate: (date: Date | null) => void;
+}
+
+export interface CalendarSeletedDaysProps {
+  reservationStartDate: Date | null;
+  reservationEndDate: Date | null;
+  setReservationStartDate: (date: Date | null) => void;
+  setReservationEndDate: (date: Date | null) => void;
+  date: Date;
+  today: Date;
+}
+
+// MultiSlider.tsx
+export interface MultiSliderProps {
+  min: number;
+  max: number;
+  minStep: number;
+  setMinStep: (value: number) => void;
+  maxStep: number;
+  setMaxStep: (value: number) => void;
+}
+
+export interface SearchResultProps {
+  location: string | null;
+  checkin_date: string | null;
+  checkout_date: string | null;
+  guesthouse_name: string | null;
+  mood: string | null;
+  facility: string | null;
+  min_price: number | null;
+  max_price: number | null;
+}
+
+// export interface SetSearchStateProps {
+//   setSearchState: React.Dispatch<React.SetStateAction<SearchResultProps>>;
+// }
+
+// export type SearchContextType = SearchResultProps;
+
 // common
 
 export interface User {
