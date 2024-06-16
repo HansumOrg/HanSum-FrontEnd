@@ -188,9 +188,9 @@ export interface MyPageStateType {
   user_id: number;
   username: string;
   mbti: string;
-  interested_location: string[];
-  interested_hobby: string[];
-  interested_food: string[];
+  interestedLocation: string[];
+  interestedHobby: string[];
+  interestedFood: string[];
   sticker: Sticker[];
 }
 
@@ -227,17 +227,29 @@ export interface MbtiCheckProps {
   userId: number;
 }
 
+export interface Interests {
+  interestedLocation: string[] | null;
+  interestedHobby: string[] | null;
+  interestedFood: string[] | null;
+}
+
 export interface InterestProps {
   // AddInterestScreen.tsx
-  context: {
-    myPageState: MyPageStateType;
-    setMyPageState: React.Dispatch<React.SetStateAction<MyPageStateType>>;
+  handleUpdateInterests: (interests: {
+    interestedLocation: string[] | null;
+    interestedFood: string[] | null;
+    interestedHobby: string[] | null;
+  }) => Promise<unknown>;
+  interestData: {
+    interestedLocation: string[] | null;
+    interestedHobby: string[] | null;
+    interestedFood: string[] | null;
   };
+  setInterestData: (interests: Interests) => void;
   interests: string[];
   userinterest: string[];
   index: number;
   type: number; // 0: 여행지, 1: 취미, 2: 음식
-  setUserData: React.Dispatch<React.SetStateAction<User[]>>;
 }
 
 // components/api types 이건 제가 만든 임시라 삭제 하시면 됩니다.

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, View, Text, ScrollView } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
 import InterestList from '../../../../components/edit-page/InterestList';
-import { useMyPageContext } from '../../../../components/my-page/MyPageContext';
+import { useAppSelector, useUpdateInterests } from '../../../../api/hooks';
+import { selectInterests } from '../../../../api/selectors';
 
 const travleList = [
   '성산일출봉',
@@ -34,10 +35,17 @@ export default function AddInterestScreen({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigation,
 }: EditProfileStackScreenProps<'AddInterest'>) {
-  const context = useMyPageContext();
-  const travleInterest = context.myPageState.interested_location;
-  const hobbyInterest = context.myPageState.interested_hobby;
-  const foodInterest = context.myPageState.interested_food;
+  const curruentState = useAppSelector(selectInterests);
+  const initialData = {
+    interestedLocation: curruentState?.interestedLocation ?? null,
+    interestedHobby: curruentState?.interestedHobby ?? null,
+    interestedFood: curruentState?.interestedFood ?? null,
+  };
+  const [interestData, setInterestData] = useState(initialData);
+  const { handleUpdateInterests } = useUpdateInterests();
+  const travleInterest = initialData.interestedLocation ?? [];
+  const hobbyInterest = initialData.interestedHobby ?? [];
+  const foodInterest = initialData.interestedFood ?? [];
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -55,7 +63,9 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {travleList.map((_, index) =>
                 InterestList({
-                  context,
+                  handleUpdateInterests,
+                  interestData,
+                  setInterestData,
                   interests: travleList,
                   userinterest: travleInterest,
                   index,
@@ -72,7 +82,9 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {hobbyList.map((_, index) =>
                 InterestList({
-                  context,
+                  handleUpdateInterests,
+                  interestData,
+                  setInterestData,
                   interests: hobbyList,
                   userinterest: hobbyInterest,
                   index,
@@ -91,7 +103,9 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {foodList.map((_, index) =>
                 InterestList({
-                  context,
+                  handleUpdateInterests,
+                  interestData,
+                  setInterestData,
                   interests: foodList,
                   userinterest: foodInterest,
                   index,
