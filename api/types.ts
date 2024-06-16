@@ -76,6 +76,7 @@ export interface StickerToSend {
 
 // Guesthouse
 export interface GuesthouseState {
+  guesthouseId: number | null;
   guesthouseDetails: GuesthouseDetails | null;
   guesthouseMembers: GuesthouseMember[] | null;
 }
