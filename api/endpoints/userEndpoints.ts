@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from '../store';
+import { API_BASE_URL } from 'react-native-dotenv';
 import { setUserState } from '../slices/userSlice';
+import type { RootState } from '../store';
 import type { Sticker, StickerToSend } from '../types';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { access } = (getState() as RootState).auth;
       if (access) {
@@ -15,6 +16,7 @@ export const userApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User', 'Validate'],
   endpoints: builder => ({
     getUserInfo: builder.query<
       {
@@ -55,9 +57,11 @@ export const userApi = createApi({
         };
         dispatch(setUserState(userState));
       },
+      providesTags: ['User'],
     }),
     getSticker: builder.query<{ userId: number; stickers: Sticker[] }, void>({
       query: () => 'user/sticker',
+      providesTags: ['User'],
     }),
     writeReview: builder.mutation<
       { message: string },
@@ -88,6 +92,7 @@ export const userApi = createApi({
         method: 'PUT',
         body: { nickname },
       }),
+      invalidatesTags: ['User', 'Validate'],
     }),
     updateInterests: builder.mutation<
       { message: string },
@@ -102,6 +107,7 @@ export const userApi = createApi({
         method: 'PUT',
         body: { interestedLocation, interestedFood, interestedHobby },
       }),
+      invalidatesTags: ['User'],
     }),
   }),
 });

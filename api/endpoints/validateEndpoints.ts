@@ -1,10 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_BASE_URL } from 'react-native-dotenv';
 
 export const validateApi = createApi({
   reducerPath: 'validateApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
   }),
+  tagTypes: ['Validate'],
   endpoints: builder => ({
     checkUsername: builder.query<
       { message: string; isUsernameAvailable: number },
@@ -14,6 +16,7 @@ export const validateApi = createApi({
         url: 'check-username',
         params: { username },
       }),
+      providesTags: ['Validate'],
     }),
     checkNickname: builder.query<
       { message: string; isNicknameAvailable: number },
@@ -23,6 +26,7 @@ export const validateApi = createApi({
         url: 'check-nickname',
         params: { nickname },
       }),
+      providesTags: ['Validate'],
     }),
   }),
 });

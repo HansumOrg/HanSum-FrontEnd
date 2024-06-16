@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ReservationRecord } from '../types';
+import { API_BASE_URL } from 'react-native-dotenv';
+import type { ReservationRecord } from '../types';
 import type { RootState } from '../store';
 
 export const reservationApi = createApi({
   reducerPath: 'reservationApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { access } = (getState() as RootState).auth;
       if (access) {
@@ -14,6 +15,7 @@ export const reservationApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User', 'Reservation'],
   endpoints: builder => ({
     reservate: builder.mutation<
       { message: string },
@@ -28,6 +30,7 @@ export const reservationApi = createApi({
         method: 'POST',
         body: { checkinDate, checkoutDate },
       }),
+      invalidatesTags: ['Reservation'],
     }),
     getReservationStatus: builder.query<
       {
@@ -36,6 +39,7 @@ export const reservationApi = createApi({
       void
     >({
       query: () => 'user/reservation-record',
+      providesTags: ['User', 'Reservation'],
     }),
   }),
 });

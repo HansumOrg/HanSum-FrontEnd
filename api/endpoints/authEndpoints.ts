@@ -4,12 +4,13 @@ import {
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
+import { API_BASE_URL } from 'react-native-dotenv';
 import type { RootState } from '../store';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { access } = (getState() as RootState).auth;
       if (access) {
@@ -18,6 +19,7 @@ export const authApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User'],
   endpoints: builder => ({
     login: builder.mutation<
       { access: string; refresh: string; message: string },
@@ -43,6 +45,7 @@ export const authApi = createApi({
         url: 'logout',
         method: 'POST',
       }),
+      invalidatesTags: ['User'],
     }),
     refresh: builder.mutation<
       { newAccess: string; newRefresh: string; message: string },
