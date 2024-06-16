@@ -64,5 +64,6 @@ yarn-error.log
 
 # testing
 /coverage
-ios/HanSum/Info.plist
-ios/HanSum.xcodeproj/project.pbxproj
+
+# env
+.env

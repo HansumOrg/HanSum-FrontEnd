@@ -6,6 +6,7 @@ import type {
 } from '../types';
 
 const initialState: GuesthouseState = {
+  guesthouseId: null,
   guesthouseDetails: null,
   guesthouseMembers: null,
 };
@@ -21,6 +22,9 @@ const guesthouseSlice = createSlice({
     clearGuesthouseState(state) {
       state.guesthouseDetails = null;
       state.guesthouseMembers = null;
+    },
+    setGuesthouseId(state, action: PayloadAction<number>) {
+      state.guesthouseId = action.payload;
     },
     setGuesthouseDetails(state, action: PayloadAction<GuesthouseDetails>) {
       state.guesthouseDetails = action.payload;

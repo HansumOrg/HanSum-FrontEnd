@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_BASE_URL } from 'react-native-dotenv';
 import type { RootState } from '../store';
 import type { Guest } from '../types';
 
 export const guestApi = createApi({
   reducerPath: 'guestApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { access } = (getState() as RootState).auth;
       if (access) {
@@ -14,6 +15,7 @@ export const guestApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['User'],
   endpoints: builder => ({
     getHangoutUser: builder.query<
       {
@@ -26,6 +28,7 @@ export const guestApi = createApi({
       number
     >({
       query: reservationId => `user/guest/${reservationId}`,
+      providesTags: ['User'],
     }),
   }),
 });
