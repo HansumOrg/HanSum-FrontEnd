@@ -25,6 +25,8 @@ export const selectInterests = (state: RootState) => state.user.interests;
 
 // Selectors for guesthouse
 export const selectGuesthouseState = (state: RootState) => state.guesthouse;
+export const selectGuesthouseId = (state: RootState) =>
+  state.guesthouse.guesthouseId;
 export const selectGuesthouseDetails = (state: RootState) =>
   state.guesthouse.guesthouseDetails;
 export const selectGuesthouseDetailsText = createAppSelector(
