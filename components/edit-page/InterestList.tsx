@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { MyPageStateType, InterestProps } from '../../types';
 import { isSuccessResponse, isFailedResponse } from '../../utils/helpers';
@@ -12,16 +12,19 @@ function deleteInterest(props: InterestProps) {
     index,
     type,
   } = props;
-  if (userinterest && userinterest.length > 0) {
+  if (userinterest[0] !== '') {
     switch (type) {
-      case 0:
+      case 0: {
+        const updatedUserInterest = userinterest.filter(
+          interest => interest !== interests[index],
+        );
+        console.log('updatedUserInterest', updatedUserInterest);
         setInterestData({
           ...interestData,
-          interestedLocation: userinterest.filter(
-            interest => interest !== interests[index],
-          ),
+          interestedLocation: updatedUserInterest,
         });
         break;
+      }
       case 1:
         setInterestData({
           ...interestData,
@@ -58,19 +61,19 @@ function pushInterest(props: InterestProps) {
       case 0:
         setInterestData({
           ...interestData,
-          interestedLocation: [...userinterest],
+          interestedLocation: [...userinterest, interests[index]],
         });
         break;
       case 1:
         setInterestData({
           ...interestData,
-          interestedHobby: [...userinterest],
+          interestedHobby: [...userinterest, interests[index]],
         });
         break;
       case 2:
         setInterestData({
           ...interestData,
-          interestedFood: [...userinterest],
+          interestedFood: [...userinterest, interests[index]],
         });
         break;
       default:
@@ -79,22 +82,23 @@ function pushInterest(props: InterestProps) {
   }
 }
 
-function interestList(props: InterestProps) {
-  const {
-    handleUpdateInterests,
-    interestData,
-    setInterestData,
-    interests,
-    userinterest,
-    index,
-    type,
-  } = props;
+const InterestList: React.FC<InterestProps> = ({
+  handleUpdateInterests,
+  interestData,
+  setInterestData,
+  interests,
+  userinterest,
+  index,
+  type,
+}) => {
+  // useEffect(() => {
+  //   console.log('interestData updated:', interestData);
+  // }, [interestData]);
 
   const handlePress = () => {
     // onPress 이벤트가 있을 때 추가와 삭제를 수행
     if (userinterest.includes(interests[index])) {
       deleteInterest({
-        handleUpdateInterests,
         interestData,
         setInterestData,
         interests,
@@ -104,7 +108,6 @@ function interestList(props: InterestProps) {
       });
     } else {
       pushInterest({
-        handleUpdateInterests,
         interestData,
         setInterestData,
         interests,
@@ -114,8 +117,10 @@ function interestList(props: InterestProps) {
       });
     }
   };
+
   const handleChangePress = async () => {
     handlePress();
+    console.log("interestData", interestData);
     const res = await handleUpdateInterests(interestData);
     if (isSuccessResponse(res)) {
       // 요청 성공시 발생하는 응답
@@ -145,5 +150,6 @@ function interestList(props: InterestProps) {
       </View>
     </Pressable>
   );
-}
-export default interestList;
+};
+
+export default InterestList;

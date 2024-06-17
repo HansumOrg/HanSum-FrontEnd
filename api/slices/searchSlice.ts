@@ -5,7 +5,7 @@ const initialState: SearchState = {
   checkinDate: null,
   checkoutDate: null,
   location: null,
-  searchName: null,
+  guesthouse_name: null,
   mood: null,
   facility: null,
   searchResult: null,
@@ -19,7 +19,7 @@ const searchSlice = createSlice({
       state.checkinDate = null;
       state.checkoutDate = null;
       state.location = null;
-      state.searchName = null;
+      state.guesthouse_name = null;
       state.mood = null;
       state.facility = null;
       state.searchResult = null;
@@ -38,19 +38,19 @@ const searchSlice = createSlice({
       state,
       action: PayloadAction<{
         mood: string;
-        facility: string[];
+        facility: string;
       }>,
     ) {
       state.mood = action.payload.mood;
       state.facility = action.payload.facility;
     },
     setSearchName(state, action: PayloadAction<string>) {
-      state.searchName = action.payload;
+      state.guesthouse_name = action.payload;
       state.location = null;
     },
     setLocation(state, action: PayloadAction<string>) {
       state.location = action.payload;
-      state.searchName = null;
+      state.guesthouse_name = null;
     },
   },
 });

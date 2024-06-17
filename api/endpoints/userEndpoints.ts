@@ -27,9 +27,9 @@ export const userApi = createApi({
         nickname: string;
         mbti: string;
         userAgreement: number;
-        interestedLocation: string[] | null;
-        interestedFood: string[] | null;
-        interestedHobby: string[] | null;
+        interestedLocation: string[];
+        interestedFood: string[];
+        interestedHobby: string[];
         message: string;
       },
       void
@@ -96,9 +96,9 @@ export const userApi = createApi({
     updateInterests: builder.mutation<
       { message: string },
       {
-        interestedLocation: string[] | null;
-        interestedFood: string[] | null;
-        interestedHobby: string[] | null;
+        interestedLocation: string[];
+        interestedFood: string[];
+        interestedHobby: string[];
       }
     >({
       query: ({ interestedLocation, interestedFood, interestedHobby }) => ({

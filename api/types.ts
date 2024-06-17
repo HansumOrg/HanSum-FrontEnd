@@ -58,9 +58,9 @@ export interface User {
   userAgreement: number | null;
 }
 export interface Interests {
-  interestedLocation: string[] | null;
-  interestedFood: string[] | null;
-  interestedHobby: string[] | null;
+  interestedLocation: string[];
+  interestedFood: string[];
+  interestedHobby: string[];
 }
 
 export interface Sticker {
@@ -108,9 +108,9 @@ export interface SearchState {
   checkinDate: string | null;
   checkoutDate: string | null;
   location: string | null;
-  searchName: string | null;
+  guesthouse_name: string | null;
   mood: string | null;
-  facility: string[] | null;
+  facility: string | null;
   searchResult: GuesthouseInSearch[] | null;
 }
 

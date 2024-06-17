@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -15,6 +15,13 @@ import MoreIcon from '../../../assets/images/icon_goback.svg';
 import FilterIcon from '../../../assets/images/icon_filter.svg';
 import { useSearchContext } from '../../../components/search-page/SearchContext';
 import { SearchResultProps } from '../../../types';
+import { useSearch, useAppSelector } from '../../../api/hooks';
+import {
+  selectSearchName,
+  selectLocation,
+  selectMood,
+  selectFacility,
+} from '../../../api/selectors';
 
 export default function SearchScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -31,6 +38,19 @@ export default function SearchScreen({
       };
     }, []),
   );
+  // const location = useAppSelector(selectLocation);
+  // const name = useAppSelector(selectSearchName);
+  const mood = useAppSelector(selectMood);
+  const facility = useAppSelector(selectFacility);
+
+  const initialData = {
+    location: '',
+    guesthouse_name: '',
+    mood,
+    facility,
+  };
+  const [searchData, setSearchData] = useState(initialData);
+
   const searchContext = useSearchContext();
   return (
     <SafeAreaView>
@@ -49,12 +69,10 @@ export default function SearchScreen({
                     placeholder="지역, 게스트하우스 이름"
                     placeholderTextColor="#BDBDBD"
                     onSubmitEditing={event => {
-                      searchContext.setSearchState(
-                        (prevState: SearchResultProps) => ({
-                          ...prevState,
-                          guesthouse_name: event.nativeEvent.text,
-                        }),
-                      );
+                      setSearchData({
+                        ...searchData,
+                        guesthouse_name: event.nativeEvent.text,
+                      });
                       navigation.navigate('SearchResult');
                     }}
                   />
@@ -106,12 +124,11 @@ export default function SearchScreen({
                 <Pressable
                   className="flex flex-row w-full h-auto justify-between"
                   onPress={() => {
-                    searchContext.setSearchState(
-                      (prevState: SearchResultProps) => ({
-                        ...prevState,
-                        location: '제주공항 서부(용담, 도두, 연동, 노형동)',
-                      }),
-                    );
+                    setSearchData({
+                      ...searchData,
+                      guesthouse_name: null,
+                      location: '용담,도두,연동,노형동',
+                    });
                     navigation.navigate('SearchResult');
                   }}
                 >
@@ -129,8 +146,7 @@ export default function SearchScreen({
                     searchContext.setSearchState(
                       (prevState: SearchResultProps) => ({
                         ...prevState,
-                        location:
-                          '제주공항 동부(제주시청, 탑동, 건입동)/추자도',
+                        location: '제주시청,탑동,건입동,추자도',
                       }),
                     );
                     navigation.navigate('SearchResult');
@@ -150,7 +166,7 @@ export default function SearchScreen({
                     searchContext.setSearchState(
                       (prevState: SearchResultProps) => ({
                         ...prevState,
-                        location: '서귀포시/중문/모슬포',
+                        location: '서귀포시,중문,모슬포',
                       }),
                     );
                     navigation.navigate('SearchResult');
@@ -170,7 +186,7 @@ export default function SearchScreen({
                     searchContext.setSearchState(
                       (prevState: SearchResultProps) => ({
                         ...prevState,
-                        location: '이호테우/하귀/애월/한림/협재',
+                        location: '이호테우,하귀,애월,한림,협재',
                       }),
                     );
                     navigation.navigate('SearchResult');
@@ -190,7 +206,7 @@ export default function SearchScreen({
                     searchContext.setSearchState(
                       (prevState: SearchResultProps) => ({
                         ...prevState,
-                        location: '함덕/김녕/세화',
+                        location: '남원,표선,성산',
                       }),
                     );
                     navigation.navigate('SearchResult');

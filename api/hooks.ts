@@ -533,7 +533,7 @@ export const useSearch = () => {
     if (!searchParam) {
       throw Error('Search information not found in Redux store');
     }
-    if (searchParam.location && searchParam.searchName) {
+    if (searchParam.location && searchParam.guesthouse_name) {
       throw Error('location and searchName cannot be used together');
     }
 

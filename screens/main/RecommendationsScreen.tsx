@@ -56,7 +56,7 @@ export default function RecommendationsScreen({
       };
     }, []),
   );
-  console.log(access);
+  // console.log(access);
 
   return (
     <SafeAreaView>

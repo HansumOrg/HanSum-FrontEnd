@@ -31,12 +31,13 @@ export default function EditProfileScreen({
   const [foodInterestCount, setFoodInterestCount] = useState(false);
   useEffect(() => {
     // 관심사 개수 체크(추가 유도 글 노출 여부)
-    if (userData?.interestedLocation) setTravelInterestCount(true);
+    if (userData?.interestedLocation[0] !== '') setTravelInterestCount(true);
     else setTravelInterestCount(false);
-    if (userData?.interestedHobby) setHobbyInterestCount(true);
+    if (userData?.interestedHobby[0] !== '') setHobbyInterestCount(true);
     else setHobbyInterestCount(false);
-    if (userData?.interestedFood) setFoodInterestCount(true);
+    if (userData?.interestedFood[0] !== '') setFoodInterestCount(true);
     else setFoodInterestCount(false);
+    console.log(userData);
   }, [userData]);
   return (
     <SafeAreaView>
@@ -94,11 +95,12 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {/* {travleInterestCount
-                  ? userData?.interestedLocation.map((interest, index) =>
+                {userData?.interestedLocation &&
+                userData?.interestedLocation[0] !== ''
+                  ? userData.interestedLocation.map((interest, index) =>
                       InterestBorder(interest, index),
                     )
-                  : null} */}
+                  : null}
                 <Pressable
                   className="py-1 mr-1"
                   onPress={() => navigation.navigate('AddInterest')}
@@ -117,11 +119,12 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {/* {hobbyInterestCount
-                  ? userData?.interestedHobby.map((interest, index) =>
+                {userData?.interestedHobby &&
+                userData?.interestedHobby[0] !== ''
+                  ? userData.interestedHobby.map((interest, index) =>
                       InterestBorder(interest, index),
                     )
-                  : null} */}
+                  : null}
                 <Pressable
                   className="py-1 mr-1"
                   onPress={() => navigation.navigate('AddInterest')}
@@ -140,11 +143,11 @@ export default function EditProfileScreen({
                 </Text>
               ) : null}
               <View className="flex flex-row h-auto w-full">
-                {/* {foodInterestCount
-                  ? userData?.interestedFood.map((interest, index) =>
+                {userData?.interestedFood && userData?.interestedFood[0] !== ''
+                  ? userData.interestedFood.map((interest, index) =>
                       InterestBorder(interest, index),
                     )
-                  : null} */}
+                  : null}
                 <Pressable
                   className="py-1 mr-1"
                   onPress={() => navigation.navigate('AddInterest')}

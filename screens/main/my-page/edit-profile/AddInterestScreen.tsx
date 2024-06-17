@@ -5,7 +5,7 @@ import InterestList from '../../../../components/edit-page/InterestList';
 import { useAppSelector, useUpdateInterests } from '../../../../api/hooks';
 import { selectInterests } from '../../../../api/selectors';
 
-const travleList = [
+const travelList = [
   '성산일출봉',
   '만장굴',
   '이호테우 해변',
@@ -37,15 +37,15 @@ export default function AddInterestScreen({
 }: EditProfileStackScreenProps<'AddInterest'>) {
   const curruentState = useAppSelector(selectInterests);
   const initialData = {
-    interestedLocation: curruentState?.interestedLocation ?? null,
-    interestedHobby: curruentState?.interestedHobby ?? null,
-    interestedFood: curruentState?.interestedFood ?? null,
+    interestedLocation: curruentState?.interestedLocation ?? [''],
+    interestedHobby: curruentState?.interestedHobby ?? [''],
+    interestedFood: curruentState?.interestedFood ?? [''],
   };
   const [interestData, setInterestData] = useState(initialData);
   const { handleUpdateInterests } = useUpdateInterests();
-  const travleInterest = initialData.interestedLocation ?? [];
-  const hobbyInterest = initialData.interestedHobby ?? [];
-  const foodInterest = initialData.interestedFood ?? [];
+  const travelInterest = interestData.interestedLocation ?? [];
+  const hobbyInterest = interestData.interestedHobby ?? [];
+  const foodInterest = interestData.interestedFood ?? [];
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -57,61 +57,61 @@ export default function AddInterestScreen({
                 제주 여행지
               </Text>
               <Text className="font-inter-b px-2 text-md text-black">
-                ({travleInterest.length}/3)
+                ({travelInterest[0] !== '' ? travelInterest.length : 0}/3)
               </Text>
             </View>
             <View className="flex flex-row flex-wrap w-wrap h-auto">
-              {travleList.map((_, index) =>
-                InterestList({
-                  handleUpdateInterests,
-                  interestData,
-                  setInterestData,
-                  interests: travleList,
-                  userinterest: travleInterest,
-                  index,
-                  type: 0,
-                }),
-              )}
+              {travelList.map((item, index) => (
+                <InterestList
+                  handleUpdateInterests={handleUpdateInterests}
+                  interestData={interestData}
+                  setInterestData={setInterestData}
+                  interests={travelList}
+                  userinterest={travelInterest}
+                  index={index}
+                  type={0}
+                />
+              ))}
             </View>
             <View className="flex flex-row w-full h-auto py-2 items-cen">
               <Text className="font-inter-b px-2 text-md text-black">취미</Text>
               <Text className="font-inter-b px-2 text-md text-black">
-                ({hobbyInterest.length}/3)
+                ({hobbyInterest[0] !== '' ? hobbyInterest.length : 0}/3)
               </Text>
             </View>
             <View className="flex flex-row flex-wrap w-wrap h-auto">
-              {hobbyList.map((_, index) =>
-                InterestList({
-                  handleUpdateInterests,
-                  interestData,
-                  setInterestData,
-                  interests: hobbyList,
-                  userinterest: hobbyInterest,
-                  index,
-                  type: 1,
-                }),
-              )}
+              {hobbyList.map((item, index) => (
+                <InterestList
+                  handleUpdateInterests={handleUpdateInterests}
+                  interestData={interestData}
+                  setInterestData={setInterestData}
+                  interests={hobbyList}
+                  userinterest={hobbyInterest}
+                  index={index}
+                  type={1}
+                />
+              ))}
             </View>
             <View className="flex flex-row w-full h-auto py-2">
               <Text className="font-inter-b px-2 text-md text-black">
                 좋아하는 음식
               </Text>
               <Text className="font-inter-b px-2 text-md text-black">
-                ({foodInterest.length}/3)
+                ({foodInterest[0] !== '' ? foodInterest.length : 0}/3)
               </Text>
             </View>
             <View className="flex flex-row flex-wrap w-wrap h-auto">
-              {foodList.map((_, index) =>
-                InterestList({
-                  handleUpdateInterests,
-                  interestData,
-                  setInterestData,
-                  interests: foodList,
-                  userinterest: foodInterest,
-                  index,
-                  type: 2,
-                }),
-              )}
+              {foodList.map((item, index) => (
+                <InterestList
+                  handleUpdateInterests={handleUpdateInterests}
+                  interestData={interestData}
+                  setInterestData={setInterestData}
+                  interests={foodList}
+                  userinterest={foodInterest}
+                  index={index}
+                  type={2}
+                />
+              ))}
             </View>
           </ScrollView>
         </View>

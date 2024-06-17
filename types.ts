@@ -32,6 +32,13 @@ export interface CalendarProps {
   setReservationEndDate: (date: Date | null) => void;
 }
 
+export interface InitialDataType {
+  location: string | null;
+  guesthouse_name: string | null;
+  mood: string | null;
+  facility: string | null;
+}
+
 export interface CalendarSeletedDaysProps {
   reservationStartDate: Date | null;
   reservationEndDate: Date | null;
@@ -228,22 +235,22 @@ export interface MbtiCheckProps {
 }
 
 export interface Interests {
-  interestedLocation: string[] | null;
-  interestedHobby: string[] | null;
-  interestedFood: string[] | null;
+  interestedLocation: string[];
+  interestedHobby: string[];
+  interestedFood: string[];
 }
 
 export interface InterestProps {
   // AddInterestScreen.tsx
   handleUpdateInterests: (interests: {
-    interestedLocation: string[] | null;
-    interestedFood: string[] | null;
-    interestedHobby: string[] | null;
+    interestedLocation: string[];
+    interestedFood: string[];
+    interestedHobby: string[];
   }) => Promise<unknown>;
   interestData: {
-    interestedLocation: string[] | null;
-    interestedHobby: string[] | null;
-    interestedFood: string[] | null;
+    interestedLocation: string[];
+    interestedHobby: string[];
+    interestedFood: string[];
   };
   setInterestData: (interests: Interests) => void;
   interests: string[];
