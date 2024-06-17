@@ -116,7 +116,7 @@ export default function GuesthouseDetailsScreen({
             <View className="w-full h-1/6 flex-row justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-start items-center">
                 <LocalSvg height="80%" width="10%" />
-                <Text className="text-mdß font-inter-r text-black ml-4 flex">
+                <Text className="text-md font-inter-r text-black ml-4 flex">
                   {guesthouse.address}
                 </Text>
               </View>
