@@ -36,7 +36,7 @@ export const guesthouseApi = createApi({
       number
     >({
       query: (guesthouseId: number) => ({
-        url: `guesthouse/${guesthouseId}`,
+        url: `guesthouses/${guesthouseId}`,
         method: 'GET',
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
@@ -65,7 +65,7 @@ export const guesthouseApi = createApi({
       number
     >({
       query: (guesthouseId: number) => ({
-        url: `guesthouse/${guesthouseId}/members`,
+        url: `guesthouses/${guesthouseId}/members`,
         method: 'GET',
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {

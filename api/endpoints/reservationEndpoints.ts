@@ -26,7 +26,7 @@ export const reservationApi = createApi({
       }
     >({
       query: ({ guesthouseId, checkinDate, checkoutDate }) => ({
-        url: `reservation/${guesthouseId}`,
+        url: `guesthouses/${guesthouseId}`,
         method: 'POST',
         body: { checkinDate, checkoutDate },
       }),
