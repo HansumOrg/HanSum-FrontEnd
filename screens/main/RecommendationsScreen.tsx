@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { MainTabScreenProps } from '../../navigation/types';
@@ -8,22 +8,28 @@ import AdBanner from '../../components/common/AdBanner';
 import { useGetUserInfoQuery } from '../../api/endpoints/userEndpoints';
 import { useGetReservationStatusQuery } from '../../api/endpoints/reservationEndpoints';
 import { useGetRecommendationQuery } from '../../api/endpoints/recommendationEndpoints';
-import { useAppSelector, useRefresh } from '../../api/hooks';
+import { useAppSelector } from '../../api/hooks';
 
 export default function RecommendationsScreen({
   route,
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
   const access = useAppSelector(state => state.auth.access);
+<<<<<<< HEAD
   console.log(access);
+=======
+>>>>>>> ab4a1e7 (Feat: main to detail page 데이터 헨들링)
   const { data: userData } = useGetUserInfoQuery();
   const { data: reservationData } = useGetReservationStatusQuery();
   const userMbti = userData?.mbti ?? '';
   const { data: recommendationData } = useGetRecommendationQuery(userMbti);
+<<<<<<< HEAD
 
   useEffect(() => {
     console.log(reservationData);
   });
+=======
+>>>>>>> ab4a1e7 (Feat: main to detail page 데이터 헨들링)
 
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator', {
