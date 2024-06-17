@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { SafeAreaView, StatusBar, View, Text, Pressable } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { MainTabScreenProps } from '../../navigation/types';
@@ -8,44 +8,23 @@ import AdBanner from '../../components/common/AdBanner';
 import { useGetUserInfoQuery } from '../../api/endpoints/userEndpoints';
 import { useGetReservationStatusQuery } from '../../api/endpoints/reservationEndpoints';
 import { useGetRecommendationQuery } from '../../api/endpoints/recommendationEndpoints';
-import { useAppSelector, useRefresh } from '../../api/hooks';
+import { useAppSelector } from '../../api/hooks';
 
 export default function RecommendationsScreen({
   route,
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
   const access = useAppSelector(state => state.auth.access);
-  const { data: userData, refetch: refetchUserData } = useGetUserInfoQuery();
-  const {
-    data: reservationData,
-    error: reservationError,
-    isLoading,
-  } = useGetReservationStatusQuery();
+  const { data: userData } = useGetUserInfoQuery();
+  const { data: reservationData } = useGetReservationStatusQuery();
   const userMbti = userData?.mbti ?? '';
-  const { data: recommendationData, error: recommendationError } =
-    useGetRecommendationQuery(userMbti);
-
-  const { handleRefresh } = useRefresh();
+  const { data: recommendationData } = useGetRecommendationQuery(userMbti);
 
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator', {
       screen: 'MyPage',
     });
   };
-
-  useEffect(() => {
-    const refetchData = async () => {
-      try {
-        await refetchUserData();
-      } catch (error) {
-        console.error('Failed to refetch user data:', error);
-      }
-    };
-
-    if (access) {
-      void refetchData();
-    }
-  }, []);
 
   useFocusEffect(
     useCallback(() => {

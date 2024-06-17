@@ -39,6 +39,7 @@ export const {
   setGuesthouseState,
   clearGuesthouseState,
   setGuesthouseDetails,
+  setGuesthouseId,
   setGuesthouseMembers,
 } = guesthouseSlice.actions;
 export default guesthouseSlice.reducer;

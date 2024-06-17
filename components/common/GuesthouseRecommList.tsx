@@ -11,20 +11,23 @@ import {
   Recommendation,
   GuesthouseRecommListPropsWithNavigation,
 } from '../../types';
-import dummyImage from '../../assets/images/dummy_img';
+import { useAppDispatch } from '../../api/hooks';
+import { setGuesthouseId } from '../../api/slices/guesthouseSlice';
 
 const GuesthouseRecommList: React.FC<
   GuesthouseRecommListPropsWithNavigation
 > = ({ navigation, recommendation }) => {
   const DATA = recommendation;
   const screenWidth = Dimensions.get('window').width;
+  const dispatch = useAppDispatch();
   const renderItem = ({ item }: { item: Recommendation }) => (
     <Pressable
-      onPress={() =>
+      onPress={() => {
+        dispatch(setGuesthouseId(item.guesthouseId));
         navigation.navigate('GuesthouseDetailsNavigator', {
           screen: 'GuesthouseDetails',
-        })
-      }
+        });
+      }}
     >
       <View
         className="flex-1/2 rounded-lg justify-center items-center m-2 shadow-md shadow-black "

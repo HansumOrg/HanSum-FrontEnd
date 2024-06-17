@@ -17,44 +17,17 @@ import MbtiCheck from '../../../components/edit-page/MbtiCheck';
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
 import RatingStarsDisplay from '../../../components/gesthouse-detail/RatingStarsDisplay';
 import GoFront from '../../../assets/images/icon_goback.svg';
-import dummyImage from '../../../assets/images/dummy_img';
 import {
   SearchContextType,
   useSearchContext,
 } from '../../../components/search-page/SearchContext';
+import { useAppSelector } from '../../../api/hooks';
+import {
+  useGetGuesthouseDetailsQuery,
+  useGetGuesthouseMembersQuery,
+} from '../../../api/endpoints/guesthouseEndpoints';
 
 const screenHeight = Dimensions.get('window').height;
-
-const guesthouseData = {
-  guesthouse_id: 123,
-  guesthouse_name: '낯선하루',
-  address: '123 Beach St, Jungmun',
-  location: '중문',
-  price: 50000,
-  phone: '010-1234-5678',
-  rating: 4.2,
-  imageBase64: 'asdfsdfsdfsdfsdfsdfg',
-  mood: '여유로운',
-};
-
-const membersData = {
-  guesthouse_id: 123,
-  guesthouse_name: '낯선하루',
-  members: [
-    {
-      user_id: 456,
-      username: 'Jane Doe',
-      nickname: 'jane',
-      mbti: 'ENFP',
-    },
-    {
-      user_id: 789,
-      username: 'John Smith',
-      nickname: 'john',
-      mbti: 'INTJ',
-    },
-  ],
-};
 
 const getDayOfWeek = (dateString: string) => {
   const date = new Date(dateString);
@@ -71,8 +44,24 @@ export default function GuesthouseDetailsScreen({
 
   navigation,
 }: GuesthouseDetailsStackScreenProps<'GuesthouseDetails'>) {
+  const guesthouseIdState = useAppSelector(
+    state => state.guesthouse.guesthouseId,
+  );
+  const {
+    data: guesthouseData = {
+      guesthouseName: '게스트하우스를 불러오지 못했습니다.',
+      address: '',
+      location: '',
+      price: 0,
+      phone: '',
+      rating: 0,
+      imageBase64: '',
+      mood: '',
+    },
+  } = useGetGuesthouseDetailsQuery(guesthouseIdState ?? 0);
   const guesthouse = guesthouseData;
-  const { members } = membersData;
+  const membersData = useGetGuesthouseMembersQuery(guesthouseIdState ?? 0);
+  const { members } = membersData.data ?? { members: [] };
   const searchContext: SearchContextType = useSearchContext();
   const today: Date = new Date();
   const tomorrow: Date = new Date(today);
@@ -115,19 +104,19 @@ export default function GuesthouseDetailsScreen({
           <View className=" w-full justify-center items-center h-1/2 bg-slate-500 shadow-lg shadow-black">
             <View className="flex justify-center h-full w-full items-center shadow-inner shadow-black">
               <Image
-                source={{ uri: dummyImage as string }}
+                source={{ uri: guesthouse.imageBase64 }}
                 className="h-full w-full"
               />
             </View>
           </View>
           <View className=" h-2/5 w-full justify-start items-center pt-8 px-4">
             <Text className="w-full mb-4 text-2xl font-inter-b text-black text-left ">
-              {guesthouse.guesthouse_name}
+              {guesthouse.guesthouseName}
             </Text>
             <View className="w-full h-1/6 flex-row justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-start items-center">
                 <LocalSvg height="80%" width="10%" />
-                <Text className="text-lg font-inter-r text-black ml-4">
+                <Text className="text-mdß font-inter-r text-black ml-4 flex">
                   {guesthouse.address}
                 </Text>
               </View>
@@ -190,7 +179,7 @@ export default function GuesthouseDetailsScreen({
             </Text>
             <View className="flex-row justify-start items-center mt-4">
               {members.map(member => (
-                <MbtiCheck key={member.user_id} mbti={member.mbti} />
+                <MbtiCheck key={member.userId} mbti={member.mbti} />
               ))}
               {members.length >= 3 && (
                 <Pressable>
