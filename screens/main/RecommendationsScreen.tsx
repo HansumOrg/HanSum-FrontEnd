@@ -15,6 +15,7 @@ export default function RecommendationsScreen({
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
   const access = useAppSelector(state => state.auth.access);
+  console.log(access);
   const { data: userData, refetch: refetchUserData } = useGetUserInfoQuery();
   const {
     data: reservationData,

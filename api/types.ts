@@ -109,8 +109,8 @@ export interface SearchState {
   checkoutDate: string | null;
   location: string | null;
   guesthouse_name: string | null;
-  mood: string | null;
-  facility: string | null;
+  mood: string;
+  facility: string;
   searchResult: GuesthouseInSearch[] | null;
 }
 
