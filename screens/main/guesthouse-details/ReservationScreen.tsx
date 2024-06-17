@@ -14,8 +14,13 @@ import PhoneSVG from '../../../assets/images/icon_phone.svg';
 import GoFront from '../../../assets/images/icon_goback.svg';
 import UnChecked from '../../../components/reservation/unchecked_rectangle.svg';
 import Checked from '../../../components/reservation/checked_rectangle.svg';
-import { ReservationRecord, GuestInfo } from '../../../types';
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
+import { useAppSelector } from '../../../api/hooks';
+import {
+  selectDate,
+  selectGuesthouseDetailsText,
+  selectUser,
+} from '../../../api/selectors';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -41,20 +46,11 @@ export default function ReservationScreen({
   const [agreeNickname, setAgreeNickname] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const reservation: ReservationRecord = {
-    guesthouse_name: '서점 숙소',
-    guesthouse_address: '제주시 조천읍 북촌리 283',
-    guesthouse_phone: '010-1234-5678',
-    checkin_date: '2024-03-30T15:00:00',
-    checkout_date: '2024-03-31T11:00:00',
-    nights: 1,
-  };
+  const reservation = useAppSelector(selectGuesthouseDetailsText);
 
-  const guestInfo: GuestInfo = {
-    nickname: '이한이',
-    name: '이나영',
-    mbti: 'INFP',
-  };
+  const reservationData = useAppSelector(selectDate);
+
+  const guestInfo = useAppSelector(selectUser);
 
   const handleAgreeNickname = (agree: boolean) => {
     setAgreeNickname(agree);
@@ -75,18 +71,18 @@ export default function ReservationScreen({
           <View className="flex-row justify-center items-center w-full h-full bg-white shadow-lg shadow-black rounded-lg">
             <View className="flex justify-start items-start w-[86%] h-full px-4 py-2 bg-white rounded-lg">
               <Text className="font-inter-r text-lg text-black ">
-                {reservation.guesthouse_name}
+                {reservation.guesthouseName}
               </Text>
               <View className="flex-row w-full h-1/6 justify-start items-center mt-2">
                 <LocalSvg height="95%" width="7%" preserveAspectRatio="none" />
                 <Text className="ml-2 font-inter-r text-sm text-black">
-                  {reservation.guesthouse_address}
+                  {reservation.address}
                 </Text>
               </View>
               <View className="flex-row w-full h-1/6 justify-start items-center mt-2">
                 <PhoneSVG height="95%" width="7%" preserveAspectRatio="none" />
                 <Text className="ml-2 font-inter-r text-sm text-black">
-                  {reservation.guesthouse_phone}
+                  {reservation.phone}
                 </Text>
               </View>
               <View className="flex-row w-full h-2/6 justify-between items-center mt-2 bg-gray-1 rounded-xl">
@@ -100,7 +96,9 @@ export default function ReservationScreen({
                     className="mx-1 font-inter-m text-sss text-black flex-shrink"
                     numberOfLines={2}
                   >
-                    {formatDate(reservation.checkin_date)}
+                    {reservationData.checkinDate
+                      ? formatDate(reservationData.checkinDate)
+                      : ''}
                   </Text>
                 </View>
                 <View className="flex-row w-[48%] h-full justify-start items-center bg-gray-3 rounded-xl">
@@ -113,15 +111,15 @@ export default function ReservationScreen({
                     className="mx-1 font-inter-m text-sss text-black flex-shrink"
                     numberOfLines={2}
                   >
-                    {formatDate(reservation.checkout_date)}
+                    {reservationData.checkoutDate
+                      ? formatDate(reservationData.checkoutDate)
+                      : ''}
                   </Text>
                 </View>
               </View>
             </View>
             <View className="flex justify-center items-center w-[14%] h-full bg-primary-2 rounded-r-lg">
-              <Text className=" font-inter-sb text-lg text-white">
-                {reservation.nights}박
-              </Text>
+              <Text className=" font-inter-sb text-lg text-white">1박</Text>
             </View>
           </View>
         </View>
@@ -141,13 +139,13 @@ export default function ReservationScreen({
               </View>
               <View className="justify-center items-start w-1/2">
                 <Text className=" font-inter-m text-sm text-black">
-                  {guestInfo.nickname}
+                  {guestInfo?.nickname}
                 </Text>
                 <Text className=" font-inter-m text-sm text-black">
-                  {guestInfo.name}
+                  {guestInfo?.name}
                 </Text>
                 <Text className=" font-inter-m text-sm text-black">
-                  {guestInfo.mbti}
+                  {guestInfo?.mbti}
                 </Text>
               </View>
             </View>
