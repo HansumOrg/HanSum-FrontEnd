@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StatusBar, View, Text, ScrollView } from 'react-native';
 import { EditProfileStackScreenProps } from '../../../../navigation/types';
 import InterestList from '../../../../components/edit-page/InterestList';
 import { useAppSelector, useUpdateInterests } from '../../../../api/hooks';
 import { selectInterests } from '../../../../api/selectors';
+import { isSuccessResponse, isFailedResponse } from '../../../../utils/helpers';
 
 const travelList = [
   '성산일출봉',
@@ -46,6 +47,19 @@ export default function AddInterestScreen({
   const travelInterest = interestData.interestedLocation ?? [];
   const hobbyInterest = interestData.interestedHobby ?? [];
   const foodInterest = interestData.interestedFood ?? [];
+  useEffect(() => {
+    const handleInterests = async () => {
+      const res = await handleUpdateInterests(interestData);
+      if (isSuccessResponse(res)) {
+        console.log('Update successful:', res);
+      } else if (isFailedResponse(res)) {
+        console.log('Update failed:', res);
+      } else {
+        console.log('Unexpected response:', res);
+      }
+    };
+    handleInterests();
+  }, [interestData]);
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
@@ -63,6 +77,7 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {travelList.map((item, index) => (
                 <InterestList
+                  key={index}
                   handleUpdateInterests={handleUpdateInterests}
                   interestData={interestData}
                   setInterestData={setInterestData}
@@ -82,6 +97,7 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {hobbyList.map((item, index) => (
                 <InterestList
+                  key={index}
                   handleUpdateInterests={handleUpdateInterests}
                   interestData={interestData}
                   setInterestData={setInterestData}
@@ -103,6 +119,7 @@ export default function AddInterestScreen({
             <View className="flex flex-row flex-wrap w-wrap h-auto">
               {foodList.map((item, index) => (
                 <InterestList
+                  key={index}
                   handleUpdateInterests={handleUpdateInterests}
                   interestData={interestData}
                   setInterestData={setInterestData}

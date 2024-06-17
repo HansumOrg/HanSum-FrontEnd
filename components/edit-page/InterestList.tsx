@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { MyPageStateType, InterestProps } from '../../types';
+import { InterestProps } from '../../types';
 import { isSuccessResponse, isFailedResponse } from '../../utils/helpers';
 
 function deleteInterest(props: InterestProps) {
@@ -12,38 +12,37 @@ function deleteInterest(props: InterestProps) {
     index,
     type,
   } = props;
-  if (userinterest[0] !== '') {
-    switch (type) {
-      case 0: {
-        const updatedUserInterest = userinterest.filter(
-          interest => interest !== interests[index],
-        );
-        console.log('updatedUserInterest', updatedUserInterest);
-        setInterestData({
-          ...interestData,
-          interestedLocation: updatedUserInterest,
-        });
-        break;
-      }
-      case 1:
-        setInterestData({
-          ...interestData,
-          interestedHobby: userinterest.filter(
-            interest => interest !== interests[index],
-          ),
-        });
-        break;
-      case 2:
-        setInterestData({
-          ...interestData,
-          interestedFood: userinterest.filter(
-            interest => interest !== interests[index],
-          ),
-        });
-        break;
-      default:
-        break;
-    }
+
+  let updatedUserInterest = userinterest.filter(
+    interest => interest !== interests[index],
+  );
+
+  if (updatedUserInterest.length === 0) {
+    updatedUserInterest = [''];
+  }
+
+  switch (type) {
+    case 0:
+      setInterestData({
+        ...interestData,
+        interestedLocation: updatedUserInterest,
+      });
+      break;
+    case 1:
+      setInterestData({
+        ...interestData,
+        interestedHobby: updatedUserInterest,
+      });
+      console.log('updatedUserInterest:', updatedUserInterest);
+      break;
+    case 2:
+      setInterestData({
+        ...interestData,
+        interestedFood: updatedUserInterest,
+      });
+      break;
+    default:
+      break;
   }
 }
 
@@ -56,29 +55,34 @@ function pushInterest(props: InterestProps) {
     index,
     type,
   } = props;
-  if (userinterest.length < 3) {
-    switch (type) {
-      case 0:
-        setInterestData({
-          ...interestData,
-          interestedLocation: [...userinterest, interests[index]],
-        });
-        break;
-      case 1:
-        setInterestData({
-          ...interestData,
-          interestedHobby: [...userinterest, interests[index]],
-        });
-        break;
-      case 2:
-        setInterestData({
-          ...interestData,
-          interestedFood: [...userinterest, interests[index]],
-        });
-        break;
-      default:
-        break;
-    }
+
+  let updatedUserInterest = userinterest[0] === '' ? [] : userinterest;
+
+  if (updatedUserInterest.length < 3) {
+    updatedUserInterest = [...updatedUserInterest, interests[index]];
+  }
+
+  switch (type) {
+    case 0:
+      setInterestData({
+        ...interestData,
+        interestedLocation: updatedUserInterest,
+      });
+      break;
+    case 1:
+      setInterestData({
+        ...interestData,
+        interestedHobby: updatedUserInterest,
+      });
+      break;
+    case 2:
+      setInterestData({
+        ...interestData,
+        interestedFood: updatedUserInterest,
+      });
+      break;
+    default:
+      break;
   }
 }
 
@@ -91,12 +95,7 @@ const InterestList: React.FC<InterestProps> = ({
   index,
   type,
 }) => {
-  // useEffect(() => {
-  //   console.log('interestData updated:', interestData);
-  // }, [interestData]);
-
   const handlePress = () => {
-    // onPress 이벤트가 있을 때 추가와 삭제를 수행
     if (userinterest.includes(interests[index])) {
       deleteInterest({
         interestData,
@@ -120,16 +119,14 @@ const InterestList: React.FC<InterestProps> = ({
 
   const handleChangePress = async () => {
     handlePress();
-    console.log("interestData", interestData);
-    const res = await handleUpdateInterests(interestData);
-    if (isSuccessResponse(res)) {
-      // 요청 성공시 발생하는 응답
-      console.log(res);
-      console.log('success');
-    } else if (isFailedResponse(res)) {
-      // 요청 실패시 발생하는 응답
-      console.log(res);
-    } else console.log('잘못된 응답입니다.');
+    // const res = await handleUpdateInterests(interestData);
+    // if (isSuccessResponse(res)) {
+    //   console.log('Update successful:', res);
+    // } else if (isFailedResponse(res)) {
+    //   console.log('Update failed:', res);
+    // } else {
+    //   console.log('Unexpected response:', res);
+    // }
   };
 
   const borderColor = userinterest.includes(interests[index])
