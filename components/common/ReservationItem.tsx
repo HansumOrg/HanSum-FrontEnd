@@ -21,6 +21,9 @@ const calculateDday = (date: string): string => {
   if (diffDays === 0) {
     return 'D-DAY';
   }
+  if (diffDays < 0) {
+    return `이용 완료`;
+  }
   return `D-${diffDays}`;
 };
 

@@ -16,37 +16,20 @@ export default function RecommendationsScreen({
 }: MainTabScreenProps<'Recommendations'>) {
   const access = useAppSelector(state => state.auth.access);
   console.log(access);
-  const { data: userData, refetch: refetchUserData } = useGetUserInfoQuery();
-  const {
-    data: reservationData,
-    error: reservationError,
-    isLoading,
-  } = useGetReservationStatusQuery();
+  const { data: userData } = useGetUserInfoQuery();
+  const { data: reservationData } = useGetReservationStatusQuery();
   const userMbti = userData?.mbti ?? '';
-  const { data: recommendationData, error: recommendationError } =
-    useGetRecommendationQuery(userMbti);
+  const { data: recommendationData } = useGetRecommendationQuery(userMbti);
 
-  const { handleRefresh } = useRefresh();
+  useEffect(() => {
+    console.log(reservationData);
+  });
 
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator', {
       screen: 'MyPage',
     });
   };
-
-  useEffect(() => {
-    const refetchData = async () => {
-      try {
-        await refetchUserData();
-      } catch (error) {
-        console.error('Failed to refetch user data:', error);
-      }
-    };
-
-    if (access) {
-      void refetchData();
-    }
-  }, []);
 
   useFocusEffect(
     useCallback(() => {
