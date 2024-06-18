@@ -5,9 +5,11 @@ const screenHeight = Dimensions.get('window').height;
 export default function GuestReviewCard({
   name,
   mbti,
+  onReviewChange,
 }: {
   name: string;
   mbti: string;
+  onReviewChange: (nickname: string, selectedReviews: string[]) => void;
 }): JSX.Element {
   return (
     <View
@@ -18,7 +20,7 @@ export default function GuestReviewCard({
         <Text className="text-md font-inter-r text-black">{name}-</Text>
         <Text className="text-md font-inter-r text-black">{mbti}</Text>
       </View>
-      <GuestReview />
+      <GuestReview onReviewChange={onReviewChange} nickname={name} />
     </View>
   );
 }
