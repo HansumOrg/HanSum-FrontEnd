@@ -158,7 +158,7 @@ export default function MyPageScreen({
         <View className="flex flex-grow w-full h-1/3">
           <ScrollView showsVerticalScrollIndicator={false}>
             <View className="flex w-full h-auto mb-20">
-              {reservationData ? (
+              {reservationData &&  reservationData.reservationRecords  ? (
                 reservationData.reservationRecords.map(reservation => (
                   <ReservationBox
                     route={route}

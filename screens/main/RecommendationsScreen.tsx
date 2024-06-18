@@ -21,7 +21,7 @@ export default function RecommendationsScreen({
 >>>>>>> ab4a1e7 (Feat: main to detail page 데이터 헨들링)
   const { data: userData } = useGetUserInfoQuery();
   const { data: reservationData } = useGetReservationStatusQuery();
-  const userMbti = userData?.mbti ?? '';
+  const userMbti = userData?.mbti ?? 'djqtdma';
   const { data: recommendationData } = useGetRecommendationQuery(userMbti);
 <<<<<<< HEAD
 
@@ -83,7 +83,7 @@ export default function RecommendationsScreen({
                 </Pressable>
               </View>
               <View className="h-4/5 w-[100%] items-center px-4">
-                {reservationData ? (
+              {reservationData && reservationData.reservationRecords ? (
                   reservationData.reservationRecords
                     .slice(0, 2)
                     .map(item => (
