@@ -17,7 +17,7 @@ export default function RecommendationsScreen({
   const access = useAppSelector(state => state.auth.access);
   const { data: userData } = useGetUserInfoQuery();
   const { data: reservationData } = useGetReservationStatusQuery();
-  const userMbti = userData?.mbti ?? '';
+  const userMbti = userData?.mbti ?? 'djqtdma';
   const { data: recommendationData } = useGetRecommendationQuery(userMbti);
 
   const handleSeeMore = () => {
@@ -72,7 +72,7 @@ export default function RecommendationsScreen({
                 </Pressable>
               </View>
               <View className="h-4/5 w-[100%] items-center px-4">
-                {reservationData ? (
+              {reservationData && reservationData.reservationRecords ? (
                   reservationData.reservationRecords
                     .slice(0, 2)
                     .map(item => (

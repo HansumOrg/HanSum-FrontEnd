@@ -15,7 +15,7 @@ import GoFront from '../../../assets/images/icon_goback.svg';
 import UnChecked from '../../../components/reservation/unchecked_rectangle.svg';
 import Checked from '../../../components/reservation/checked_rectangle.svg';
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
-import { useAppSelector } from '../../../api/hooks';
+import { useAppSelector, useReservate } from '../../../api/hooks';
 import {
   selectDate,
   selectGuesthouseDetailsText,
@@ -38,18 +38,16 @@ const formatDate = (dateString: string) => {
 };
 
 export default function ReservationScreen({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  route,
   navigation,
 }: GuesthouseDetailsStackScreenProps<'Reservation'>) {
+  const { handleReservate } = useReservate();
+
   const [agreeMbti, setAgreeMbti] = useState(false);
   const [agreeNickname, setAgreeNickname] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const reservation = useAppSelector(selectGuesthouseDetailsText);
-
   const reservationData = useAppSelector(selectDate);
-
   const guestInfo = useAppSelector(selectUser);
 
   const handleAgreeNickname = (agree: boolean) => {
@@ -57,9 +55,11 @@ export default function ReservationScreen({
     setModalVisible(false);
   };
 
-  const handleReservation = () => {
-    // 예약하기 로직을 추가하세요.
-    navigation.navigate('ReservationComplete');
+  const handleReservation = async () => {
+    const result = await handleReservate();
+    if (result) {
+      navigation.navigate('ReservationComplete');
+    }
     console.log('예약 완료');
   };
 
@@ -71,18 +71,18 @@ export default function ReservationScreen({
           <View className="flex-row justify-center items-center w-full h-full bg-white shadow-lg shadow-black rounded-lg">
             <View className="flex justify-start items-start w-[86%] h-full px-4 py-2 bg-white rounded-lg">
               <Text className="font-inter-r text-lg text-black ">
-                {reservation.guesthouseName}
+                {reservation.guesthouseName ?? 'Guesthouse Name'}
               </Text>
               <View className="flex-row w-full h-1/6 justify-start items-center mt-2">
                 <LocalSvg height="95%" width="7%" preserveAspectRatio="none" />
                 <Text className="ml-2 font-inter-r text-sm text-black">
-                  {reservation.address}
+                  {reservation.address ?? 'No Address'}
                 </Text>
               </View>
               <View className="flex-row w-full h-1/6 justify-start items-center mt-2">
                 <PhoneSVG height="95%" width="7%" preserveAspectRatio="none" />
                 <Text className="ml-2 font-inter-r text-sm text-black">
-                  {reservation.phone}
+                  {reservation.phone ?? 'No Phone'}
                 </Text>
               </View>
               <View className="flex-row w-full h-2/6 justify-between items-center mt-2 bg-gray-1 rounded-xl">
@@ -98,7 +98,7 @@ export default function ReservationScreen({
                   >
                     {reservationData.checkinDate
                       ? formatDate(reservationData.checkinDate)
-                      : ''}
+                      : 'No Check-in Date'}
                   </Text>
                 </View>
                 <View className="flex-row w-[48%] h-full justify-start items-center bg-gray-3 rounded-xl">
@@ -113,7 +113,7 @@ export default function ReservationScreen({
                   >
                     {reservationData.checkoutDate
                       ? formatDate(reservationData.checkoutDate)
-                      : ''}
+                      : 'No Check-out Date'}
                   </Text>
                 </View>
               </View>
@@ -139,13 +139,13 @@ export default function ReservationScreen({
               </View>
               <View className="justify-center items-start w-1/2">
                 <Text className=" font-inter-m text-sm text-black">
-                  {guestInfo?.nickname}
+                  {guestInfo?.nickname ?? 'No Nickname'}
                 </Text>
                 <Text className=" font-inter-m text-sm text-black">
-                  {guestInfo?.name}
+                  {guestInfo?.name ?? 'No Name'}
                 </Text>
                 <Text className=" font-inter-m text-sm text-black">
-                  {guestInfo?.mbti}
+                  {guestInfo?.mbti ?? 'No MBTI'}
                 </Text>
               </View>
             </View>
@@ -226,9 +226,9 @@ export default function ReservationScreen({
               <View className="flex-row justify-between w-full ">
                 <TouchableOpacity
                   className="rounded-md bg-primary-2 w-[45%] py-2 justify-center items-center"
-                  onPress={() => {
+                  onPress={async () => {
                     handleAgreeNickname(true);
-                    handleReservation();
+                    await handleReservation();
                   }}
                 >
                   <Text className="text-white font-inter-sb text-s text-center">
@@ -237,8 +237,8 @@ export default function ReservationScreen({
                 </TouchableOpacity>
                 <TouchableOpacity
                   className="rounded-md bg-gray-2 w-[45%] py-2 justify-center items-center"
-                  onPress={() => {
-                    handleReservation();
+                  onPress={async () => {
+                    await handleReservation();
                     setModalVisible(false);
                   }}
                 >

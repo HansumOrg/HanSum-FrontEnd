@@ -5,10 +5,10 @@ import FavoriteSelect from '../../assets/icon/icon _Heart.svg';
 import dummyImage from '../../assets/images/dummy_img';
 
 interface Guesthouse {
-  guesthouse_id: number;
-  guesthouse_name: string;
+  guesthouseId: number;
+  guesthouseName: string;
   address: string;
-  imageUrl: string;
+  imageBase64: string;
 }
 
 const screenHeight = Dimensions.get('window').height;
@@ -22,7 +22,7 @@ const GuesthouseItem: React.FC<{ item: Guesthouse }> = ({ item }) => (
   >
     <View className="mt-4 items-center rounded-lg w-full h-[68%] ">
       <Image
-        source={{ uri: dummyImage }}
+        source={{ uri: item.imageBase64 || dummyImage}}
         className="w-[90%] h-full  rounded-lg absolute"
       />
       <View className="w-[90%] pt-2 pr-2 aspect-square justify-start items-end">
@@ -31,7 +31,7 @@ const GuesthouseItem: React.FC<{ item: Guesthouse }> = ({ item }) => (
     </View>
     {/* 원래는 엑스틀라 볼드 */}
     <Text className="w-[90%] text-sm font-inter-b text-black mt-2">
-      {item.guesthouse_name}
+      {item.guesthouseName}
     </Text>
     <Text className="w-[90%] text-sss text-black">{item.address}</Text>
   </View>

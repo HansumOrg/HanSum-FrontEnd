@@ -11,19 +11,15 @@ import {
 import { GuesthouseDetailsStackScreenProps } from '../../../navigation/types';
 import LocalSvg from '../../../assets/images/icon_local.svg';
 import PhoneSVG from '../../../assets/images/icon_phone.svg';
-import { ReservationRecord } from '../../../types';
-import dummyImage from '../../../assets/images/dummy_img';
+import {
+  selectDate,
+  selectGuesthouseDetailsImage,
+  selectGuesthouseDetailsText,
+} from '../../../api/selectors';
+import { useAppSelector } from '../../../api/hooks';
 
 const screenHeight = Dimensions.get('window').height;
 
-const reservation: ReservationRecord = {
-  guesthouse_name: '서점 숙소',
-  guesthouse_address: '제주시 조천읍 북촌리 283',
-  guesthouse_phone: '010-1234-5678',
-  checkin_date: '2024-03-30T15:00:00',
-  checkout_date: '2024-03-31T11:00:00',
-  nights: 1,
-};
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleDateString('ko-KR', {
@@ -44,21 +40,25 @@ export default function ReservationCompleteScreen({
   navigation,
 }: GuesthouseDetailsStackScreenProps<'ReservationComplete'>) {
   const [imageError, setImageError] = useState(false);
+  const reservation = useAppSelector(selectGuesthouseDetailsText) || {};
+  const guesthouseImage = useAppSelector(selectGuesthouseDetailsImage) ?? '';
+  const reservationData = useAppSelector(selectDate) || {};
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />
       <View className=" h-screen bg-gray-1 gap-1 flex justify-start items-center">
         <View className="flex justify-start h-3/5 w-full bg-white items-center  py-4 px-4">
           <Text className="font-inter-b w-full text-left text-xl2 mt-4 text-black">
-            {reservation.guesthouse_name}
+            {reservation.guesthouseName}
           </Text>
           <Text className="font-inter-b  w-full text-left text-xl2 text-black">
             예약이 완료되었습니다.
           </Text>
           <View className="flex-row h-3/5 w-full justify-center items-center mt-4 rounded-lg mb-4">
-            {dummyImage && !imageError ? (
+            {guesthouseImage && !imageError ? (
               <Image
-                source={{ uri: dummyImage }}
+                source={{ uri: guesthouseImage }}
                 className="w-full h-full rounded-lg"
                 onError={() => setImageError(true)}
               />
@@ -76,7 +76,9 @@ export default function ReservationCompleteScreen({
                   Check In
                 </Text>
                 <Text className="font-inter-m text-ss text-black ">
-                  {formatDate(reservation.checkin_date)}
+                  {formatDate(
+                    reservationData?.checkoutDate ?? '2025-03-30T15:00:00',
+                  )}
                 </Text>
               </View>
               <View className="flex w-[50%] h-full justify-nomal items-start p-2 ">
@@ -84,14 +86,14 @@ export default function ReservationCompleteScreen({
                   Check Out
                 </Text>
                 <Text className="mr-1 font-inter-m text-ss text-black ">
-                  {formatDate(reservation.checkout_date)}
+                  {formatDate(
+                    reservationData?.checkoutDate ?? '2025-03-31T15:00:00',
+                  )}
                 </Text>
               </View>
             </View>
             <View className="flex justify-center items-center h-full bg-primary-2 rounded-r-lg">
-              <Text className=" font-inter-sb text-lg text-white m-2">
-                {reservation.nights}박
-              </Text>
+              <Text className=" font-inter-sb text-lg text-white m-2">1박</Text>
             </View>
           </View>
         </View>
@@ -104,13 +106,13 @@ export default function ReservationCompleteScreen({
             <View className="flex-row w-full h-1/6 justify-start items-center mt-2">
               <LocalSvg height="95%" width="7%" />
               <Text className="ml-2 font-inter-r text-sm text-black">
-                {reservation.guesthouse_address}
+                {reservation.address}
               </Text>
             </View>
             <View className="flex-row w-full h-1/6 justify-start items-center mt-2">
               <PhoneSVG height="95%" width="7%" />
               <Text className="ml-2 font-inter-r text-sm text-black">
-                {reservation.guesthouse_phone}
+                {reservation.phone}
               </Text>
             </View>
           </View>
@@ -119,6 +121,7 @@ export default function ReservationCompleteScreen({
           className=" absolute z-10 bottom-0 mb-[2%] bg-primary-2 items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
           style={{ height: (screenHeight * 1) / 14 }}
           onPress={() =>
+            // handleClick()
             navigation.navigate('MyPageNavigator', { screen: 'MyPage' })
           }
         >
