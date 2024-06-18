@@ -16,6 +16,7 @@ import FilterIcon from '../../../assets/images/icon_filter.svg';
 import { useSearch, useAppSelector, useAppDispatch } from '../../../api/hooks';
 import { selectDate } from '../../../api/selectors';
 import { setSearchName, setLocation } from '../../../api/slices/searchSlice';
+import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
 
 export default function SearchScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -32,8 +33,22 @@ export default function SearchScreen({
       };
     }, []),
   );
+  const { handleSearch } = useSearch();
   const dispatch = useAppDispatch();
   const date = useAppSelector(selectDate);
+
+  const handleSearchSubmit = async () => {
+    const res = await handleSearch();
+    if (isSuccessResponse(res)) {
+      console.log('search success');
+      navigation.navigate('SearchResult');
+    } else if (isFailedResponse(res)) {
+      console.log('search failed');
+    } else {
+      console.log(res);
+      console.log('search error');
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -48,12 +63,14 @@ export default function SearchScreen({
                 </View>
                 <View className="flex w-3/4 h-full justify-center">
                   <TextInput
-                    className="font-inter-m text-md text-black"
+                    className="font-inter-m text-sm text-black"
                     placeholder="지역, 게스트하우스 이름"
                     placeholderTextColor="#BDBDBD"
-                    onSubmitEditing={event => {
+                    // eslint-disable-next-line prettier/prettier
+                    onSubmitEditing={async (event) => {
                       dispatch(setSearchName(event.nativeEvent.text));
-                      navigation.navigate('SearchResult');
+                      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                      handleSearchSubmit();
                     }}
                   />
                 </View>
@@ -76,13 +93,13 @@ export default function SearchScreen({
                   </View>
                   {date.checkinDate && date.checkoutDate ? (
                     <View className="flex w-3/4 h-full justify-center">
-                      <Text className="font-inter-m text-md text-black">
+                      <Text className="font-inter-m text-sm text-black">
                         {`${date.checkinDate} ~ ${date.checkoutDate}`}
                       </Text>
                     </View>
                   ) : (
                     <View className="flex w-3/4 h-full justify-center">
-                      <Text className="font-inter-m text-md text-gray-2">
+                      <Text className="font-inter-m text-sm text-gray-2">
                         {' '}
                         날짜 선택
                       </Text>
@@ -104,7 +121,7 @@ export default function SearchScreen({
                   className="flex flex-row w-full h-auto justify-between"
                   onPress={() => {
                     dispatch(setLocation('용담,도두,연동,노형동'));
-                    navigation.navigate('SearchResult');
+                    handleSearchSubmit();
                   }}
                 >
                   <Text className="font-inter-r inter-sm text-black">
