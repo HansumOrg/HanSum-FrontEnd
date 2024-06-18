@@ -9,47 +9,79 @@ import ParkingIcon from '../../../assets/images/icon_parking.svg';
 import SwimmingIcon from '../../../assets/images/icon_swimming.svg';
 import WomanIcon from '../../../assets/images/icon_woman.svg';
 import MultiSlider from '../../../components/filter-page/MultiSlider';
-import { useSearchContext } from '../../../components/search-page/SearchContext';
-import { SearchResultProps } from '../../../types';
+import { useAppSelector, useAppDispatch } from '../../../api/hooks';
+import { selectFilter } from '../../../api/selectors';
+import { setFilter } from '../../../api/slices/searchSlice';
 
 export default function FilterScreen({
-  // route와 navigation 사용 안할 시 제거해주세요.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   route,
-
   navigation,
 }: SearchStackScreenProps<'Filter'>) {
-  const context = useSearchContext();
-  // 분위기 필터
+  const dispatch = useAppDispatch();
+  const filter = useAppSelector(selectFilter);
+
   const [activity, setActivity] = useState(false);
   const [healing, setHealing] = useState(false);
   const [energetic, setEnergetic] = useState(false);
   const [leisure, setLeisure] = useState(false);
-  // 시설 서비스 필터
-  const [party, setParty] = useState(false);
-  const [breakfast, setBreakfast] = useState(false);
-  const [singleRoom, setSingleRoom] = useState(false);
-  const [parking, setParking] = useState(false);
-  const [swimming, setSwimming] = useState(false);
-  const [womenOnly, setWomenOnly] = useState(false);
-  const [count, setCount] = useState(0);
-  // 가격 필터
+
+  const [facility, setFacility] = useState('');
+
   const [minStep, setMinStep] = useState(1);
   const [maxStep, setMaxStep] = useState(10);
 
+  const [moodCount, setMoodCount] = useState(true);
   useEffect(() => {
-    setCount(
-      [party, breakfast, singleRoom, parking, swimming, womenOnly].filter(
-        v => v === true,
-      ).length,
+    if (activity || healing || energetic || leisure) {
+      setMoodCount(false);
+    } else {
+      setMoodCount(true);
+    }
+  }, [activity, healing, energetic, leisure]);
+
+  const [facilityCount, setFacilityCount] = useState(true);
+  useEffect(() => {
+    setFacilityCount(facility === '');
+  }, [facility]);
+
+  useEffect(() => {
+    if (filter.mood) {
+      setActivity(filter.mood === '액티비티가 다양한');
+      setHealing(filter.mood === '힐링하기 좋은');
+      setEnergetic(filter.mood === '활기 넘치는');
+      setLeisure(filter.mood === '여유로운');
+    }
+    if (filter.facility) {
+      setFacility(filter.facility);
+    }
+  }, [filter]);
+
+  const updateMood = (mood: string) => {
+    dispatch(
+      setFilter({
+        mood,
+        facility: filter.facility,
+      }),
     );
-  }, [party, breakfast, singleRoom, parking, swimming, womenOnly]);
+  };
+
+  const updateFacility = (selectedFacility: string) => {
+    const newFacility = facility === selectedFacility ? '' : selectedFacility;
+    setFacility(newFacility);
+    dispatch(
+      setFilter({
+        mood: filter.mood,
+        facility: newFacility,
+      }),
+    );
+  };
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="default" />
       <View className="w-screen h-screen bg-white flex justify-center items-center">
         <View className="flex w-10/12 h-full">
-          <View className="flex w-full h-1/6  items-center justify-end">
+          <View className="flex w-full h-1/6 items-center justify-end">
             <View className="flex flex-col w-full h-4/5">
               <View className="flex flex-row w-full h-1/3 justify-between items-center ">
                 <Text className="font-inter-sb text-lg text-black">분위기</Text>
@@ -62,14 +94,13 @@ export default function FilterScreen({
                   <Pressable
                     className="flex w-auto h-auto rounded-md mx-1"
                     onPress={() => {
-                      setActivity(!activity);
-                      if (!activity) {
-                        context.setSearchState(
-                          (prevState: SearchResultProps) => ({
-                            ...prevState,
-                            mood: '액티비티가 다양한',
-                          }),
-                        );
+                      if (moodCount || activity) {
+                        setActivity(!activity);
+                        if (!activity) {
+                          updateMood('액티비티가 다양한');
+                        } else {
+                          updateMood('');
+                        }
                       }
                     }}
                   >
@@ -87,14 +118,13 @@ export default function FilterScreen({
                   <Pressable
                     className="flex w-auto h-auto rounded-md mx-1"
                     onPress={() => {
-                      setHealing(!healing);
-                      if (!healing) {
-                        context.setSearchState(
-                          (prevState: SearchResultProps) => ({
-                            ...prevState,
-                            mood: '힐링하기 좋은',
-                          }),
-                        );
+                      if (moodCount || healing) {
+                        setHealing(!healing);
+                        if (!healing) {
+                          updateMood('힐링하기 좋은');
+                        } else {
+                          updateMood('');
+                        }
                       }
                     }}
                   >
@@ -114,14 +144,13 @@ export default function FilterScreen({
                   <Pressable
                     className="flex w-auto h-auto rounded-md mx-1"
                     onPress={() => {
-                      setEnergetic(!energetic);
-                      if (!energetic) {
-                        context.setSearchState(
-                          (prevState: SearchResultProps) => ({
-                            ...prevState,
-                            mood: '활기 넘치는',
-                          }),
-                        );
+                      if (moodCount || energetic) {
+                        setEnergetic(!energetic);
+                        if (!energetic) {
+                          updateMood('활기 넘치는');
+                        } else {
+                          updateMood('');
+                        }
                       }
                     }}
                   >
@@ -139,14 +168,13 @@ export default function FilterScreen({
                   <Pressable
                     className="flex w-auto h-auto rounded-md mx-1"
                     onPress={() => {
-                      setLeisure(!leisure);
-                      if (!leisure) {
-                        context.setSearchState(
-                          (prevState: SearchResultProps) => ({
-                            ...prevState,
-                            mood: '여유로운',
-                          }),
-                        );
+                      if (moodCount || leisure) {
+                        setLeisure(!leisure);
+                        if (!leisure) {
+                          updateMood('여유로운');
+                        } else {
+                          updateMood('');
+                        }
                       }
                     }}
                   >
@@ -165,40 +193,22 @@ export default function FilterScreen({
               <Text className="font-inter-sb text-lg text-black">
                 시설 서비스
               </Text>
-              <View className="flex flex-row w-auto h-auto items-center">
-                <Text className="font-inter-b text-s text-primary-2">
-                  {count}
-                </Text>
-                <Text className="font-inter-b text-sm text-black/[.50]">
-                  개 선택
-                </Text>
-              </View>
             </View>
             <View className="flex flex-row w-full h-1/3 justify-center">
               <View className="flex flex-row w-10/12 h-full justify-between items-center">
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => {
-                    setParty(!party);
-                    if (!party) {
-                      context.setSearchState(
-                        (prevState: SearchResultProps) => ({
-                          ...prevState,
-                          facility: '파티',
-                        }),
-                      );
-                    }
-                  }}
+                  onPress={() => updateFacility('파티')}
                 >
                   <PartyIcon
                     width={37}
                     height={44}
-                    fill={`${party ? '#39C3C5' : '#C2C2C2'}`}
-                    stroke={`${party ? '#39C3C5' : '#C2C2C2'}`}
+                    fill={`${facility === '파티' ? '#39C3C5' : '#C2C2C2'}`}
+                    stroke={`${facility === '파티' ? '#39C3C5' : '#C2C2C2'}`}
                   />
                   <Text
                     className={`font-inter-sb text-sm text-${
-                      party ? 'primary-2' : 'gray-3'
+                      facility === '파티' ? 'primary-2' : 'gray-3'
                     } py-1`}
                   >
                     파티
@@ -206,27 +216,17 @@ export default function FilterScreen({
                 </Pressable>
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => {
-                    setBreakfast(!breakfast);
-                    if (!breakfast) {
-                      context.setSearchState(
-                        (prevState: SearchResultProps) => ({
-                          ...prevState,
-                          facility: '조식',
-                        }),
-                      );
-                    }
-                  }}
+                  onPress={() => updateFacility('조식')}
                 >
                   <BreakfastIcon
                     width={42}
                     height={44}
-                    fill={`${breakfast ? '#39C3C5' : '#C2C2C2'}`}
-                    stroke={`${breakfast ? '#39C3C5' : '#C2C2C2'}`}
+                    fill={`${facility === '조식' ? '#39C3C5' : '#C2C2C2'}`}
+                    stroke={`${facility === '조식' ? '#39C3C5' : '#C2C2C2'}`}
                   />
                   <Text
                     className={`font-inter-sb text-sm text-${
-                      breakfast ? 'primary-2' : 'gray-3'
+                      facility === '조식' ? 'primary-2' : 'gray-3'
                     } py-1`}
                   >
                     조식
@@ -234,26 +234,16 @@ export default function FilterScreen({
                 </Pressable>
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => {
-                    setSingleRoom(!singleRoom);
-                    if (!singleRoom) {
-                      context.setSearchState(
-                        (prevState: SearchResultProps) => ({
-                          ...prevState,
-                          facility: '1인실',
-                        }),
-                      );
-                    }
-                  }}
+                  onPress={() => updateFacility('1인실')}
                 >
                   <BedroomIcon
                     width={44}
                     height={44}
-                    fill={`${singleRoom ? '#39C3C5' : '#C2C2C2'}`}
+                    fill={`${facility === '1인실' ? '#39C3C5' : '#C2C2C2'}`}
                   />
                   <Text
                     className={`font-inter-sb text-sm text-${
-                      singleRoom ? 'primary-2' : 'gray-3'
+                      facility === '1인실' ? 'primary-2' : 'gray-3'
                     } py-1`}
                   >
                     1인실
@@ -265,26 +255,16 @@ export default function FilterScreen({
               <View className="flex flex-row w-10/12 h-full justify-between items-center">
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => {
-                    setParking(!parking);
-                    if (!parking) {
-                      context.setSearchState(
-                        (prevState: SearchResultProps) => ({
-                          ...prevState,
-                          facility: '주차',
-                        }),
-                      );
-                    }
-                  }}
+                  onPress={() => updateFacility('주차')}
                 >
                   <ParkingIcon
                     width={50}
                     height={44}
-                    fill={`${parking ? '#39C3C5' : '#C2C2C2'}`}
+                    fill={`${facility === '주차' ? '#39C3C5' : '#C2C2C2'}`}
                   />
                   <Text
                     className={`font-inter-sb text-sm text-${
-                      parking ? 'primary-2' : 'gray-3'
+                      facility === '주차' ? 'primary-2' : 'gray-3'
                     } py-1`}
                   >
                     주차
@@ -292,26 +272,16 @@ export default function FilterScreen({
                 </Pressable>
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => {
-                    setSwimming(!swimming);
-                    if (!swimming) {
-                      context.setSearchState(
-                        (prevState: SearchResultProps) => ({
-                          ...prevState,
-                          facility: '수영',
-                        }),
-                      );
-                    }
-                  }}
+                  onPress={() => updateFacility('수영')}
                 >
                   <SwimmingIcon
                     width={48}
                     height={44}
-                    stroke={`${swimming ? '#39C3C5' : '#C2C2C2'}`}
+                    stroke={`${facility === '수영' ? '#39C3C5' : '#C2C2C2'}`}
                   />
                   <Text
                     className={`font-inter-sb text-sm text-${
-                      swimming ? 'primary-2' : 'gray-3'
+                      facility === '수영' ? 'primary-2' : 'gray-3'
                     } py-1`}
                   >
                     수영
@@ -319,26 +289,18 @@ export default function FilterScreen({
                 </Pressable>
                 <Pressable
                   className="flex flex-col w-auto h-auto items-center"
-                  onPress={() => {
-                    setWomenOnly(!womenOnly);
-                    if (!womenOnly) {
-                      context.setSearchState(
-                        (prevState: SearchResultProps) => ({
-                          ...prevState,
-                          facility: '여성전용',
-                        }),
-                      );
-                    }
-                  }}
+                  onPress={() => updateFacility('여성전용')}
                 >
                   <WomanIcon
                     width={46}
                     height={44}
-                    stroke={`${womenOnly ? '#39C3C5' : '#C2C2C2'}`}
+                    stroke={`${
+                      facility === '여성전용' ? '#39C3C5' : '#C2C2C2'
+                    }`}
                   />
                   <Text
                     className={`font-inter-sb text-sm text-${
-                      womenOnly ? 'primary-2' : 'gray-3'
+                      facility === '여성전용' ? 'primary-2' : 'gray-3'
                     } py-1`}
                   >
                     여성전용
@@ -368,11 +330,12 @@ export default function FilterScreen({
         <Pressable
           className="absolute z-10 bottom-0 mb-[4%] items-center justify-center w-full h-1/5 shadow-black drop-shadow-xl"
           onPress={() => {
-            context.setSearchState((prevState: SearchResultProps) => ({
-              ...prevState,
-              min_price: minStep,
-              max_price: maxStep,
-            }));
+            dispatch(
+              setFilter({
+                mood: filter.mood,
+                facility,
+              }),
+            );
             navigation.goBack();
           }}
         >

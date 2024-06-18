@@ -1,80 +1,105 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { MyPageStateType, InterestProps } from '../../types';
+import { InterestProps } from '../../types';
+import { isSuccessResponse, isFailedResponse } from '../../utils/helpers';
 
 function deleteInterest(props: InterestProps) {
-  const { context, interests, userinterest, index, type } = props;
-  if (userinterest.length > 0) {
-    switch (type) {
-      case 0:
-        context.setMyPageState((prevState: MyPageStateType) => ({
-          ...prevState,
-          interested_location: userinterest.filter(
-            interest => interest !== interests[index],
-          ),
-        }));
-        break;
-      case 1:
-        context.setMyPageState((prevState: MyPageStateType) => ({
-          ...prevState,
-          interested_hobby: userinterest.filter(
-            interest => interest !== interests[index],
-          ),
-        }));
-        break;
-      case 2:
-        context.setMyPageState((prevState: MyPageStateType) => ({
-          ...prevState,
-          interested_food: userinterest.filter(
-            interest => interest !== interests[index],
-          ),
-        }));
-        break;
-      default:
-        break;
-    }
+  const {
+    interestData,
+    setInterestData,
+    interests,
+    userinterest,
+    index,
+    type,
+  } = props;
+
+  let updatedUserInterest = userinterest.filter(
+    interest => interest !== interests[index],
+  );
+
+  if (updatedUserInterest.length === 0) {
+    updatedUserInterest = [''];
+  }
+
+  switch (type) {
+    case 0:
+      setInterestData({
+        ...interestData,
+        interestedLocation: updatedUserInterest,
+      });
+      break;
+    case 1:
+      setInterestData({
+        ...interestData,
+        interestedHobby: updatedUserInterest,
+      });
+      console.log('updatedUserInterest:', updatedUserInterest);
+      break;
+    case 2:
+      setInterestData({
+        ...interestData,
+        interestedFood: updatedUserInterest,
+      });
+      break;
+    default:
+      break;
   }
 }
 
 function pushInterest(props: InterestProps) {
-  const { context, interests, userinterest, index, type } = props;
-  if (userinterest.length < 3) {
-    switch (type) {
-      case 0:
-        context.setMyPageState((prevState: MyPageStateType) => ({
-          ...prevState,
-          interested_location: [
-            ...prevState.interested_location,
-            interests[index],
-          ],
-        }));
-        break;
-      case 1:
-        context.setMyPageState((prevState: MyPageStateType) => ({
-          ...prevState,
-          interested_hobby: [...prevState.interested_hobby, interests[index]],
-        }));
-        break;
-      case 2:
-        context.setMyPageState((prevState: MyPageStateType) => ({
-          ...prevState,
-          interested_food: [...prevState.interested_food, interests[index]],
-        }));
-        break;
-      default:
-        break;
-    }
+  const {
+    interestData,
+    setInterestData,
+    interests,
+    userinterest,
+    index,
+    type,
+  } = props;
+
+  let updatedUserInterest = userinterest[0] === '' ? [] : userinterest;
+
+  if (updatedUserInterest.length < 3) {
+    updatedUserInterest = [...updatedUserInterest, interests[index]];
+  }
+
+  switch (type) {
+    case 0:
+      setInterestData({
+        ...interestData,
+        interestedLocation: updatedUserInterest,
+      });
+      break;
+    case 1:
+      setInterestData({
+        ...interestData,
+        interestedHobby: updatedUserInterest,
+      });
+      break;
+    case 2:
+      setInterestData({
+        ...interestData,
+        interestedFood: updatedUserInterest,
+      });
+      break;
+    default:
+      break;
   }
 }
 
-function interestList(props: InterestProps) {
-  const { context, interests, userinterest, index, type } = props;
-
+const InterestList: React.FC<InterestProps> = ({
+  handleUpdateInterests,
+  interestData,
+  setInterestData,
+  interests,
+  userinterest,
+  index,
+  type,
+}) => {
   const handlePress = () => {
-    // onPress 이벤트가 있을 때 추가와 삭제를 수행
     if (userinterest.includes(interests[index])) {
       deleteInterest({
-        context,
+        interestData,
+        setInterestData,
         interests,
         userinterest,
         index,
@@ -82,13 +107,26 @@ function interestList(props: InterestProps) {
       });
     } else {
       pushInterest({
-        context,
+        interestData,
+        setInterestData,
         interests,
         userinterest,
         index,
         type,
       });
     }
+  };
+
+  const handleChangePress = async () => {
+    handlePress();
+    // const res = await handleUpdateInterests(interestData);
+    // if (isSuccessResponse(res)) {
+    //   console.log('Update successful:', res);
+    // } else if (isFailedResponse(res)) {
+    //   console.log('Update failed:', res);
+    // } else {
+    //   console.log('Unexpected response:', res);
+    // }
   };
 
   const borderColor = userinterest.includes(interests[index])
@@ -99,7 +137,7 @@ function interestList(props: InterestProps) {
     : 'text-point';
 
   return (
-    <Pressable key={index} onPress={handlePress}>
+    <Pressable key={index} onPress={handleChangePress}>
       <View
         className={`flex border-2 mr-2 mb-1 ${borderColor} w-auto h-auto rounded-2xl items-center`}
       >
@@ -109,5 +147,6 @@ function interestList(props: InterestProps) {
       </View>
     </Pressable>
   );
-}
-export default interestList;
+};
+
+export default InterestList;

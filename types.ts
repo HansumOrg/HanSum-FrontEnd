@@ -32,6 +32,13 @@ export interface CalendarProps {
   setReservationEndDate: (date: Date | null) => void;
 }
 
+export interface InitialDataType {
+  location: string | null;
+  guesthouse_name: string | null;
+  mood: string | null;
+  facility: string | null;
+}
+
 export interface CalendarSeletedDaysProps {
   reservationStartDate: Date | null;
   reservationEndDate: Date | null;
@@ -188,9 +195,9 @@ export interface MyPageStateType {
   user_id: number;
   username: string;
   mbti: string;
-  interested_location: string[];
-  interested_hobby: string[];
-  interested_food: string[];
+  interestedLocation: string[];
+  interestedHobby: string[];
+  interestedFood: string[];
   sticker: Sticker[];
 }
 
@@ -227,17 +234,29 @@ export interface MbtiCheckProps {
   userId: number;
 }
 
+export interface Interests {
+  interestedLocation: string[];
+  interestedHobby: string[];
+  interestedFood: string[];
+}
+
 export interface InterestProps {
   // AddInterestScreen.tsx
-  context: {
-    myPageState: MyPageStateType;
-    setMyPageState: React.Dispatch<React.SetStateAction<MyPageStateType>>;
+  handleUpdateInterests: (interests: {
+    interestedLocation: string[];
+    interestedFood: string[];
+    interestedHobby: string[];
+  }) => Promise<unknown>;
+  interestData: {
+    interestedLocation: string[];
+    interestedHobby: string[];
+    interestedFood: string[];
   };
+  setInterestData: (interests: Interests) => void;
   interests: string[];
   userinterest: string[];
   index: number;
   type: number; // 0: 여행지, 1: 취미, 2: 음식
-  setUserData: React.Dispatch<React.SetStateAction<User[]>>;
 }
 
 // components/api types 이건 제가 만든 임시라 삭제 하시면 됩니다.

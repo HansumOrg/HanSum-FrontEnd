@@ -38,6 +38,7 @@ const guesthouseSlice = createSlice({
 export const {
   setGuesthouseState,
   clearGuesthouseState,
+  setGuesthouseId,
   setGuesthouseDetails,
   setGuesthouseId,
   setGuesthouseMembers,

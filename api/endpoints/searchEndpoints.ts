@@ -23,17 +23,17 @@ export const searchApi = createApi({
       },
       {
         location: string | null;
-        searchName: string | null;
+        guesthouse_name: string | null;
         mood: string | null;
-        facility: string[] | null;
+        facility: string | null;
       }
     >({
-      query: ({ location, searchName, mood, facility }) => ({
+      query: ({ location, guesthouse_name, mood, facility }) => ({
         url: 'guesthouses/search',
         method: 'GET',
         params: {
           location,
-          searchName,
+          guesthouse_name,
           mood,
           facility,
         },

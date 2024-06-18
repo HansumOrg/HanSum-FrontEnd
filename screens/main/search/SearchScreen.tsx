@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -13,8 +13,10 @@ import SearchIcon from '../../../assets/images/icon_search.svg';
 import CalendarIcon from '../../../assets/images/icon_calendar.svg';
 import MoreIcon from '../../../assets/images/icon_goback.svg';
 import FilterIcon from '../../../assets/images/icon_filter.svg';
-import { useSearchContext } from '../../../components/search-page/SearchContext';
-import { SearchResultProps } from '../../../types';
+import { useSearch, useAppSelector, useAppDispatch } from '../../../api/hooks';
+import { selectDate } from '../../../api/selectors';
+import { setSearchName, setLocation } from '../../../api/slices/searchSlice';
+import { isFailedResponse, isSuccessResponse } from '../../../utils/helpers';
 
 export default function SearchScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -31,7 +33,23 @@ export default function SearchScreen({
       };
     }, []),
   );
-  const searchContext = useSearchContext();
+  const { handleSearch } = useSearch();
+  const dispatch = useAppDispatch();
+  const date = useAppSelector(selectDate);
+
+  const handleSearchSubmit = async () => {
+    const res = await handleSearch();
+    if (isSuccessResponse(res)) {
+      console.log('search success');
+      navigation.navigate('SearchResult');
+    } else if (isFailedResponse(res)) {
+      console.log('search failed');
+    } else {
+      console.log(res);
+      console.log('search error');
+    }
+  };
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />
@@ -45,17 +63,14 @@ export default function SearchScreen({
                 </View>
                 <View className="flex w-3/4 h-full justify-center">
                   <TextInput
-                    className="font-inter-m text-md text-black"
+                    className="font-inter-m text-sm text-black"
                     placeholder="지역, 게스트하우스 이름"
                     placeholderTextColor="#BDBDBD"
-                    onSubmitEditing={event => {
-                      searchContext.setSearchState(
-                        (prevState: SearchResultProps) => ({
-                          ...prevState,
-                          guesthouse_name: event.nativeEvent.text,
-                        }),
-                      );
-                      navigation.navigate('SearchResult');
+                    // eslint-disable-next-line prettier/prettier
+                    onSubmitEditing={async (event) => {
+                      dispatch(setSearchName(event.nativeEvent.text));
+                      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                      handleSearchSubmit();
                     }}
                   />
                 </View>
@@ -76,16 +91,15 @@ export default function SearchScreen({
                   <View className="flex ml-2 w-auto h-full justify-center">
                     <CalendarIcon width={26} height={27} />
                   </View>
-                  {searchContext.searchState.checkin_date &&
-                  searchContext.searchState.checkout_date ? (
+                  {date.checkinDate && date.checkoutDate ? (
                     <View className="flex w-3/4 h-full justify-center">
-                      <Text className="font-inter-m text-md text-black">
-                        {`${searchContext.searchState.checkin_date} ~ ${searchContext.searchState.checkout_date}`}
+                      <Text className="font-inter-m text-sm text-black">
+                        {`${date.checkinDate} ~ ${date.checkoutDate}`}
                       </Text>
                     </View>
                   ) : (
                     <View className="flex w-3/4 h-full justify-center">
-                      <Text className="font-inter-m text-md text-gray-2">
+                      <Text className="font-inter-m text-sm text-gray-2">
                         {' '}
                         날짜 선택
                       </Text>
@@ -106,13 +120,8 @@ export default function SearchScreen({
                 <Pressable
                   className="flex flex-row w-full h-auto justify-between"
                   onPress={() => {
-                    searchContext.setSearchState(
-                      (prevState: SearchResultProps) => ({
-                        ...prevState,
-                        location: '제주공항 서부(용담, 도두, 연동, 노형동)',
-                      }),
-                    );
-                    navigation.navigate('SearchResult');
+                    dispatch(setLocation('용담,도두,연동,노형동'));
+                    handleSearchSubmit();
                   }}
                 >
                   <Text className="font-inter-r inter-sm text-black">
@@ -126,13 +135,7 @@ export default function SearchScreen({
                 <Pressable
                   className="flex flex-row w-full h-auto justify-between"
                   onPress={() => {
-                    searchContext.setSearchState(
-                      (prevState: SearchResultProps) => ({
-                        ...prevState,
-                        location:
-                          '제주공항 동부(제주시청, 탑동, 건입동)/추자도',
-                      }),
-                    );
+                    dispatch(setLocation('제주시청,탑동,건입동,추자도'));
                     navigation.navigate('SearchResult');
                   }}
                 >
@@ -147,12 +150,7 @@ export default function SearchScreen({
                 <Pressable
                   className="flex flex-row w-full h-auto justify-between"
                   onPress={() => {
-                    searchContext.setSearchState(
-                      (prevState: SearchResultProps) => ({
-                        ...prevState,
-                        location: '서귀포시/중문/모슬포',
-                      }),
-                    );
+                    dispatch(setLocation('서귀포시,중문,모슬포'));
                     navigation.navigate('SearchResult');
                   }}
                 >
@@ -167,12 +165,7 @@ export default function SearchScreen({
                 <Pressable
                   className="flex flex-row w-full h-auto justify-between"
                   onPress={() => {
-                    searchContext.setSearchState(
-                      (prevState: SearchResultProps) => ({
-                        ...prevState,
-                        location: '이호테우/하귀/애월/한림/협재',
-                      }),
-                    );
+                    dispatch(setLocation('이호테우,하귀,애월,한림,협재'));
                     navigation.navigate('SearchResult');
                   }}
                 >
@@ -187,12 +180,7 @@ export default function SearchScreen({
                 <Pressable
                   className="flex flex-row w-full h-auto justify-between"
                   onPress={() => {
-                    searchContext.setSearchState(
-                      (prevState: SearchResultProps) => ({
-                        ...prevState,
-                        location: '함덕/김녕/세화',
-                      }),
-                    );
+                    dispatch(setLocation('함덕,김녕,세화'));
                     navigation.navigate('SearchResult');
                   }}
                 >
@@ -207,12 +195,8 @@ export default function SearchScreen({
                 <Pressable
                   className="flex flex-row w-full h-auto justify-between"
                   onPress={() => {
-                    searchContext.setSearchState(
-                      (prevState: SearchResultProps) => ({
-                        ...prevState,
-                        location: '남원/표선/성산',
-                      }),
-                    );
+                    dispatch(setLocation('남원,표선,성산'));
+
                     navigation.navigate('SearchResult');
                   }}
                 >

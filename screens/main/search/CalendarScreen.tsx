@@ -9,20 +9,23 @@ import {
 } from 'react-native';
 import Calendar from '../../../components/search-page/Calendar';
 import { SearchStackScreenProps } from '../../../navigation/types';
-import { SearchResultProps } from '../../../types';
-import { useSearchContext } from '../../../components/search-page/SearchContext';
+import { useAppDispatch, useAppSelector } from '../../../api/hooks';
+import { setDate } from '../../../api/slices/searchSlice';
+import { selectDate } from '../../../api/selectors';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function CalendarScreen({
   navigation,
 }: SearchStackScreenProps<'Calendar'>) {
-  const context = useSearchContext();
+  const dispatch = useAppDispatch();
+  const selectedDates = useAppSelector(selectDate);
+
   const [reservationStartDate, setReservationStartDate] = useState<Date | null>(
-    null,
+    selectedDates.checkinDate ? new Date(selectedDates.checkinDate) : null,
   );
   const [reservationEndDate, setReservationEndDate] = useState<Date | null>(
-    null,
+    selectedDates.checkoutDate ? new Date(selectedDates.checkoutDate) : null,
   );
   const [isReservationable, setIsReservationable] = useState<boolean>(false);
   const [footerColor, setFooterColor] = useState<string>('bg-gray-1/100');
@@ -90,19 +93,17 @@ export default function CalendarScreen({
           disabled={!isReservationable}
           onPress={() => {
             if (reservationStartDate && reservationEndDate) {
-              context.setSearchState((prevState: SearchResultProps) => ({
-                ...prevState,
-                checkin_date: new Date(
-                  reservationStartDate.getTime() + 1000 * 60 * 60 * 24,
-                )
-                  .toISOString()
-                  .split('T')[0],
-                checkout_date: new Date(
-                  reservationEndDate.getTime() + 1000 * 60 * 60 * 24,
-                )
-                  .toISOString()
-                  .split('T')[0],
-              }));
+              const checkinDate = new Date(
+                reservationStartDate.getTime() + 1000 * 60 * 60 * 24,
+              )
+                .toISOString()
+                .split('T')[0];
+              const checkoutDate = new Date(
+                reservationEndDate.getTime() + 1000 * 60 * 60 * 24,
+              )
+                .toISOString()
+                .split('T')[0];
+              dispatch(setDate({ checkinDate, checkoutDate }));
             }
             navigation.goBack();
           }}

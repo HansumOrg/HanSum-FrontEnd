@@ -1,16 +1,9 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, View, Text } from 'react-native';
-import { EditProfileStackScreenProps } from '../../../../navigation/types';
 import StickerList from '../../../../components/edit-page/StickerList';
 import { useGetStickerQuery } from '../../../../api/endpoints/userEndpoints';
 
-export default function ViewReceivedStickerScreen({
-  // route와 navigation 사용 안할 시 제거해주세요.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  route,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  navigation,
-}: EditProfileStackScreenProps<'ViewReceivedSticker'>) {
+export default function ViewReceivedStickerScreen() {
   const { data: stickerData } = useGetStickerQuery();
   const mentList = [
     '항상 웃음을 잃지 않아요',
@@ -34,8 +27,7 @@ export default function ViewReceivedStickerScreen({
           </View>
           <View className="flex flex-col h-full w-full items-center">
             {stickerData ? (
-              stickerData.stickers.map((_, index) => {
-                // user_id와 sticker_text가 일치하는 sticker_count를 찾아서 count에 저장
+              mentList.map((_, index) => {
                 const count =
                   stickerData.stickers.find(
                     sticker => sticker.stickerText === mentList[index],
