@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -11,6 +11,10 @@ import {
 import { MyPageStackScreenProps } from '../../../navigation/types';
 import RatingStars from '../../../components/common/RatingStars';
 import GuestReviewCard from '../../../components/my-page/review-page/GuestReviewCard';
+import { useAppDispatch, useAppSelector } from '../../../api/hooks';
+import { setGuesthouseId } from '../../../api/slices/guesthouseSlice';
+import { useGetReservationStatusQuery } from '../../../api/endpoints/reservationEndpoints';
+import { useGetHangoutUserQuery } from '../../../api/endpoints/guestEndpoints';
 
 export default function ReviewsScreen({
   // route와 navigation 사용 안할 시 제거해주세요.
@@ -20,13 +24,21 @@ export default function ReviewsScreen({
   navigation,
 }: MyPageStackScreenProps<'Reviews'>) {
   const screenHeight = Dimensions.get('window').height;
-  const guests = [
-    { name: '게스트 이름 1', mbti: 'MBTI1' },
-    { name: '게스트 이름 2', mbti: 'MBTI2' },
-    { name: '게스트 이름 3', mbti: 'MBTI3' },
-    { name: '게스트 이름 4', mbti: 'MBTI4' },
-    { name: '게스트 이름 5', mbti: 'MBTI5' },
-  ];
+  const guesthouseIdState = useAppSelector(
+    state => state.guesthouse.guesthouseId,
+  );
+  const { data: reservationData } = useGetReservationStatusQuery();
+  const selectedReservation = reservationData?.reservationRecords.find(
+    record => record.guesthouseId === guesthouseIdState
+  );
+  const dispatch = useAppDispatch();
+  const guesthouseData = useGetHangoutUserQuery(selectedReservation?.reservationId ?? 0).data
+  const guests = useGetHangoutUserQuery(selectedReservation?.reservationId ?? 0).data?.guests ?? [];
+  const [rating, setRating] = useState(0);
+  const handleRatingChange = (newRating: number) => {
+    setRating(newRating);
+    console.log(`Updated rating: ${newRating}`);
+  };
 
   return (
     <SafeAreaView>
@@ -40,9 +52,11 @@ export default function ReviewsScreen({
             <View className="bg-gray-2 h-[2%] w-full" />
             <View className="flex-row w-[80%] my-2  justify-between items-start pl-2">
               <Text className="text-s font-inter-r text-black">숙소 정보</Text>
-              <Text className="text-s font-inter-r text-black">
-                게스트하우스 이름 state
-              </Text>
+              {guesthouseData && (
+                <Text className="text-s font-inter-r text-black">
+                  {guesthouseData.guesthouseName}
+                </Text>
+              )}
             </View>
             <View className="bg-gray-2 h-[2%] w-full" />
           </View>
@@ -53,7 +67,7 @@ export default function ReviewsScreen({
             <Text className="my-5 text-md font-inter-sb text-black">
               게스트 하우스는 어떠셨나요?
             </Text>
-            <RatingStars />
+            <RatingStars  onRatingChange={handleRatingChange}/>
           </View>
           <View className="px-4 w-full my-2">
             <Text className=" text-left text-md font-inter-sb text-black">
@@ -63,8 +77,8 @@ export default function ReviewsScreen({
           {guests.map(guest => (
             <>
               <GuestReviewCard
-                key={guest.name}
-                name={guest.name}
+                key={guest.nickname}
+                name={guest.nickname}
                 mbti={guest.mbti}
               />
               <View

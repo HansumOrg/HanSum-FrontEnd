@@ -4,6 +4,8 @@ import LocalIcon from '../../assets/images/icon_local.svg';
 import PhoneIcon from '../../assets/images/icon_phone.svg';
 import { Reservation, ReservationBoxProps } from '../../types';
 import { useGetGuesthouseDetailsQuery } from '../../api/endpoints/guesthouseEndpoints';
+import { setGuesthouseId } from '../../api/slices/guesthouseSlice';
+import { useAppDispatch } from '../../api/hooks';
 
 function DateCheck({ checkinDate }: Reservation): number {
   const today = new Date();
@@ -22,10 +24,11 @@ function ReservationBox(props: ReservationBoxProps) {
   const { data: guesthouseData } = useGetGuesthouseDetailsQuery(
     reservation.guesthouseId,
   );
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setDateState(DateCheck(reservation));
   }, [reservation]);
+
   return (
     <View className="flex bg-white h-auto mb-1 w-full items-center">
       <View className="flex flex-row m-2 w-11/12 h-auto rounded-xl shadow-md shadow-black/50">
@@ -71,6 +74,7 @@ function ReservationBox(props: ReservationBoxProps) {
             ) : (
               <Pressable
                 onPress={() => {
+                  dispatch(setGuesthouseId(reservation.guesthouseId));
                   navigation.navigate('Reviews');
                 }}
                 className="flex flex-col w-full h-auto justify-center items-center"
