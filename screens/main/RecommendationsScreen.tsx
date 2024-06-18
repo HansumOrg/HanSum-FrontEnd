@@ -15,21 +15,10 @@ export default function RecommendationsScreen({
   navigation,
 }: MainTabScreenProps<'Recommendations'>) {
   const access = useAppSelector(state => state.auth.access);
-<<<<<<< HEAD
-  console.log(access);
-=======
->>>>>>> ab4a1e7 (Feat: main to detail page 데이터 헨들링)
   const { data: userData } = useGetUserInfoQuery();
   const { data: reservationData } = useGetReservationStatusQuery();
   const userMbti = userData?.mbti ?? 'djqtdma';
   const { data: recommendationData } = useGetRecommendationQuery(userMbti);
-<<<<<<< HEAD
-
-  useEffect(() => {
-    console.log(reservationData);
-  });
-=======
->>>>>>> ab4a1e7 (Feat: main to detail page 데이터 헨들링)
 
   const handleSeeMore = () => {
     navigation.navigate('MyPageNavigator', {
