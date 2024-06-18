@@ -400,7 +400,7 @@ export const useWriteReview = () => {
 };
 
 // Hook for register sticker
-export const useRegistSticker = () => {
+export const useRegisterSticker = () => {
   const [registerSticker, { isLoading, error }] = useRegisterStickerMutation();
   const [isRegistStickerLoading, registerStickerError] = [isLoading, error];
 
