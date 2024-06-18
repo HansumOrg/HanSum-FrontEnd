@@ -28,16 +28,20 @@ export const searchApi = createApi({
         facility: string | null;
       }
     >({
-      query: ({ location, guesthouse_name, mood, facility }) => ({
-        url: 'guesthouses/search',
-        method: 'GET',
-        params: {
-          location,
-          guesthouse_name,
-          mood,
-          facility,
-        },
-      }),
+      query: ({ location, searchName, mood, facility }) => {
+        const params = {
+          location: location ?? undefined,
+          guesthouse_name: searchName ?? undefined,
+          mood: mood ?? undefined,
+          facility: facility ?? undefined,
+        };
+
+        return {
+          url: 'guesthouses/search',
+          method: 'GET',
+          params,
+        };
+      },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled;
         dispatch(setSearchResult(data.guesthouses));
