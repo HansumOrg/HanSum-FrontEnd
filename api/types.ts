@@ -115,6 +115,13 @@ export interface SearchState {
   searchResult: GuesthouseInSearch[] | null;
 }
 
+export interface SearchParam {
+  location: string | null;
+  searchName: string | null;
+  mood: string | null;
+  facility: string[] | null;
+}
+
 // Reservation
 
 export interface ReservationRecord {
