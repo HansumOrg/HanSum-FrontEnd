@@ -3,11 +3,12 @@ import {
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
+import { API_BASE_URL } from 'react-native-dotenv';
 
 export const joinApi = createApi({
   reducerPath: 'joinApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
   }),
   tagTypes: ['Validate'],
   endpoints: builder => ({

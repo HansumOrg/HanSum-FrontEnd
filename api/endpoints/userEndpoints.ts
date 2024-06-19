@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from '../store';
+import { API_BASE_URL } from 'react-native-dotenv';
 import { setUserState } from '../slices/userSlice';
+import type { RootState } from '../store';
 import type { Sticker, StickerToSend } from '../types';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { access } = (getState() as RootState).auth;
       if (access) {

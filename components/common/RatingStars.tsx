@@ -1,11 +1,9 @@
-// ../../components/common/RatingStars.tsx
 import React, { useState } from 'react';
 import { View, Pressable, Text } from 'react-native';
 import EmptyStar from '../../assets/icon/empty_rabong.svg';
 import FullStar from '../../assets/icon/full_rabong.svg';
 import HalfStar from '../../assets/icon/half_rabong.svg';
 
-// 별점 데이터를 포함하는 배열 생성
 const stars = [
   { id: 'star-1', value: 0.5 },
   { id: 'star-2', value: 1.5 },
@@ -14,17 +12,20 @@ const stars = [
   { id: 'star-5', value: 4.5 },
 ];
 
-const RatingStars: React.FC = () => {
+interface RatingStarsProps {
+  onRatingChange: (value: number) => void;
+}
+
+const RatingStars: React.FC<RatingStarsProps> = ({ onRatingChange }) => {
   const [rating, setRating] = useState(0);
 
   const handlePress = (value: number) => {
-    console.log(`Pressed star value: ${value}`);
+    let newRating = value;
     if (rating === value) {
-      setRating(value + 0.5); // Half star if clicked again
-    } else {
-      setRating(value); // Full star
+      newRating = value + 0.5; // Half star if clicked again
     }
-    console.log(`Updated rating: ${rating}`);
+    setRating(newRating);
+    onRatingChange(newRating);
   };
 
   const renderStar = (value: number) => {

@@ -18,20 +18,29 @@ const negativeReviews = [
   '소음 관리에 조금 더 신경 써 주세요',
 ];
 
-const GuestReview: React.FC = () => {
+interface GuestReviewProps {
+  onReviewChange: (nickname: string, selectedReviews: string[]) => void;
+  nickname: string;
+}
+
+const GuestReview: React.FC<GuestReviewProps> = ({ onReviewChange, nickname }) => {
   const [selectedReviews, setSelectedReviews] = useState<string[]>([]);
 
   const toggleReview = (review: string) => {
     setSelectedReviews(prevState => {
+      let newReviews;
       if (prevState.includes(review)) {
-        return prevState.filter(r => r !== review);
+        newReviews = prevState.filter(r => r !== review);
+      } else if (prevState.length < 2) {
+        newReviews = [...prevState, review];
+      } else {
+        newReviews = prevState;
       }
-      if (prevState.length < 2) {
-        return [...prevState, review];
-      }
-      return prevState;
+      onReviewChange(nickname, newReviews);
+      return newReviews;
     });
   };
+
   return (
     <View className="flex flex-wrap flex-row gap-2">
       {reviews.map(review => {

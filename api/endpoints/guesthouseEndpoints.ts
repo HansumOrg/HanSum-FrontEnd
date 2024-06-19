@@ -1,15 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from '../store';
+import { API_BASE_URL } from 'react-native-dotenv';
 import {
   setGuesthouseDetails,
   setGuesthouseMembers,
 } from '../slices/guesthouseSlice';
+import type { RootState } from '../store';
 import type { GuesthouseMember } from '../types';
 
 export const guesthouseApi = createApi({
   reducerPath: 'guesthouseApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const { access } = (getState() as RootState).auth;
       if (access) {
