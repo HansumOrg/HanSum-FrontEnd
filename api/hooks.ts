@@ -41,10 +41,9 @@ import {
   selectUser,
   selectInterests,
   selectJoinState,
-  selectSearchParam,
   selectReservationInfo,
 } from './selectors';
-import type { StickerToSend } from './types';
+import type { SearchParam, StickerToSend } from './types';
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
@@ -525,11 +524,10 @@ export const useUpdateInterests = () => {
 // Hooks for search
 // Hook for search
 export const useSearch = () => {
-  const searchParam = useAppSelector(selectSearchParam);
   const [search, { isLoading, error }] = useLazySearchQuery();
   const [isSearchLoading, searchError] = [isLoading, error];
 
-  const handleSearch = async () => {
+  const handleSearch = async (searchParam: SearchParam) => {
     if (!searchParam) {
       throw Error('Search information not found in Redux store');
     }
