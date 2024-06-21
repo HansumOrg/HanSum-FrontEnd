@@ -10,7 +10,7 @@ const defaultSearchContext: SearchResultProps = {
   location: null,
   checkin_date: null,
   checkout_date: null,
-  guesthouse_name: null,
+  guesthouseName: null,
   mood: null,
   facility: null,
   min_price: null,

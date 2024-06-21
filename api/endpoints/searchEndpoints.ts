@@ -22,15 +22,15 @@ export const searchApi = createApi({
       },
       {
         location: string | null;
-        guesthouse_name: string | null;
+        guesthouseName: string | null;
         mood: string | null;
         facility: string | null;
       }
     >({
-      query: ({ location, guesthouse_name, mood, facility }) => {
+      query: ({ location, guesthouseName, mood, facility }) => {
         const params = {
           location: location ?? undefined,
-          guesthouse_name: guesthouse_name ?? undefined,
+          guesthouseName: guesthouseName ?? undefined,
           mood: mood ?? undefined,
           facility: facility ?? undefined,
         };

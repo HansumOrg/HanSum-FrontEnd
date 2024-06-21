@@ -24,6 +24,13 @@ export interface SearchResultScreenProps {
   guesthouses: Guesthouse[];
 }
 
+export interface SearchPageTypes {
+  location: string | null;
+  guesthouseName: string | null;
+  mood: string | null;
+  facility: string | null;
+}
+
 // SearchScreen.tsx
 export interface CalendarProps {
   reservationStartDate: Date | null;
@@ -34,7 +41,7 @@ export interface CalendarProps {
 
 export interface InitialDataType {
   location: string | null;
-  guesthouse_name: string | null;
+  guesthouseName: string | null;
   mood: string | null;
   facility: string | null;
 }
@@ -62,7 +69,7 @@ export interface SearchResultProps {
   location: string | null;
   checkin_date: string | null;
   checkout_date: string | null;
-  guesthouse_name: string | null;
+  guesthouseName: string | null;
   mood: string | null;
   facility: string | null;
   min_price: number | null;
@@ -176,15 +183,15 @@ export interface Reservation {
 }
 
 export interface Guesthouse {
-  guesthouseId: number;
-  guesthouseName: string;
-  address: string;
-  location: string;
-  price: number;
-  phone: string;
-  rating: number;
-  imageBase64: string;
-  mood: string;
+  guesthouseId: number | null;
+  guesthouseName: string | null;
+  address: string | null;
+  location: string | null;
+  price: number | null;
+  phone: string | null;
+  rating: number | null;
+  imageBase64: string | null;
+  mood: string | null;
 }
 
 export interface ReservationBoxProps extends MyPageStackScreenProps<'MyPage'> {
@@ -291,7 +298,7 @@ export interface CheckDuplicateResponse {
 
 export interface ReservationRecord {
   // ReservationItem.tsx
-  guesthouse_name: string | undefined;
+  guesthouseName: string | undefined;
   guesthouse_address: string | undefined;
   guesthouse_phone: string | undefined;
   checkin_date: string;

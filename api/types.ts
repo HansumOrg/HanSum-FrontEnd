@@ -109,7 +109,7 @@ export interface SearchState {
   checkinDate: string | null;
   checkoutDate: string | null;
   location: string | null;
-  guesthouse_name: string | null;
+  guesthouseName: string | null;
   mood: string;
   facility: string;
   searchResult: GuesthouseInSearch[] | null;
@@ -117,9 +117,9 @@ export interface SearchState {
 
 export interface SearchParam {
   location: string | null;
-  searchName: string | null;
+  guesthouseName: string | null;
   mood: string | null;
-  facility: string[] | null;
+  facility: string | null;
 }
 
 // Reservation

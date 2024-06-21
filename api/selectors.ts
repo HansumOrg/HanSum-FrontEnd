@@ -50,7 +50,7 @@ export const selectSearchParam = createAppSelector(
   [selectSearchState],
   search => ({
     location: search.location,
-    guesthouse_name: search.guesthouse_name,
+    guesthouseName: search.guesthouseName,
     mood: search.mood,
     facility: search.facility,
   }),
@@ -65,7 +65,7 @@ export const selectFilter = createAppSelector([selectSearchState], search => ({
 }));
 export const selectLocation = (state: RootState) => state.search.location;
 export const selectSearchName = (state: RootState) =>
-  state.search.guesthouse_name;
+  state.search.guesthouseName;
 export const selectMood = (state: RootState) => state.search.mood;
 export const selectFacility = (state: RootState) => state.search.facility;
 
