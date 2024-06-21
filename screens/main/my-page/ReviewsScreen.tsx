@@ -26,13 +26,19 @@ export default function ReviewsScreen({
   );
   const { data: reservationData } = useGetReservationStatusQuery();
   const selectedReservation = reservationData?.reservationRecords.find(
-    record => record.guesthouseId === guesthouseIdState
+    record => record.guesthouseId === guesthouseIdState,
   );
-  const guesthouseData = useGetHangoutUserQuery(selectedReservation?.reservationId ?? 0).data;
-  const guests = useGetHangoutUserQuery(selectedReservation?.reservationId ?? 0).data?.guests ?? [];
-  
+  const guesthouseData = useGetHangoutUserQuery(
+    selectedReservation?.reservationId ?? 0,
+  ).data;
+  const guests =
+    useGetHangoutUserQuery(selectedReservation?.reservationId ?? 0).data
+      ?.guests ?? [];
+
   const [rating, setRating] = useState(0);
-  const [selectedReviews, setSelectedReviews] = useState<{ [key: string]: string[] }>({});
+  const [selectedReviews, setSelectedReviews] = useState<{
+    [key: string]: string[];
+  }>({});
 
   const handleRatingChange = (newRating: number) => {
     setRating(newRating);
@@ -51,7 +57,7 @@ export default function ReviewsScreen({
   const handleSubmit = async () => {
     for (const guest of guests) {
       const stickerTexts = selectedReviews[guest.nickname];
-      
+
       if (stickerTexts && stickerTexts.length > 0) {
         try {
           await registerSticker.handleRegistSticker([
@@ -60,9 +66,14 @@ export default function ReviewsScreen({
               stickerTexts,
             },
           ]);
-          console.log(`Successfully registered stickers for ${guest.nickname}, ${guest.userId} with texts: ${stickerTexts}`);
+          console.log(
+            `Successfully registered stickers for ${guest.nickname}, ${guest.userId} with texts: ${stickerTexts}`,
+          );
         } catch (error) {
-          console.error(`Failed to register sticker for ${guest.nickname}`, error);
+          console.error(
+            `Failed to register sticker for ${guest.nickname}`,
+            error,
+          );
         }
       }
     }
