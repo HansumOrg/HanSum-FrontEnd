@@ -26,6 +26,7 @@ import {
   useGetGuesthouseDetailsQuery,
   useGetGuesthouseMembersQuery,
 } from '../../../api/endpoints/guesthouseEndpoints';
+import dummyImage from '../../../assets/images/dummy_img';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -103,10 +104,12 @@ export default function GuesthouseDetailsScreen({
         >
           <View className=" w-full justify-center items-center h-1/2 bg-slate-500 shadow-lg shadow-black">
             <View className="flex justify-center h-full w-full items-center shadow-inner shadow-black">
-              <Image
-                source={{ uri: guesthouse.imageBase64 }}
-                className="h-full w-full"
-              />
+              {guesthouse.imageBase64 ? (
+                <Image
+                  source={{ uri: guesthouse.imageBase64 ?? dummyImage }}
+                  className="h-full w-full"
+                />
+              ) : null}
             </View>
           </View>
           <View className=" h-2/5 w-full justify-start items-center pt-8 px-4">
@@ -116,13 +119,10 @@ export default function GuesthouseDetailsScreen({
             <View className="w-full h-1/6 flex-row justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-start items-center">
                 <LocalSvg height="80%" width="10%" />
-                <Text className="text-md font-inter-r text-black ml-4 flex">
+                <Text className="text-lg font-inter-r text-black ml-4 flex">
                   {guesthouse.address}
                 </Text>
               </View>
-              <Text className=" underline text-sm font-inter-r text-black">
-                지도보기
-              </Text>
             </View>
             <View className="w-full h-1/6 flex-row justify-between items-center mt-2">
               <View className="flex-row w-4/5 h-full justify-start items-center">
@@ -177,7 +177,7 @@ export default function GuesthouseDetailsScreen({
             <Text className=" w-full text-left text-xl font-inter-b text-black">
               예약자 MBTI
             </Text>
-            <View className="flex-row justify-start items-center mt-4">
+            <View className="flex-row flex-wrap justify-start items-start mt-4 h-1/3">
               {members.map(member => (
                 <MbtiCheck key={member.userId} mbti={member.mbti} />
               ))}
@@ -189,8 +189,7 @@ export default function GuesthouseDetailsScreen({
             </View>
           </View>
           <Pressable
-            className="bg-primary-2 items-center justify-center w-screen shadow-black drop-shadow-xl"
-            style={{ height: (screenHeight * 1) / 14 }}
+            className="bg-primary-2 items-center justify-center w-screen  h-1/4 shadow-black drop-shadow-xl"
             onPress={() => navigation.navigate('Reservation')}
           >
             <Text className="font-inter-b text-lg text-white">예약하기</Text>
