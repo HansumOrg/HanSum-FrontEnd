@@ -7,30 +7,13 @@ import dummyImage from '../../assets/images/dummy_img';
 
 const screenHeight = Dimensions.get('window').height;
 
-function SearchResultList({
-  guesthouse_id,
-  guesthouse_name,
-  address,
-  location,
-  price,
-  phone,
-  rating,
-  imageUrl,
-  mood,
-}: Guesthouse) {
+function SearchResultList(props: Guesthouse) {
   const [isFavorite, setIsFavorite] = useState(false);
-  const parameter = {
-    guesthouse_id,
-    guesthouse_name,
-    address,
-    location,
-    price,
-    phone,
-    rating,
-    imageUrl,
-    mood,
-    isFavorite, // 찜 선택 여부
-  };
+  console.log(props.guesthouseId);
+  console.log(props.guesthouseName);
+  console.log(props.address);
+  console.log(props.mood);
+  const { guesthouseName, imageBase64, address } = props;
   return (
     <View
       className="border-t border-gray-100 px-2 bg-white w-full shadow"
@@ -40,7 +23,7 @@ function SearchResultList({
     >
       <View className="mt-4 items-end rounded-md w-full bg-primary-1 h-[75%]">
         <Image
-          source={{ uri: dummyImage }}
+          source={{ uri: imageBase64 ?? dummyImage }}
           className="w-full h-full absolute"
         />
         {isFavorite ? (
@@ -64,7 +47,7 @@ function SearchResultList({
         )}
       </View>
       <Text className="text-sm font-inter-b text-black mt-2">
-        {guesthouse_name}
+        {guesthouseName}
       </Text>
       <Text className="text-sss text-black">{address}</Text>
     </View>
